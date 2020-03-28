@@ -250,11 +250,8 @@ export const Repuestos = data => dispatch => {
             let VALUES = '-'
             let count = 0;
 
-
-            for (let i = 0; i < previousP.length; i++) {
-
-                for (let j = 0; j < currentP.length; j++) {
-
+            for (const i in previousP) {
+                for (const j in currentP) {
                     if (previousP[i].idrepuesto === currentP[j].idrepuesto) {
                         if (previousP[i].qty !== currentP[j].qty) {
                             IDS = IDS + currentP[j].idrepuesto + `-`;
@@ -262,10 +259,9 @@ export const Repuestos = data => dispatch => {
                             count = count + 1;
                         }
                     }
-
                 }
-
             }
+
 
             IDS = IDS.substring(1, IDS.length);
             VALUES = VALUES.substring(1, VALUES.length);
@@ -277,6 +273,7 @@ export const Repuestos = data => dispatch => {
                 size: count,
                 opt: data.opt
             }
+
 
             api.rep.repuestos(info).then(res => {
 

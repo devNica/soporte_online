@@ -44,45 +44,64 @@ class FormularioEdicionRepuestos extends Component {
     }
 
     INC_QTY_REP = i => {
-        this.setState(state => {
-            const parts = state.parts.map((item) => {
-            if (item.idrepuesto === i && item.qty < 4) {
-                
-                item.qty +=1
-                return item;
 
-            } else {
-                this.props.noSave({msg:'Cantidad no permitida', type:'warning'})
-              return item;
-            }
-          });
-          return {
-            parts,
-          };
-        });
+        const {parts} = this.state;
+        let repuesto = parts.filter(item => item.idrepuesto === i)
+        
+        if(repuesto[0].qty < 4){
 
-        this.setState({operacion_rep: 'update'})
+            this.setState(state => {
+                const parts = state.parts.map((item) => {
+                if (item.idrepuesto === i ) {
+                    
+                    item.qty +=1
+                    return item;
+    
+                }
+                else{
+                    return item;
+                } 
+              });
+              return {
+                parts,
+              };
+            });
+    
+            this.setState({operacion_rep: 'update'})
+
+        }else{
+            this.props.noSave({msg:'Cantidad no permitida', type:'warning'})
+        }
+
+        
     }
 
     DEC_QTY_REP = i => {
-        this.setState(state => {
-            const parts = state.parts.map((item) => {
-            if (item.idrepuesto === i && item.qty > 1) {
-                
-                item.qty -=1
-                return item;
 
-            } else {
-                this.props.noSave({msg:'Cantidad no permitida', type:'warning'})
-              return item;
-            }
-          });
-          return {
-            parts,
-          };
-        });
+        const {parts} = this.state;
+        let repuesto = parts.filter(item => item.idrepuesto === i)
 
-        this.setState({operacion_rep: 'update'})
+        if(repuesto[0].qty > 1){
+            this.setState(state => {
+                const parts = state.parts.map((item) => {
+                if (item.idrepuesto === i && item.qty > 1) {
+                    
+                    item.qty -=1
+                    return item;
+    
+                } else {
+                  return item;
+                }
+              });
+              return {
+                parts,
+              };
+            });
+    
+            this.setState({operacion_rep: 'update'})
+        }else{
+            this.props.noSave({msg:'Cantidad no permitida', type:'warning'})
+        }
     }
 
     deletePart = i =>{
@@ -121,8 +140,7 @@ class FormularioEdicionRepuestos extends Component {
 
         if(operacion_rep === 'add'){
             
-            for (let index = 0; index < currentP.length; index++) {
-                
+            for (const index in currentP) {
                 flag = previousP.find(item => item.idrepuesto === currentP[index].idrepuesto)
                 if(!flag){
                     IDS = IDS + currentP[index].idrepuesto + `-`;
@@ -142,15 +160,14 @@ class FormularioEdicionRepuestos extends Component {
                 size: count,
                 opt: 'ADD'
             }
-            console.log(data)
+            //console.log(data)
             this.props.Repuestos(data);
             this.setState({operacion_rep: ''})
             
         }
         if(operacion_rep === 'delete'){
 
-            for (let index = 0; index < previousP.length; index++) {
-                
+            for (const index in previousP) {
                 flag = currentP.find(item => item.idrepuesto === previousP[index].idrepuesto)
                 if(!flag){
                     IDS = IDS + previousP[index].idrepuesto + `-`;
@@ -167,7 +184,7 @@ class FormularioEdicionRepuestos extends Component {
                 opt: 'DEL'
             }
 
-            console.log(data)
+            //console.log(data)
             this.props.Repuestos(data);
             this.setState({operacion_rep: ''})
 
