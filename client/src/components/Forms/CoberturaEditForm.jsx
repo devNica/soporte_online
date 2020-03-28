@@ -103,7 +103,6 @@ class CoberturaEditForm extends Component {
                 opt: `'` + 'ADD' + `'`
             }
 
-            //console.log(data);
             this.props.Cobertura(data);
             this.setState({operaciones_cobertura: ''})
 
@@ -130,7 +129,6 @@ class CoberturaEditForm extends Component {
                 opt: `'` + 'DEL' + `'`
             }
 
-            //console.log(data);
             this.props.Cobertura(data);
             this.setState({operaciones_cobertura: ''})
 

@@ -23,20 +23,7 @@ class FormularioEdicionAtencion extends Component {
         this.setState({estado: equipo[0].estado})
     }
     
-    // componentDidUpdate(prevProps){
-    //     const {coverage, idregws} = this.props;
-
-        
-        
-    //     if(coverage !== prevProps.coverage){
-    //         this.setState({coverage})
-    //     }
-       
-    //     if(idregws !== prevProps.idregws){
-    //         this.setState({idregws})
-    //     }
-    // }
-
+    
     render() {
 
        return (

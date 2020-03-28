@@ -61,17 +61,7 @@ class AtencionReporte extends Component {
         let test={
             name: 'Alexander'
         }
-        // api.report.eqp().then(respose=>{
-
-        //     console.log(respose);
-
-        //     const blob = new Blob([respose.data],{type: 'application/pdf'})
-        //     const link = document.createElement('a')
-        //     link.href = window.URL.createObjectURL(blob)
-        //     link.download = 'report.pdf'
-        //     link.click();
-        //     this.closeModal();
-        // }).catch(err=>{console.log(err)})
+        
     }
     
     componentDidMount(){

@@ -94,8 +94,6 @@ class FormularioEdiciontareas extends Component {
         let {tasksEQP} = this.state;
         let notallowed = tasksEQP.filter(
             T => T.idtarea === parseInt(idtarea) && T.estado === 'FINALIZADA')
-        
-        //console.log(notallowed)    
 
         if(notallowed.length < 1){
             this.setState(state => {

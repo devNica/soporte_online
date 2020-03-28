@@ -3,7 +3,7 @@ import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import FormularioCrearAsistencia from '../Forms/FormularioCrearAsistencia';
 
-class EmployeesTable extends Component {
+class TablaEmpleados extends Component {
 
     state={
 
@@ -110,4 +110,4 @@ const mapStateToProps = state=>({
     employees: state.employee.employees
 })
 
-export default connect(mapStateToProps)(EmployeesTable);
+export default connect(mapStateToProps)(TablaEmpleados);

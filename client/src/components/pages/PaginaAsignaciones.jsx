@@ -37,8 +37,6 @@ class PaginaAsignaciones extends Component {
     
 
     componentDidMount(){
-        // this.props.getTaskAfterDate();
-        //let fecha = new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0].concat('.000Z')
         
         let fecha = new Date();
         fecha.setDate(fecha.getDate()-30)

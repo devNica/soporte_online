@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import {Link} from 'react-router-dom'
 import {aprobar, pausar, reiniciar, reasignar, denegar} from '../../redux/actions/workload';
-import {getActiveTechnicians} from '../../redux/actions/employee';
+import {empleados_activos} from '../../redux/actions/empleados';
 import 'moment-timezone';
 import {connect} from 'react-redux';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
@@ -38,7 +38,7 @@ class AdministrarAsignacionForm extends Component {
        
         this.setState({nombre, info, tecnico})
 
-        this.props.getActiveTechnicians();
+        this.props.empleados_activos();
     }
 
     componentDidUpdate(prevProps){
@@ -335,4 +335,4 @@ const mapStateToProps = state =>({
     tecnicos: state.employee.tecnicos
 })
 
-export default connect(mapStateToProps,{aprobar, pausar, reiniciar, reasignar, denegar, getActiveTechnicians})(AdministrarAsignacionForm);
+export default connect(mapStateToProps,{aprobar, pausar, reiniciar, reasignar, denegar, empleados_activos})(AdministrarAsignacionForm);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {getActiveEmployee, getActiveTechnicians} from '../../redux/actions/employee';
-import EmployeesTable from '../Table/EmployeesTable';
+import {empleados_activos, tecnicos_activos} from '../../redux/actions/empleados';
+import TablaEmpleados from '../Table/TablaEmpleados';
 
 
 class PaginaCrearAsignacion extends Component {
@@ -14,17 +14,17 @@ class PaginaCrearAsignacion extends Component {
     }
 
     componentDidMount(){
-        this.props.getActiveEmployee();
-        this.props.getActiveTechnicians();
+        this.props.empleados_activos();
+        this.props.tecnicos_activos();
     }
 
     render() {
         return (
             <div>
-                <EmployeesTable/>
+                <TablaEmpleados/>
             </div>
         );
     }
 }
 
-export default connect(null,{getActiveEmployee, getActiveTechnicians})(PaginaCrearAsignacion);
+export default connect(null,{empleados_activos, tecnicos_activos})(PaginaCrearAsignacion);

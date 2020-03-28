@@ -16,7 +16,6 @@ class FormularioCierreAsignacion extends Component {
     reparado=()=>{
         const {idregws, equipo} = this.state;
         const {tasksEQP} = this.props;
-        //let info = rows.filter(item => item.idregws === parseInt(idregws))
         let pendientes = tasksEQP.filter(item => item.estado === 'PENDIENTE')
     
 
@@ -74,7 +73,6 @@ class FormularioCierreAsignacion extends Component {
     solucionado=()=>{
         const {idregws, equipo} = this.state;
         const {rows, tasksEQP} = this.props;
-        //let info = rows.filter(item => item.idregws === parseInt(idregws))
         let pendientes = tasksEQP.filter(item => item.estado === 'PENDIENTE')
     
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TablaDesempeno from '../Table/TablaDesempeno';
 import {connect} from 'react-redux';
 import {rep_desemepeno_tec} from '../../redux/actions/reportes';
-import {getActiveTechnicians} from '../../redux/actions/employee';
+import {tecnicos_activos} from '../../redux/actions/empleados';
 import DatePicker  from 'react-datepicker'
 
 class PaginaDesempeno extends Component {
@@ -45,7 +45,7 @@ class PaginaDesempeno extends Component {
     }
 
     componentDidMount(){
-        this.props.getActiveTechnicians();
+        this.props.tecnicos_activos();
     }
 
     render() {
@@ -122,4 +122,4 @@ const mapStateToProps = state =>({
     tecnicos: state.employee.tecnicos
 })
 
-export default connect(mapStateToProps,{rep_desemepeno_tec, getActiveTechnicians})(PaginaDesempeno);
+export default connect(mapStateToProps,{rep_desemepeno_tec, tecnicos_activos})(PaginaDesempeno);

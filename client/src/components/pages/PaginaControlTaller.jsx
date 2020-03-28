@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import FormularioAtencionTaller from '../Forms/FormularioAtencionTaller';
 import {connect} from 'react-redux';
 import {ingresado_pendiente} from '../../redux/actions/recepcion';
-import {getActiveTechnicians} from '../../redux/actions/employee';
+import {tecnicos_activos} from '../../redux/actions/empleados';
 
 class PaginaControlTaller extends Component {
 
     componentDidMount(){
         let filtro=`RI.fk_estados_regin = 1`
         this.props.ingresado_pendiente({filtro});
-        this.props.getActiveTechnicians();
+        this.props.tecnicos_activos();
     }
 
     render() {
@@ -21,4 +21,4 @@ class PaginaControlTaller extends Component {
     }
 }
 
-export default connect(null,{ingresado_pendiente, getActiveTechnicians})(PaginaControlTaller);
+export default connect(null,{ingresado_pendiente, tecnicos_activos})(PaginaControlTaller);

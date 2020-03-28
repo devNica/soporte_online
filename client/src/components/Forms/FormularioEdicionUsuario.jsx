@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux';
 import UsuariosModal from '../Modal/UsuariosModal';
 import SearchIcon from '@material-ui/icons/Search';
-import {getActiveEmployee} from '../../redux/actions/employee';
+import {empleados_activos} from '../../redux/actions/empleados';
 import {setUsuarioRegin} from '../../redux/actions/tools'
 import {noSave} from '../../redux/actions/tools';
 
@@ -50,7 +50,7 @@ class FormularioEdicionUsuario extends Component {
         let info = tasks.filter(item => item.idregws === parseInt(idregws))
 
         this.setState({info})
-        this.props.getActiveEmployee();
+        this.props.empleados_activos();
     }
 
 
@@ -104,4 +104,4 @@ const mapStateToProps = state=>({
     tasks: state.workshop.tasks.data.rows,
 })
 
-export default connect(mapStateToProps,{getActiveEmployee, setUsuarioRegin, noSave})(FormularioEdicionUsuario);
+export default connect(mapStateToProps,{empleados_activos, setUsuarioRegin, noSave})(FormularioEdicionUsuario);

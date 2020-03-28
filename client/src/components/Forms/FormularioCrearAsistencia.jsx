@@ -33,7 +33,6 @@ class FormularioCrearAsistencia extends Component {
             carnet, 
             fecha
         }
-        //console.log(newTask)
         this.props.crear_assistencia(nueva_asistencia);
     }
 
