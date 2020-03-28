@@ -1,0 +1,16 @@
+.item-profile{
+    background-color: #f4eeff;
+    border-right: 2px solid #5351d6;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+}
+
+
+.sub-item-option{
+    background-color: #e9f0ff;
+    border-right: 2px solid #fab433;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+}

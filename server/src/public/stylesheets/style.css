@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.titulo{
+    color: rgb(37, 61, 139);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+}
+

@@ -1,0 +1,451 @@
+<style type="text/css">
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: 
+#007bff;
+--indigo:
+#6610f2;
+--purple:
+#6f42c1;
+--pink:
+#e83e8c;
+--red:
+#dc3545;
+--orange:
+#fd7e14;
+--yellow:
+#ffc107;
+--green:
+#28a745;
+--teal:
+#20c997;
+--cyan:
+#17a2b8;
+--white:
+#fff;
+--gray:
+#6c757d;
+--gray-dark:
+#343a40;
+--primary:
+#007bff;
+--secondary:
+#6c757d;
+--success:
+#28a745;
+--info:
+#17a2b8;
+--warning:
+#ffc107;
+--danger:
+#dc3545;
+--light:
+#f8f9fa;
+--dark:
+    #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+
+.portrait {
+    width: 8.3in;
+    height: 10.8.0in;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.h1, h1{
+    text-align: center;
+    font-family: 'Rubik', sans-serif;
+    color: rgb(55, 60, 80);
+    font-size: 0.95rem;
+}
+
+.h5, h5{
+    font-size: 0.80rem;
+    color: rgb(84, 90, 110);
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.pl-3, .px-3 {
+    padding-left: 1rem;
+}
+.pb-3, .py-3 {
+    padding-bottom: 1rem;
+}
+.pr-3, .px-3 {
+    padding-right: 1rem;
+}
+.pt-3, .py-3 {
+    padding-top: 1rem;
+}
+.mt-5, .my-5 {
+    margin-top: 3rem;
+}
+.border {
+    border: 1px solid #dee2e6;
+}
+
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+
+.col-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.col-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: 
+#fff;
+background-clip: border-box;
+border: 1px solid
+    rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.card-header {
+    padding: .5rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    font-size: 0.8rem;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.0rem;
+    color: rgb(38, 56, 94);
+}
+
+.text-white {
+    color: 
+    #fff !important;
+}
+.bg-primary {
+    background-color: 
+    #3b7abd !important;
+}
+
+.bg-danger {
+    background-color: 
+    #f16270 !important;
+}
+
+.bg-success{
+    background-color: 
+    #3a52bd !important;
+    color: aliceblue;
+}
+
+.bg-warning{
+    background-color: 
+    #3a52bd !important;
+    color: aliceblue;
+}
+
+.bg-info{
+    background-color: 
+    #3a52bd !important;
+    color: aliceblue;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 0.6rem;
+}
+
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #41464b;
+}
+table {
+    border-collapse: collapse;
+}
+
+th {
+    border: 1px solid #dee2e6;
+    border-bottom-color: rgb(222, 226, 230);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+.table td, .table th {
+    padding: .40rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+    font-size: 0.7rem;
+}
+th {
+    text-align: center;
+}
+
+.list-group {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.list-group-flush .list-group-item {
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: .50rem 1rem;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    color: rgb(82, 95, 112);
+    font-size: 0.75rem;
+}
+.especial{
+    font-size: 0.7rem;
+}
+
+.border-primary {
+    border-color: 
+    #154f8b !important;
+}
+
+</style>
+
+<div class="page portrait">
+    <div class="py-3 px-3">
+        <h1 class=".h1">FICHA TECNICA DE ATENCION</h1>
+        <hr>
+         <h5 class="text-primary my-3 font-weight-bold .h5">#1 Resumen General</h5>
+        <div class="row">
+            <div class="col-6">
+            
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Datos del Tecnico
+                    </div>
+                    <div class="card-body">
+                    <p><b>NOMBRE:</b> {{info.nombretecnico}}</p>
+                    <p><b>CARGO:</b> {{info.cargotecnico}}</p>
+                    <p><b>CARNET:</b> {{info.carnetecnico}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+              <div class="card">
+                  <div class="card-header bg-danger text-white">
+                      Datos del Usuario
+                  </div>
+                  <div class="card-body">
+                    <p><b>NOMBRE:</b> {{info.nombreusuario}}</p>
+                    <p><b>CARGO:</b> {{info.cargousuario}}</p>
+                    <p><b>CARNET:</b> {{info.carneusuario}}</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+
+
+        {{!-- DATOS DE LOS REPUESTOS OCUPADOS --}}
+        <div class="row">
+            <div class="col-12">
+                <h5 class="text-primary my-3 font-weight-bold .h5">#2 Resumen de Repuestos Utilizados</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Repuesto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">SubTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each parts }}
+                        <tr>
+                            <td scope="row">{{ this.qty}}</td>
+                            <td class="text-center">{{this.repuesto}}</td>
+                            <td class="text-center">{{this.costo}} {{this.moneda}}</td>
+                            <td class="text-center">${{this.subtotal}}</td>
+                        </tr>
+                        {{/each}}
+                        <tr>
+                             <td colspan="3"></td>
+                             <td class="text-center">${{amount}}</td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{!-- DATOS DE LOS EQUIPOS DE COBERTURA --}}
+        <div class="row">
+            <div class="col-12">
+                <h5 class="text-primary my-3 font-weight-bold .h5">#3 Resumen de Equipos beneficiarios de la atencion principal</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">idRegws</th>
+                            <th scope="col">idEquipo</th>
+                            <th scope="col">Equipo</th>
+                            <th scope="col">Consecutivo</th>
+                            <th scope="col">Usuario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each coverage }}
+                        <tr>
+                            <td scope="row">{{ this.idregws}}</td>
+                            <td class="text-center">{{this.idequipo}}</td>
+                            <td class="text-center">{{this.equipo}}</td>
+                            <td class="text-center">{{this.consecutivo}}</td>
+                            <td class="text-center">{{this.usuario}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{!-- TAREAS ASIGNADAS AL EQUIPO --}}
+        <div class="row">
+            <div class="col-12">
+                <h5 class="text-primary my-3 font-weight-bold .h5">#4 Resumen de las Tareas del Equipo</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#Id</th>
+                            <th scope="col">Tarea</th>
+                            <th scope="col">Propietario</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each tasks }}
+                        <tr>
+                            <td scope="row">{{ this.idtarea}}</td>
+                            <td class="text-center">{{this.tarea}}</td>
+                            <td class="text-center">{{this.propietario}}</td>
+                            <td class="text-center">{{this.estado}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header bg-info">Resumen del Master</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Equipo: {{info.equipo}}</li>
+                        <li class="list-group-item">Consecutivo: {{info.consecutivo}}</li>
+                        <li class="list-group-item">Modelo: {{info.modelo}}</li>
+                        <li class="list-group-item">Serie: {{info.serie}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header bg-warning">Resumen de Ingreso</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item especial">Ingreso: {{info.ingreso}}</li>
+                        <li class="list-group-item especial">Inicio: {{info.inicio}}</li>
+                        <li class="list-group-item especial">Finalizo: {{info.final}}</li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header bg-success">Resumen de Tiempos</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Ordinario: {{info.ordinario}}</li>
+                        <li class="list-group-item">Pausa: {{info.pausa}}</li>
+                        <li class="list-group-item">extra: {{info.extra}}</li>
+                        <li class="list-group-item">Total: {{info.tiempo}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
