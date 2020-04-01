@@ -1,12 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import AdminPanel from '../../Panel/AdminPanel';
-import Dashboard from '../Dashboard/Dashboard';
-import noImg from './noimage.png';
-import { downloadImage } from '../../../helpers/helpers';
-import UploadImage from '../../Modal/UploadImage';
-// Iconos
-import AddTwoToneIcon from '@material-ui/icons/AddTwoTone';
 import PaginaAsignaciones from '../../pages/PaginaAsignaciones';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 

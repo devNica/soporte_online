@@ -1,38 +1,25 @@
-export const RecepcionDT = (data) => {
+export const modelo_empleados = (data) => {
 
     let rows = data;
 
     return {
-        //ESTRUCTURA DATATABLE
         data: {
             columns: [
                 {
                     label: 'Id',
-                    field: 'idregin',
+                    field: 'idempleado',
                     sort: 'asc',
                     width: 50
                 },
                 {
-                    label: '#Orden',
-                    field: 'orden',
+                    label: 'N° Empleado',
+                    field: 'carnet',
                     sort: 'asc',
                     width: 150
                 },
                 {
-                    label: 'Consecutivo',
-                    field: 'consecutivo',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Modelo',
-                    field: 'modelo',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Usuario',
-                    field: 'nombreusuario',
+                    label: 'Nombre',
+                    field: 'full_name',
                     sort: 'asc',
                     width: 150
                 },
@@ -43,12 +30,17 @@ export const RecepcionDT = (data) => {
                     width: 150
                 },
                 {
-                    label: 'Ingreso',
-                    field: 'ingreso',
+                    label: 'Centro de Costo',
+                    field: 'centro_costo',
                     sort: 'asc',
                     width: 150
                 },
-
+                {
+                    label: 'Estado',
+                    field: 'estado',
+                    sort: 'asc',
+                    width: 150
+                },
 
             ],
             rows,

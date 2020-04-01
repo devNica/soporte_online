@@ -1,16 +1,21 @@
-export const EqpDT = (data) => {
+export const modelo_asignaciones = (data) => {
 
     let rows = data;
 
     return {
-        //ESTRUCTURA DATATABLE
         data: {
             columns: [
                 {
                     label: 'Id',
-                    field: 'idequipo',
+                    field: 'idregws',
                     sort: 'asc',
                     width: 50
+                },
+                {
+                    label: '#Orden',
+                    field: 'orden',
+                    sort: 'asc',
+                    width: 150
                 },
                 {
                     label: 'Equipo',
@@ -24,15 +29,23 @@ export const EqpDT = (data) => {
                     sort: 'asc',
                     width: 150
                 },
+
                 {
-                    label: 'Modelo',
-                    field: 'modelo',
+                    label: 'App',
+                    field: 'aplicacion',
+                    sort: 'asc',
+                    width: 150
+                },
+
+                {
+                    label: 'Asistencia',
+                    field: 'asistencia',
                     sort: 'asc',
                     width: 150
                 },
                 {
-                    label: 'Serie',
-                    field: 'serie',
+                    label: 'Cliente',
+                    field: 'nombre',
                     sort: 'asc',
                     width: 150
                 },
@@ -43,26 +56,19 @@ export const EqpDT = (data) => {
                     width: 150
                 },
                 {
-                    label: 'Usuario',
-                    field: 'resguardo',
+                    label: 'Control',
+                    field: 'control',
                     sort: 'asc',
                     width: 150
                 },
                 {
-                    label: 'Usuario',
-                    field: 'usuario',
+                    label: 'Opciones',
+                    field: 'opciones',
                     sort: 'asc',
                     width: 150
-                },
-                {
-                    label: 'cat',
-                    field: 'idcategoria',
-                    sort: 'asc',
-                    width: 40
                 },
             ],
             rows,
         }
     }
-
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import Moment from 'react-moment';
+//import Moment from 'react-moment';
 import 'moment-timezone';
 
 class AtencionReporte extends Component {
@@ -58,9 +58,9 @@ class AtencionReporte extends Component {
 
 
     downloadPdf = ()=>{
-        let test={
-            name: 'Alexander'
-        }
+        // let test={
+        //     name: 'Alexander'
+        // }
         
     }
     
@@ -98,7 +98,7 @@ class AtencionReporte extends Component {
 
         const partList = parts.map((part, i)=>(
             <tr key={i}>
-                <td scope="row">{part.qty}</td>
+                <td >{part.qty}</td>
                 <td className="text-center">{part.repuesto}</td>
                 <td className="text-center">{part.costo} {part.moneda}</td>
                 <td className="text-center">${part.subtotal}</td>
@@ -107,7 +107,7 @@ class AtencionReporte extends Component {
 
         const coverageList = coverage.map((element, i)=>(
             <tr key={i}>
-                <td scope="row">{element.idregws}</td>
+                <td >{element.idregws}</td>
                 <td className="text-center">{element.idequipo}</td>
                 <td className="text-center">{element.equipo}</td>
                 <td className="text-center">{element.consecutivo}</td>
@@ -117,7 +117,7 @@ class AtencionReporte extends Component {
 
         const tasksList = tasksEQP.map((task, i)=>(
             <tr key={i}>
-                <td scope="row">{task.idtarea}</td>
+                <td>{task.idtarea}</td>
                 <td className="text-center">{task.tarea}</td>
                 <td className="text-center">{task.propietario}</td>
                 <td className="text-center">{task.estado}</td>

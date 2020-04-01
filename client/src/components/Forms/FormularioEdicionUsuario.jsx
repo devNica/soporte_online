@@ -45,12 +45,21 @@ class FormularioEdicionUsuario extends Component {
 
     componentDidMount(){
         let idregws = this.props.idregws;
-        let tasks = this.props.tasks;
+        //let tasks = this.props.tasks;
+        let {data} = this.props.asignaciones;
+        let info=[];
 
-        let info = tasks.filter(item => item.idregws === parseInt(idregws))
+        if(data){
+            info = data.rows.filter(item => item.idregws === parseInt(idregws))
+            this.setState({info})
+           
+        }
 
-        this.setState({info})
+        //let info = tasks.filter(item => item.idregws === parseInt(idregws))
         this.props.empleados_activos();
+
+
+       
     }
 
 
@@ -101,7 +110,8 @@ class FormularioEdicionUsuario extends Component {
 }
 
 const mapStateToProps = state=>({
-    tasks: state.workshop.tasks.data.rows,
+    //tasks: state.workshop.tasks.data.rows,
+    asignaciones: state.workshop.tasks
 })
 
 export default connect(mapStateToProps,{empleados_activos, setUsuarioRegin, noSave})(FormularioEdicionUsuario);

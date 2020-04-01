@@ -1,15 +1,12 @@
 import { GET_CATALOGO_EQP, GET_EQUIPOS_ACTIVOS, GET_TAREAS_BY_EQP, CREATE_NOTIFICATION, GET_REPUESTOS_BY_EQP, GET_COBERTURA } from './types'
-import { EqpDT } from '../../Data/EqpDatatable'
-import { RepuestoDT } from '../../Data/RepuestoDatatable'
-import { TareasEQPDT } from '../../Data/TareasEqpDatatable'
-import { AssignamentsDT } from '../../Data/AssignamentsDatatable';
+import { modelos } from '../../modelos/modelos';
 import api from '../../api/api'
 
 
 export const getEqpActivos = id => dispatch => {
     api.eqp.getActivos(id).then(res => {
 
-        let eqps = EqpDT(res.eqps)
+        let eqps = modelos.equipos(res.eqps)
 
         dispatch({
             type: GET_EQUIPOS_ACTIVOS,
@@ -24,7 +21,7 @@ export const getEqpActivos = id => dispatch => {
 export const cobertura = id => dispatch => {
     api.eqp.getActivos(id).then(res => {
 
-        let eqps = EqpDT(res.eqps)
+        let eqps = modelos.equipos(res.eqps)
 
         dispatch({
             type: GET_COBERTURA,
@@ -53,7 +50,8 @@ export const getCatalogo = () => dispatch => {
 export const getTareasEqp = idregws => dispatch => {
     api.eqp.getTareasEqp(idregws).then(res => {
 
-        let tareas = TareasEQPDT(res.tareas)
+        //let tareas = TareasEQPDT(res.tareas)
+        let tareas = modelos.tareas(res.tareas)
 
         dispatch({
             type: GET_TAREAS_BY_EQP,
@@ -79,7 +77,8 @@ export const setEquipoRegin = cluster => dispatch => {
 
         api.workshop.task(cluster.info).then(res => {
 
-            let info = AssignamentsDT(res.task);
+            //let info = AssignamentsDT(res.task);
+            let info = modelos.asignaciones(res.task);
 
             dispatch({
                 type: 'GET_TASK_FILTER_BY_DATE',
@@ -117,7 +116,8 @@ export const setUsuarioRegin = data => dispatch => {
 export const getRepuestos = idequipo => dispatch => {
     api.rep.getRepuestos(idequipo).then(res => {
 
-        let reps = RepuestoDT(res.repuestos)
+        //let reps = RepuestoDT(res.repuestos)
+        let reps = modelos.repuestos(res.repuestos)
 
         dispatch({
             type: GET_REPUESTOS_BY_EQP,

@@ -1,22 +1,13 @@
-export const AssignamentsDT = (data) => {
-
-    let rows = data;
-    //console.log(rows);
+export const modelo_cobertura = (data) => {
+    let rows = data
     return {
-        //ESTRUCTURA DATATABLE
         data: {
             columns: [
                 {
                     label: 'Id',
-                    field: 'idregws',
+                    field: 'idequipo',
                     sort: 'asc',
                     width: 50
-                },
-                {
-                    label: '#Orden',
-                    field: 'orden',
-                    sort: 'asc',
-                    width: 150
                 },
                 {
                     label: 'Equipo',
@@ -30,28 +21,15 @@ export const AssignamentsDT = (data) => {
                     sort: 'asc',
                     width: 150
                 },
-                // {
-                //     label: 'Inicio',
-                //     field: 'inicio',
-                //     sort: 'asc',
-                //     width: 150
-                // },
                 {
-                    label: 'App',
-                    field: 'aplicacion',
-                    sort: 'asc',
-                    width: 150
-                },
-
-                {
-                    label: 'Asistencia',
-                    field: 'asistencia',
+                    label: 'Modelo',
+                    field: 'modelo',
                     sort: 'asc',
                     width: 150
                 },
                 {
-                    label: 'Cliente',
-                    field: 'nombre',
+                    label: 'Serie',
+                    field: 'serie',
                     sort: 'asc',
                     width: 150
                 },
@@ -62,20 +40,21 @@ export const AssignamentsDT = (data) => {
                     width: 150
                 },
                 {
-                    label: 'Control',
-                    field: 'control',
+                    label: 'Resguardo',
+                    field: 'resguardo',
                     sort: 'asc',
                     width: 150
                 },
                 {
-                    label: 'Opciones',
-                    field: 'opciones',
+                    label: 'Usuario',
+                    field: 'usuario',
                     sort: 'asc',
                     width: 150
                 },
+
+
             ],
             rows,
         }
     }
-
 }

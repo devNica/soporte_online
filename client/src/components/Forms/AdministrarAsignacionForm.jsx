@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {Link} from 'react-router-dom'
-import {aprobar, pausar, reiniciar, reasignar, denegar} from '../../redux/actions/workload';
+import {aprobar, pausar, reiniciar, reasignar, denegar, habililitar_edicion} from '../../redux/actions/workload';
 import {empleados_activos} from '../../redux/actions/empleados';
 import 'moment-timezone';
 import {connect} from 'react-redux';
@@ -65,8 +65,6 @@ class AdministrarAsignacionForm extends Component {
             this.props.history.push('/profile');
         }, 3500);
 
-        
-        //this.props.history.push('/profile');
     }
 
     selecionarTecnico = idtecnico =>{
@@ -122,7 +120,7 @@ class AdministrarAsignacionForm extends Component {
 
     onClickAprobar=()=>{
         const {info} = this.state;
-        let i=0;
+        //let i=0;
         let data={
             idtec: info.idtecnico,
             idregws: info.idregws,
@@ -148,6 +146,21 @@ class AdministrarAsignacionForm extends Component {
         
         this.setState({loading: true, operacion_atencion:'denegar'})
         this.props.denegar(data);
+
+        setTimeout(() => {
+            this.props.history.push('/profile');
+        }, 3500);
+    }
+
+    onclickHabilitarEdicion = () =>{
+        let{info} = this.state;
+        
+        let data={
+            idregws: info.idregws
+        }
+        
+        this.setState({loading: true, operacion_atencion:'editar'})
+        this.props.habililitar_edicion(data);
 
         setTimeout(() => {
             this.props.history.push('/profile');
@@ -215,7 +228,7 @@ class AdministrarAsignacionForm extends Component {
                                                             <button className="btn btn-outline-dark btn-sm" onClick={this.onclickDenegar}>Denegar</button>
                                                         </div>
                                                         :info.control === 'APROBADO' ?
-                                                        <button className="btn btn-outline-warning btn-sm">Habilitar Edicion</button>
+                                                        <button className="btn btn-outline-warning btn-sm" onClick={habililitar_edicion}>Habilitar Edicion</button>
                                                         :
                                                         <button className="btn btn-outline-primary btn-sm" onClick={this.onClickAprobar}>Aprobar</button>
                                                     :null
@@ -335,4 +348,4 @@ const mapStateToProps = state =>({
     tecnicos: state.employee.tecnicos
 })
 
-export default connect(mapStateToProps,{aprobar, pausar, reiniciar, reasignar, denegar, empleados_activos})(AdministrarAsignacionForm);
+export default connect(mapStateToProps,{aprobar, pausar, reiniciar, reasignar, denegar, empleados_activos, habililitar_edicion})(AdministrarAsignacionForm);

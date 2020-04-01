@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol} from 'mdbreact';
 import {connect} from 'react-redux';
 import {login} from '../../redux/actions/auth';
 
@@ -24,7 +24,7 @@ class signin extends Component {
     handleOnSubmit = e =>{
         e.preventDefault();
 
-        const {username, password, type} = this.state;
+        const {username, password} = this.state;
 
         let msg, count, error;
         error = false;
@@ -86,7 +86,7 @@ class signin extends Component {
 
         const {username, password} = this.state;
 
-        const {alert, error, msg, type} = this.state;
+        const {alert, error, msg} = this.state;
         
         const ErrorMessage=(
           

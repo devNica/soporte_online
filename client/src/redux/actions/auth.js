@@ -1,5 +1,4 @@
 import { USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, CREATE_NOTIFICATION } from './types';
-import jwt_decode from 'jwt-decode';
 import api from '../../api/api';
 
 //CHECK TOKEN & LOAD USER

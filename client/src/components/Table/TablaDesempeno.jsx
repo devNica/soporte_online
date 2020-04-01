@@ -3,87 +3,14 @@ import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import Line from '../chart/Line';
 import {rep_desemepeno_tec} from '../../redux/actions/reportes';
+import { modelo_desempeno } from '../../modelos/desempeno'
 
 class TablaDesempeno extends Component {
 
     state={
         etiquetas: [],
         datasets:[],
-        
-        data: {
-            columns: [
-                {
-                    label: 'ID',
-                    field: 'posicion',
-                    sort: 'asc',
-                    width: 50
-                },
-                {
-                    label: 'TECNICO',
-                    field: 'nick',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'EQUIPO',
-                    field: 'equipo',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'CONSECUTIVO',
-                    field: 'consecutivo',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'EFC-REAL',
-                    field: 'real_pfm',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'EFC-AJUSTADA',
-                    field: 'pfm',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'DIAS',
-                    field: 'dias',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'T-REAL',
-                    field: 'tmp',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'T-AJUSTADO',
-                    field: 'shd',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'INICIO',
-                    field: 'inicio',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'FINAL',
-                    field: 'final',
-                    sort: 'asc',
-                    width: 150
-                },
-
-            ],
-            rows:[],
-        }
-       
-        
+        data: modelo_desempeno([]).data
     }
 
     generar_dataset = () =>{
@@ -159,10 +86,7 @@ class TablaDesempeno extends Component {
         if(desempeno !== prevProps.desempeno){
 
             let funcion='clickEvent'
-            // for(let i=0; i<desempeno.data.rows.length; i++){
-            //     Object.defineProperty(desempeno.data.rows[i], funcion, {value: this.handleOnClick})
-            // }
-
+            
             /*ESTA VERSION DE CICLO FOR TIENE MEJOR TIEMPO DE RESPUESTA*/
             for (const key in desempeno.data.rows) {
                 Object.defineProperty(desempeno.data.rows[key], funcion, {value: this.handleOnClick})

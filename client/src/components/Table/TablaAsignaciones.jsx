@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
+import {modelo_asignaciones} from '../../modelos/asignaciones';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 
 
@@ -9,62 +10,7 @@ import ImportExportIcon from '@material-ui/icons/ImportExport';
 class TablaAsignaciones extends Component {
 
     state={
-
-        data: {
-            columns: [
-                {
-                    label: 'Id',
-                    field: 'idregws',
-                    sort: 'asc',
-                    width: 50
-                },
-                {
-                    label: '#Orden',
-                    field: 'orden',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Equipo',
-                    field: 'equipo',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Consecutivo',
-                    field: 'consecutivo',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Modelo',
-                    field: 'modelo',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Ingreso',
-                    field: 'ingreso',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Tipo',
-                    field: 'TipoIngreso',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Estado',
-                    field: 'estado',
-                    sort: 'asc',
-                    width: 150
-                },
-
-            ],
-            rows:[],
-        }
-        
+        data: modelo_asignaciones([]).data
     }
 
     

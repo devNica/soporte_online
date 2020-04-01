@@ -1,9 +1,9 @@
-export const RepuestoDT = (data) => {
+export const modelo_repuestos = (data) => {
 
     let rows = data;
 
     return {
-        //ESTRUCTURA DATATABLE
+
         data: {
             columns: [
                 {

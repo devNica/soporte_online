@@ -1,12 +1,12 @@
 import { GET_TASK_FILTER_BY_DATE, GET_COVERAGE_BY_IDREGWS, GET_PARTS_BY_IDREGWS, GET_TASKS_EQP } from './types'
-import { AssignamentsDT } from '../../Data/AssignamentsDatatable';
+import { modelos } from '../../modelos/modelos';
 import api from '../../api/api';
 
 
 export const getTaskAfterDate = data => dispatch => {
     api.workshop.task(data).then(res => {
 
-        let info = AssignamentsDT(res.task);
+        let info = modelos.asignaciones(res.task);
 
         dispatch({
             type: GET_TASK_FILTER_BY_DATE,
@@ -23,7 +23,6 @@ export const getTaskAfterDate = data => dispatch => {
 
 export const getCoverage = idregws => dispatch => {
     api.workshop.coverage(idregws).then(res => {
-        //console.log(res)
 
         dispatch({
             type: GET_COVERAGE_BY_IDREGWS,
@@ -40,7 +39,6 @@ export const getCoverage = idregws => dispatch => {
 
 export const getParts = idregws => dispatch => {
     api.workshop.parts(idregws).then(res => {
-        //console.log(res)
 
         dispatch({
             type: GET_PARTS_BY_IDREGWS,

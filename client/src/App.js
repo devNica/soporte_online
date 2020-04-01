@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Router } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import PrivateRoute from './components/commons/PrivateRoute';
 import GuestRoute from './components/commons/GuestRoute';
 import Signin from './components/user/signin';
@@ -13,6 +13,7 @@ import FormularioCierreAsignacion from './components/Forms/FormularioCierreAsign
 import AdministrarAsignacionForm from './components/Forms/AdministrarAsignacionForm';
 import PaginaControlTaller from './components/pages/PaginaControlTaller';
 import PaginaInformes from './components/pages/PaginaInformes';
+import PaginaAtencionReportadaTecnico from './components/pages/PaginaAtencionReportadaTecnico';
 
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
         <PrivateRoute location={location} exact path='/assignament/close/view/:id' component={FormularioCierreAsignacion} />
         <PrivateRoute location={location} exact path='/control/taller' component={PaginaControlTaller} />
         <PrivateRoute location={location} exact path='/informes/tecnicos' component={PaginaInformes} />
+        <Route location={location} exact path='/asignacion-reportada-tecnico' component={PaginaAtencionReportadaTecnico} />
         <Route location={location} exact path='/' component={HomePage} />
         <PrivateRoute location={location} exact path='/local/support' component={PaginaCrearAsignacion} />
         <PrivateRoute location={location} exact path='/profile' component={Profile} />

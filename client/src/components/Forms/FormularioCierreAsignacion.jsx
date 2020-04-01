@@ -72,7 +72,7 @@ class FormularioCierreAsignacion extends Component {
 
     solucionado=()=>{
         const {idregws, equipo} = this.state;
-        const {rows, tasksEQP} = this.props;
+        const {tasksEQP} = this.props;
         let pendientes = tasksEQP.filter(item => item.estado === 'PENDIENTE')
     
 

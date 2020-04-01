@@ -1,36 +1,12 @@
 import React, { Component } from 'react';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
+import {modelo_tareas} from '../../modelos/tareas';
 
 class TareasEqpTable extends Component {
 
     state={
-
-        data: {
-            columns: [
-                {
-                    label: 'Id',
-                    field: 'idtarea',
-                    sort: 'asc',
-                    width: 50
-                },
-                {
-                    label: 'Tarea',
-                    field: 'tarea',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'TipoEquipo',
-                    field: 'equipo',
-                    sort: 'asc',
-                    width: 150
-                },
-            ],
-            rows:[],
-        }
-       
-        
+        data: modelo_tareas([]).data
     }
 
     handleOnClick=e=>{

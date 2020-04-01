@@ -1,17 +1,37 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import Notification from '../Notifications/Notification';
+import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
+import {modelos} from '../../modelos/modelos';
 import {crear_assistencia} from '../../redux/actions/workload';
 
 class FormularioCrearAsistencia extends Component {
 
     state={
+
+        emp:{},
+        data: modelos.empleados().data,
         nota: '',
         selector: 0,
         idusuario: 0,
         error: false,
         msg: []
+        
+    }
+
+    handleOnClick=e=>{
+        let field= e.currentTarget;
+        // //console.log(e.currentTarget.cells[1])
+        let id=parseInt(field.cells[0].innerText)
+        let full_name=`${field.cells[2].innerText}`
+        let carnet=`${field.cells[1].innerText}`
+        
+        let emp={
+            id, full_name, carnet
+        }
+
+        this.setState({emp})
+
     }
 
     handleOnChange = e =>{
@@ -21,8 +41,8 @@ class FormularioCrearAsistencia extends Component {
     handleOnSubmit = e =>{
         e.preventDefault();
 
-        const {nota, selector, idusuario} = this.state;
-        const {carnet} = this.props.usuario
+        const {nota, selector, idusuario, emp} = this.state;
+        
 
         let fecha = new Date().toISOString().slice(0,10);
 
@@ -30,21 +50,31 @@ class FormularioCrearAsistencia extends Component {
             nota,
             selector,
             idusuario,
-            carnet, 
+            carnet: emp.carnet, 
             fecha
         }
         this.props.crear_assistencia(nueva_asistencia);
     }
 
+   
+    componentDidUpdate(prevProps){
+        const {employees} = this.props;
+        if(employees !== prevProps.employees){
 
-    componentDidMount(){
-        let fecha = new Date().toISOString().slice(0,10);
+            let func='clickEvent'
 
-        console.log(fecha);
+            for(let i=0; i<employees.data.rows.length; i++){
+                Object.defineProperty(employees.data.rows[i], func, {value: this.handleOnClick})
+                 
+            }
+            
+            this.setState({data: employees.data});
+        }
     }
 
     render() {
 
+        const {full_name} = this.state.emp;
         const {tecnicos} = this.props;
 
         const ListaTecnicos = tecnicos.map((tecnico, i)=>(
@@ -52,7 +82,19 @@ class FormularioCrearAsistencia extends Component {
         ))
 
         return (
-            <Fragment>
+            <div className="container my-5 py-5">
+                
+                <p>Seleccione un empleado de la siguiente lista</p>
+
+                <MDBDataTable
+                    bordered
+                    hover
+                    data={this.state.data}
+                    entries={3}
+                    entriesOptions={[3,5,10,20,40]}
+                    
+                />
+
                 <form onSubmit={this.handleOnSubmit}>
                     <div className="form-group">
                         <label htmlFor="usuario" className="h5">Usuario:</label>
@@ -60,7 +102,7 @@ class FormularioCrearAsistencia extends Component {
                             type="text"
                             className="form-control"
                             id="usuario" name="usuario"
-                            defaultValue={this.props.usuario.full_name}
+                            defaultValue={full_name}
                             
                         />
                     </div>
@@ -80,7 +122,6 @@ class FormularioCrearAsistencia extends Component {
                         <label htmlFor="selector" className="h5">Tipo de Asistencia:</label>
                         <select name="selector" id="selector" className="form-control" onChange={this.handleOnChange}>
                             <option value="0">Seleccione el tipo de asistencia...</option>
-                            <option value="1">REMISION</option>
                             <option value="2">ATENCION IN LOCO</option>
                             <option value="3">ATENCION ATENCION TELEFONICA</option>
                             <option value="4">MANTENIMIENTO</option>
@@ -100,15 +141,15 @@ class FormularioCrearAsistencia extends Component {
                         <Link className="btn btn-outline-dark btn-sm" to="/profile">Cancelar</Link>
                     </div>
                 </form>
-                <Notification/>
-            </Fragment>
-            
+   
+            </div>
         );
     }
 }
 
-const mapStateToProps = state =>({
+const mapStateToProps = state=>({
+    employees: state.employee.employees,
     tecnicos: state.employee.tecnicos
 })
 
-export default connect(mapStateToProps, {crear_assistencia})(FormularioCrearAsistencia);
+export default connect(mapStateToProps,{crear_assistencia})(FormularioCrearAsistencia);

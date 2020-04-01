@@ -41,18 +41,18 @@ class RepuestosModal extends Component {
         //console.log(keyPressedIsNumber);
 
         const keyNotSupported =
-        keyPressed != 'ArrowDown' &&
-        keyPressed != 'ArrowUp' &&
-        keyPressed != 'ArrowLeft' &&
-        keyPressed != 'ArrowRight' &&
-        keyPressed != 'Backspace' &&
-        keyPressed != 'Delete' &&
-        keyPressed != 'Enter' &&
+        keyPressed !== 'ArrowDown' &&
+        keyPressed !== 'ArrowUp' &&
+        keyPressed !== 'ArrowLeft' &&
+        keyPressed !== 'ArrowRight' &&
+        keyPressed !== 'Backspace' &&
+        keyPressed !== 'Delete' &&
+        keyPressed !== 'Enter' &&
         !keyPressedIsNumber;
 
         const start_at_zero = 
             numberField.value.length === 0 &&
-            keyPressed == 0;
+            keyPressed === 0;
         
         if (keyNotSupported || start_at_zero) {
             e.preventDefault(); 

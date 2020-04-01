@@ -65,6 +65,20 @@ export const denegar = data => dispatch => {
     })
 }
 
+export const habililitar_edicion = data => dispatch => {
+    api.workload.edicion(data).then(res => {
+        dispatch({
+            type: CREATE_NOTIFICATION,
+            payload: {
+                msg: res.msg,
+                type: 'success'
+            }
+        })
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
 export const pausar = data => dispatch => {
     api.workshop.pausarAtencion(data).then(res => {
         dispatch({

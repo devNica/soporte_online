@@ -1,37 +1,13 @@
 import React, { Component } from 'react';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
+import {modelo_repuestos} from '../../modelos/repuestos'
 
 class RepuestosTable extends Component {
 
     state={
-
-        data: {
-            columns: [
-                {
-                    label: 'Id',
-                    field: 'idrepuesto',
-                    sort: 'asc',
-                    width: 50
-                },
-                {
-                    label: 'Repuesto',
-                    field: 'repuesto',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Categoria',
-                    field: 'categoria',
-                    sort: 'asc',
-                    width: 150
-                },
-            ],
-            rows:[],
-        }
-       
-        
-    }
+        data: modelo_repuestos([]).data
+     }
 
     handleOnClick=e=>{
         let field= e.currentTarget;

@@ -1,9 +1,9 @@
-export const DesempenoDT = (data) => {
+export const modelo_desempeno = (data) => {
 
     let rows = data;
 
     return {
-        //ESTRUCTURA DATATABLE
+
         data: {
             columns: [
                 {

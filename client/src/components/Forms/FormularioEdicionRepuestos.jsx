@@ -120,7 +120,6 @@ class FormularioEdicionRepuestos extends Component {
         const {operacion_rep, info} = this.state;
         const currentP = this.state.parts.slice();
         const previousP = this.props.parts.slice();
-        let idregin = info[0].idregws;
         let idregws = info[0].idregws;
         let flag = false;
         let count = 0;

@@ -49,16 +49,19 @@ export default {
 
     workload: {
         crearAsistencia: data =>
-            axios.post('/api/workload/create/assistance', { data }).then(res => res.data),
+            axios.post('/api/workload/crear-asignacion', { data }).then(res => res.data),
 
         cerrarAsistencia: data =>
-            axios.post('/api/workload/close/assignament', { data }).then(res => res.data),
+            axios.post('/api/workload/cerrar-asignacion', { data }).then(res => res.data),
 
         aprobar: data =>
-            axios.post('/api/workload/approve/assignament', { data }).then(res => res.data),
+            axios.post('/api/workload/aprobar-asignacion', { data }).then(res => res.data),
 
         denegar: data =>
             axios.post('/api/workload/denegar-cierre-asignacion', data).then(res => res.data),
+
+        edicion: data =>
+            axios.post('/api/workload/habilitar-edicion-asignacion', data).then(res => res.data),
 
     },
 

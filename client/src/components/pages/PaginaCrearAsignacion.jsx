@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {empleados_activos, tecnicos_activos} from '../../redux/actions/empleados';
-import TablaEmpleados from '../Table/TablaEmpleados';
+import FormularioCrearAsistencia from '../Forms/FormularioCrearAsistencia';
 
 
 class PaginaCrearAsignacion extends Component {
@@ -21,7 +21,7 @@ class PaginaCrearAsignacion extends Component {
     render() {
         return (
             <div>
-                <TablaEmpleados/>
+                <FormularioCrearAsistencia/>
             </div>
         );
     }

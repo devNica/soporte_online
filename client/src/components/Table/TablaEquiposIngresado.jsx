@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {noSave} from '../../redux/actions/tools';
 import {registrar_atencion_taller} from '../../redux/actions/recepcion';
 import Notification from '../Notifications/Notification'
+import {modelo_recepcion} from '../../modelos/recepcion';
 
 class TablaEquiposIngresados extends Component {
 
@@ -12,57 +13,7 @@ class TablaEquiposIngresados extends Component {
         tiposeleccion: 0,
         tecnico: [],
         equipos: [],
-        data: {
-            columns: [
-                {
-                    label: 'Id',
-                    field: 'idequipo',
-                    sort: 'asc',
-                    width: 50
-                },
-                {
-                    label: '#Orden',
-                    field: 'orden',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Consecutivo',
-                    field: 'consecutivo',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Modelo',
-                    field: 'modelo',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Usuario',
-                    field: 'usuario',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Ubicacion',
-                    field: 'ubicacion',
-                    sort: 'asc',
-                    width: 150
-                },
-                {
-                    label: 'Ingreso',
-                    field: 'ingreso',
-                    sort: 'asc',
-                    width: 150
-                },
-                
-
-            ],
-            rows:[],
-        }
-       
-        
+        data:  modelo_recepcion([]).data
     }
 
     reset = () =>{

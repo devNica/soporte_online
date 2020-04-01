@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { cyan } from '@material-ui/core/colors';
 import './adminpanel.css';
 
 // Iconos
@@ -35,7 +34,7 @@ const AdminPanel = ({rolusuario}) => {
                 <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/informes/tecnicos"><PictureAsPdfIcon  style={{ color: "#5094de"}} fontSize="small"/> Informes</Link>
                 <br/>
                 <h5 className="font-weight-bold text-uppercase pt-2" style={{color: "#196ac2"}}>Atenciones</h5>
-                <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/customer/add"><TimerRoundedIcon  style={{ color: "#5094de"}} fontSize="small"/> Nueva Atencion</Link>
+                <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/asignacion-reportada-tecnico"><TimerRoundedIcon  style={{ color: "#5094de"}} fontSize="small"/> Nueva Atencion</Link>
                 <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/customer/list"><TimerOffRoundedIcon  style={{ color: "#5094de"}} fontSize="small"/> Cerrar Atencion</Link>
             </div>
     );

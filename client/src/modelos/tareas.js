@@ -1,9 +1,9 @@
-export const TareasEQPDT = (data) => {
+export const modelo_tareas = (data) => {
 
     let rows = data;
 
     return {
-        //ESTRUCTURA DATATABLE
+
         data: {
             columns: [
                 {
