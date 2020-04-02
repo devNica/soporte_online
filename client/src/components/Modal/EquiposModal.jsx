@@ -26,7 +26,7 @@ class EquiposModal extends Component {
     }
 
     handleOnSave = () =>{
-        this.props.getComponentData(this.state.eqp)
+        this.props.odec(this.state.eqp)
     }
     
     handleSelect = e =>{

@@ -3,7 +3,7 @@ var workload = require('../management/workload/workload');
 var bio = require('../management/bio/bio')
 
 //RUTA PARA CREAR UNA ASISTENCIA DESDE LA APLICACION WEB
-router.post('/workload/create/assistance', (req, res) => {
+router.post('/workload/crear-asignacion', (req, res) => {
 
     //POR DEFAULT EL ESTADO DE UN EQUIPO QUE INGRESA AL TALLER ES EN REVISION
     let recepcionestado = 2;
@@ -29,7 +29,7 @@ router.post('/workload/create/assistance', (req, res) => {
 
 })
 
-router.post('/workload/close/assignament', (req, res) => {
+router.post('/workload/cerrar-asignacion', (req, res) => {
 
     /*
     stregws:                    |   stregin:           
@@ -68,8 +68,16 @@ router.post('/workload/denegar-cierre-asignacion', (req, res) => {
 
 })
 
+router.post('/workload/habilitar-edicion-asignacion', (req, res) => {
+    workload.habilitar_edicion(req.body.idregws).then(response => {
+        res.status(201).json({ msg: 'La solicitud de habilitar ediicion de asignacion se ha realizado' })
+    }).catch(err => {
+        console.log(err);
+    })
 
-router.post('/workload/approve/assignament', (req, res) => {
+})
+
+router.post('/workload/aprobar-asignacion', (req, res) => {
 
     let data = {
         idtec: req.body.data.idtec,

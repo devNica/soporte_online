@@ -20,7 +20,8 @@ class UsuariosTable extends Component {
             id, full_name, carnet
         }
 
-        this.props.getComponentData(emp)
+        /*ODEC: OBTENER DATOS DEL ESTADO DEL COMPONENTE*/
+        this.props.odec(emp)
 
     }
 
@@ -43,7 +44,6 @@ class UsuariosTable extends Component {
         return (
             <div className="container my-5 py-5">
                 <MDBDataTable
-                    //striped
                     bordered
                     hover
                     data={this.state.data}

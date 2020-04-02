@@ -13,12 +13,12 @@ class UsuariosModal extends Component {
         
     }
 
-    getUsuarioData=data=>{
+    set_datos_usuario=data=>{
         this.setState({usr:data});
     }
 
     handleOnSave = () =>{
-        this.props.getComponentData(this.state.usr)
+        this.props.odec(this.state.usr)
     }
     
 
@@ -36,7 +36,8 @@ class UsuariosModal extends Component {
                     </div>
                     <div className="modal-body">
                         
-                        <UsuariosTable  getComponentData={this.getUsuarioData}/>
+                        {/* ODEC: OBTENER DATOS DEL ESTADO DEL COMPONENTE */}
+                        <UsuariosTable  odec={this.set_datos_usuario}/>
 
                         <hr/>
                         <div className="form-inline">

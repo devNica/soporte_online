@@ -18,11 +18,12 @@ class FormularioEdicionUsuario extends Component {
         info: []
     }
 
-    getUsuarioData=usr=>{
+    /*ODEC: OBTENER DATOS DEL ESTADO DEL COMPONENTE*/
+    ODEC=usr=>{
         this.setState({usr})
     }
 
-    setUsr = () =>{
+    set_usuario = () =>{
         const {usr:{carnet}, info}=this.state
 
         if(carnet !== ''){
@@ -37,7 +38,7 @@ class FormularioEdicionUsuario extends Component {
         }
     }
 
-    resetUsr = () =>{
+    reset_usuario = () =>{
         this.setState({
             usr: {id: '',full_name: '', carnet: ''}
         })
@@ -99,11 +100,11 @@ class FormularioEdicionUsuario extends Component {
                 </div>
 
                 <div className="form-row">
-                    <button className="btn btn-outline-primary btn-sm" onClick={this.setUsr}>Guardar</button>
-                    <button className="btn btn-outline-dark btn-sm mx-2" onClick={this.resetUsr}>Cancelar</button>
+                    <button className="btn btn-outline-primary btn-sm" onClick={this.set_usuario}>Guardar</button>
+                    <button className="btn btn-outline-dark btn-sm mx-2" onClick={this.reset_usuario}>Cancelar</button>
                 </div>
-
-                <UsuariosModal getComponentData={this.getUsuarioData}/>
+                {/* odec: obtener datos del estado del componente */}
+                <UsuariosModal odec={this.ODEC}/>
             </Fragment>
         );
     }

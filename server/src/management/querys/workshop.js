@@ -120,6 +120,11 @@ const workshop = {
     //CONSULTA DENEGAR SOLCITUD DE CIERRE
     CDSC: (idregws) => {
         return `UPDATE seguimiento SET fk_control = '4' WHERE seguimiento.fk_regtaller = ${idregws};`
+    },
+
+    //CONSULTA HABILITAR EDICION DE ASIGNACION
+    CHEA: (idregws) => {
+        return `UPDATE seguimiento SET fk_control = '1' WHERE seguimiento.fk_regtaller = ${idregws};`
     }
 }
 
