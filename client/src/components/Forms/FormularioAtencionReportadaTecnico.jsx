@@ -8,6 +8,8 @@ import FormularioBuscarUsuarioEquipo from './FormularioBuscarUsuarioEquipo';
 import FormularioBuscarEquipo from './FormularioBuscarEquipo';
 import {noSave} from '../../redux/actions/tools';
 import {connect} from 'react-redux';
+import {mayorFecha, selecionar_tipo_actividad, MOCTO, calcular_tiempo_ordinario, funcionsinnombre} from '../../helpers/tiempo';
+import {timeTools, timeManagement} from '../../helpers/timetools'
 
 class FormularioAtencionReportadaTecnico extends Component {
 
@@ -67,13 +69,21 @@ class FormularioAtencionReportadaTecnico extends Component {
          * ES MAYOR QUE LA FECHA DE INICIO (ESTO ES CORRECTO)
          * DE LO CONTRARIO RETORNA FALSO
          */
-        let equal = this.mayorFecha(fechaInicio, fechaFinalizo, tiempoInicio, tiempoFinalizo)
+        let equal = mayorFecha(fechaInicio, fechaFinalizo, tiempoInicio, tiempoFinalizo)
 
         if(tipoactividad){
             if(equal.flag){
                 if(usuario !== '' && equipo !== ''){
-                     let inicio = this.obtenerFecha(fechaInicio, tiempoInicio);
-                     let final = this.obtenerFecha(fechaFinalizo, tiempoFinalizo);
+                    
+                    let inicio = timeTools.fechaISO8601(fechaInicio, tiempoInicio);
+                    let final = timeTools.fechaISO8601(fechaFinalizo, tiempoFinalizo);
+                    let tipo_actividad = selecionar_tipo_actividad(tiempoInicio, tiempoFinalizo);
+                    let opcion = timeManagement.searchOption(tiempoInicio, tiempoFinalizo);
+                    let tiempo = calcular_tiempo_ordinario(inicio, final, tiempoInicio, tiempoFinalizo, opcion.opc);
+                    let r = funcionsinnombre(inicio, final, opcion.opc)
+                    console.log('tiempo:', tiempo, '-', 'XXX:', r)
+
+
                  }else{
                      this.props.noSave({msg: 'El campo del usuario o del equipo, esta vacio', type:'warning'})
                  }
@@ -87,65 +97,7 @@ class FormularioAtencionReportadaTecnico extends Component {
             
     }
 
-    obtenerFecha = (fecha, hora)=>{
-        const a = new Date(fecha).toISOString();
-        let b = `${a.substring(0,10)}T${hora.hh}:${hora.mm}:00.000Z`
-        return b
-    }
-
-    mayorFecha = (f_inicio, f_final, t_inicio, t_final)=>{
-
-        const fi = new Date(f_inicio)
-        const ff = new Date(f_final)
-        
-        let i_anio = fi.getFullYear();
-        let f_anio = ff.getFullYear();
-
-        let i_mes = fi.getMonth()+1;
-        let f_mes = ff.getMonth()+1;
-
-        let i_dia = fi.getDate();
-        let f_dia = ff.getDate();
-
-        if(f_anio >= i_anio){
-            if(f_mes > i_mes){
-                return {msg: '', flag: true}
-            }
-            else if(f_mes == i_mes){
-                if(f_dia > i_dia){
-                    return {msg: '', flag: true}
-                }else if(f_dia == i_dia){
-                    return  this.mayorHora(t_inicio, t_final)       
-                }else{
-                    return {msg: 'Incongruencia en las fechas', flag: false}
-                }
-            }
-            else{
-                return {msg: 'Incongruencia en las fechas', flag: false}
-            }
-        }else{
-            return {msg: 'Incongruencia en las fechas', flag: false}
-        }
-        
-    }
-
-    mayorHora = (inicio, final) =>{
-        let i_hora = parseInt(inicio.hh);
-        let f_hora = parseInt(final.hh);
-        let i_minutos = parseInt(inicio.mm);
-        let f_minutos = parseInt(final.mm);
-
-        if(f_hora >= i_hora && (f_hora > 0 && i_hora > 0)){
-            if(f_minutos >= i_minutos){
-                return {msg: '', flag: true}
-            }else{
-                return {msg: 'Incongruencia en las horas', flag: false}
-            }
-
-        }else{
-            return {msg: 'Incongruencia en las horas', flag: false}
-        }
-    }
+    
     
     onFocusChange = (focusStatue) => {
        
@@ -170,7 +122,7 @@ class FormularioAtencionReportadaTecnico extends Component {
                                     onChange={this.handleOnChange}
                                 >
                                     <option value="0">Seleccione el tipo de actividad realizada...</option>
-                                    <option value="2">ASISTENCIA IN LOCO</option>
+                                    <option value="2">ASISTENCIA EN EL SITIO</option>
                                     <option value="3">ATENCION TELEFONICA</option>
                                     <option value="4">MANTENIMIENTO DE EQUIPOS</option>
                                 </select>

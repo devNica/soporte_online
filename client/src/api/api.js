@@ -63,6 +63,9 @@ export default {
         edicion: data =>
             axios.post('/api/workload/habilitar-edicion-asignacion', data).then(res => res.data),
 
+        crearAtencionExterna: data =>
+            axios.post('/api/workload/crear-atencion-externa-taller', { data }).then(res => res.data),
+
     },
 
     report: {

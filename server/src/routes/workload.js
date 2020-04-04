@@ -149,5 +149,9 @@ router.post('/workload/aprobar-asignacion', (req, res) => {
 
 })
 
+router.post('/workload/crear-atencion-externa-taller', (req, res) => {
+
+})
+
 
 module.exports = router;
