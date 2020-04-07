@@ -1,37 +1,44 @@
-import React, {Fragment, useState, useEffect } from 'react';
-import {connect} from 'react-redux';
-import UsuariosModal from '../Modal/UsuariosModal';
+import React, {Fragment, useState} from 'react';
+import { connect } from 'react-redux';
+import { setEquipoRegin ,noSave} from '../../redux/actions/tools';
+import EquiposModal from '../Modal/EquiposModal';
 import SearchIcon from '@material-ui/icons/Search';
-import {empleados_activos} from '../../redux/actions/empleados';
 
-const FormularioBuscarUsuarioEquipo = ({empleados_activos, fetchDataComponent}) =>{
+const FormularioBuscarEquipoHooks = ({fetchDataComponent}) => {
 
-    const [usr, setUsr] = useState('');
+    const  [eqp, setEqp] = useState('')
 
-    const setComponentData = usr =>{
-        setUsr(usr);
-        fetchDataComponent(usr);
+    const ODEC = (eqp)=> {
+        setEqp(eqp);
+        fetchDataComponent(eqp);
     }
 
-    useEffect(()=>{
-        empleados_activos();
-    })
+    const reset_equipo = () =>{
+        this.setState({
+            eqp: {
+                id: '',
+                consecutivo: '',
+                modelo: ''
+            }
+        })
+    }
+
 
     return (
         <Fragment>
             <div className="form-row mt-3">
                 <div className="col-md-3 mb-3">
-                    <label htmlFor="usuario" className="h5" style={{color: '#2f9fcb'}}>USUARIO:</label>
+                    <label htmlFor="equipo" className="h5" style={{color: '#2f9fcb'}}>EQUIPO:</label>
                 </div>
                 <div className="input-group mb-2 mr-sm-2">
                     <input
                         style={{color: '#676c71'}}
                         type="text"
                         className="form-control mx-2 font-weight-bold h5"
-                        id="usuario"
-                        name="usuario"
+                        id="equipo"
+                        name="equipo"
                         placeholder="*Haga clic en la lupa por favor"
-                        defaultValue={usr === '' ? null : usr.full_name}
+                        defaultValue={eqp === '' ? null : `${eqp.consecutivo}-${eqp.modelo}`}
                         readOnly="readonly"
                     />
                     <div className="input-group-prepend">
@@ -39,7 +46,7 @@ const FormularioBuscarUsuarioEquipo = ({empleados_activos, fetchDataComponent}) 
                             type="button"
                             className="btn btn-sm btn-primary"
                             data-toggle="modal"
-                            data-target="#usuariosModal"
+                            data-target="#equiposModal"
                         >
                         <SearchIcon fontSize="small" />
                         </button>
@@ -48,11 +55,9 @@ const FormularioBuscarUsuarioEquipo = ({empleados_activos, fetchDataComponent}) 
 
             </div>
 
-            {/* odec: obtener datos del estado del componente */}
-            <UsuariosModal fetchDataComponent={setComponentData}/>
+            <EquiposModal odec={ODEC}/>
         </Fragment>
     );
-    
-}
+};
 
-export default connect(null,{empleados_activos})(FormularioBuscarUsuarioEquipo);
+export default connect(null, {})(FormularioBuscarEquipoHooks);

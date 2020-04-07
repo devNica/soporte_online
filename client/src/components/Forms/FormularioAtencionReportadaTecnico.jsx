@@ -6,6 +6,7 @@ import 'react-times/css/classic/default.css';
 import 'react-times/css/material/default.css';
 import FormularioBuscarUsuarioEquipo from './FormularioBuscarUsuarioEquipo';
 import FormularioBuscarEquipo from './FormularioBuscarEquipo';
+import FormularioBuscarEquipoHooks from './FormularioBuscarEquipoHooks';
 import {noSave} from '../../redux/actions/tools';
 import {connect} from 'react-redux';
 import {mayorFecha, selecionar_tipo_actividad, MOCTO, calcular_tiempo_ordinario, funcionsinnombre} from '../../helpers/tiempo';
@@ -79,7 +80,7 @@ class FormularioAtencionReportadaTecnico extends Component {
                     let final = timeTools.fechaISO8601(fechaFinalizo, tiempoFinalizo);
                     let tipo_actividad = selecionar_tipo_actividad(tiempoInicio, tiempoFinalizo);
                     let opcion = timeManagement.searchOption(tiempoInicio, tiempoFinalizo);
-                    let tiempo = calcular_tiempo_ordinario(inicio, final, tiempoInicio, tiempoFinalizo, opcion.opc);
+                    let tiempo = calcular_tiempo_ordinario(inicio, final, opcion.opc);
                     let r = funcionsinnombre(inicio, final, opcion.opc)
                     console.log('tiempo:', tiempo, '-', 'XXX:', r)
 
@@ -180,10 +181,10 @@ class FormularioAtencionReportadaTecnico extends Component {
 
                     <div className="row my-4">
                         <div className="col-12 col-sm-12 col-md-6 col-lg-6">
-                            <FormularioBuscarUsuarioEquipo odec={this.ODEC_A}/>
+                            <FormularioBuscarUsuarioEquipo fetchDataComponent={this.ODEC_A}/>
                         </div>
                         <div className="col-12 col-sm-12 col-md-6 col-lg-6">
-                            <FormularioBuscarEquipo odec={this.ODEC_B}/>
+                            <FormularioBuscarEquipoHooks fetchDataComponent={this.ODEC_B}/>
                         </div>
                     </div>
 
