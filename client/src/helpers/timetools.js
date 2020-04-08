@@ -40,8 +40,8 @@ export const timeTools = {
 
     /* DETERMINA SI ENTRE LAS FECHAS DEL ARGUMENTO HAY FINES DE SEMANAS*/
     isWeekend: (f_inicio, f_final) => {
-        let a = ([5, 6].indexOf(new Date(f_inicio).getDay()) != -1);
-        let b = ([5, 6].indexOf(new Date(f_final).getDay()) != -1);
+        let a = ([5, 6].indexOf(new Date(f_inicio).getDay()) !== -1);
+        let b = ([5, 6].indexOf(new Date(f_final).getDay()) !== -1);
 
         if (a || b) {
             return 1;

@@ -18,10 +18,10 @@ export const mayorFecha = (f_inicio, f_final, t_inicio, t_final) => {
         if (f_mes > i_mes) {
             return { msg: '', flag: true }
         }
-        else if (f_mes == i_mes) {
+        else if (f_mes === i_mes) {
             if (f_dia > i_dia) {
                 return { msg: '', flag: true }
-            } else if (f_dia == i_dia) {
+            } else if (f_dia === i_dia) {
                 return mayorHora(t_inicio, t_final)
             } else {
                 return { msg: 'Incongruencia en las fechas', flag: false }
@@ -214,6 +214,9 @@ export const calcular_tiempo_ordinario = (f_inicio, f_final, opc) => {
             tc = ((((DD - 1) * X) + DD) * Y)
             td = (TD - ((tc) + (ta)))
             return { segundos: td }
+
+        default:
+            return {}
     }
 
 }
@@ -300,6 +303,10 @@ export const nolaborable = (f_inicio, f_final) => {
 
         case 2:
             nonWorking = ((DD - (WD - 1)) * aWorkDay)
+            break;
+
+        default:
+            break;
     }
 
     return nonWorking
@@ -439,6 +446,9 @@ export const funcionsinnombre = (f_inicio, f_final, opc) => {
             tc = ((((DD - 1) * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 1))) * Y)
             td = (TD - ((tc) + (ta)))
             return { segundos: td }
+
+        default:
+            break;
     }
 
 

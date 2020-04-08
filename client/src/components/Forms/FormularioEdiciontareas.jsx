@@ -303,7 +303,6 @@ class FormularioEdiciontareas extends Component {
                 </div>
 
                 <div className="form-row">
-                    
                     <button
                         id="addtarea" name="addtarea"
                         className="btn btn-outline-dark btn-sm mx-2"
@@ -313,7 +312,7 @@ class FormularioEdiciontareas extends Component {
                     </button>
                     <button className="btn btn-outline-primary btn-sm" onClick={this.updateTarea}>Guardar</button>
                 </div>
-                <TareasModal getComponentData={this.getTareaData} idregws={this.props.idregws}/>
+                <TareasModal fetchComponentData={this.getTareaData} idregws={this.props.idregws}/>
             </Fragment>
         );
     }

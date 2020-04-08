@@ -47,8 +47,7 @@ const FormularioBuscarUsuarioEquipo = ({empleados_activos, fetchDataComponent}) 
                 </div>
 
             </div>
-
-            {/* odec: obtener datos del estado del componente */}
+            
             <UsuariosModal fetchDataComponent={setComponentData}/>
         </Fragment>
     );

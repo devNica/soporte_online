@@ -3,11 +3,12 @@ import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {modelo_empleados} from '../../modelos/empleados';
 
-const UsuariosTable = ({fetchDataComponent, employees})=>{
 
+const UsuariosTable = (props)=>{
+    const {fetchDataComponent, empleados} = props;
     const [data, setData] = useState(modelo_empleados([]).data)
 
-   const onClickRow = e => {
+    const handleOnClick = e => {
         let field= e.currentTarget;
         // //console.log(e.currentTarget.cells[1])
         let id=parseInt(field.cells[0].innerText)
@@ -24,19 +25,18 @@ const UsuariosTable = ({fetchDataComponent, employees})=>{
 
     useEffect(()=>{
         
-       
-        if(employees.data !== undefined){
-            
+        if(empleados.data !== undefined){
+
             let func='clickEvent'
-            for(let i=0; i<employees.data.rows.length; i++){
-                Object.defineProperty(employees.data.rows[i], func, {value: onClickRow, writable: true})
+            for(let i=0; i<empleados.data.rows.length; i++){
+                Object.defineProperty(empleados.data.rows[i], func, {value: handleOnClick, writable: true})
                     
             }
-            setData({data: employees.data});
+            setData(empleados.data);
         }
-        
-        
-    })
+               
+        },[empleados]
+    )
 
     return (
         <div className="container my-5 py-5">
@@ -53,7 +53,7 @@ const UsuariosTable = ({fetchDataComponent, employees})=>{
 }
 
 const mapStateToProps = state=>({
-    employees: state.employee.employees
+    empleados: state.employee.employees
 })
 
 export default connect(mapStateToProps)(UsuariosTable);

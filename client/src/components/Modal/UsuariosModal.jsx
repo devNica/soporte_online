@@ -36,9 +36,9 @@ const UsuariosModal = ({fetchDataComponent}) => {
                             type="text" 
                             className="form-control mx-1 text-center text-primary" 
                             id="id" name="id" 
-                            value={usr === '' ? null: usr.id}
+                            defaultValue={usr === '' ? null: usr.id}
                             size='4'
-                            disabled
+                            readOnly
                             />
                         <label htmlFor="name" className="mx-1">Nombre Completo:</label>
                         <input 
@@ -46,9 +46,9 @@ const UsuariosModal = ({fetchDataComponent}) => {
                             className="form-control mx-1 text-center text-primary" 
                             id="name" 
                             name="name" 
-                            value={usr === '' ? null: usr.full_name}
+                            defaultValue={usr === '' ? null: usr.full_name}
                             size='70'
-                            disabled
+                            readOnly
                             />
                         <label htmlFor="carnet" className="mx-1">Carnet:</label>
                         <input 
@@ -56,9 +56,9 @@ const UsuariosModal = ({fetchDataComponent}) => {
                             className="form-control mx-1 text-center text-primary" 
                             id="carnet" 
                             name="carnet" 
-                            value={usr === '' ? null: usr.carnet}
+                            defaultValue={usr === '' ? null: usr.carnet}
                             size='10'
-                            disabled
+                            readOnly
                             />
                     
                     </div>
