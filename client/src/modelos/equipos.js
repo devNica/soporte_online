@@ -42,12 +42,12 @@ export const modelo_equipos = (data) => {
                     sort: 'asc',
                     width: 150
                 },
-                {
-                    label: 'Usuario',
-                    field: 'resguardo',
-                    sort: 'asc',
-                    width: 150
-                },
+                // {
+                //     label: 'Usuario',
+                //     field: 'resguardo',
+                //     sort: 'asc',
+                //     width: 150
+                // },
                 {
                     label: 'Usuario',
                     field: 'usuario',

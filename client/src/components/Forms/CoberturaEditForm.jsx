@@ -1,87 +1,83 @@
-import React, { Component, Fragment } from 'react';
+import React, {Fragment, useState, useEffect, useRef } from 'react';
 import {noSave, Cobertura} from '../../redux/actions/tools';
 import {connect} from 'react-redux';
 import CoberturaModal from '../Modal/CoberturaModal';
 
-class CoberturaEditForm extends Component {
+function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+  
+      ref.current = value;
+  
+    }, [value]);
+    return ref.current;
+}
 
-    state={
-        info: '',
-        coverage: [],
-        operaciones_cobertura: ''
-    }
+const CoberturaEditForm = (props) => {
 
-    getEquipoData = data =>{
+    const {noSave, Cobertura, propsCVG, rows, idregws} = props;
+    const prevCVG = usePrevious(propsCVG)
+    const [info, setInfo] = useState([]);
+    const [cobertura, setCoverage] = useState([]);
+    const [operacion, setOperacion] = useState('');
+    
+    const setDataComponent = data =>{
 
         let eqp ={
             idequipo: data.id,
             equipo: data.equipo,
             consecutivo: data.consecutivo,
-            usuario: data.usuario
+            catalogoID: data.catalogoID
         }
 
-        this.setState(state=>{
-            const coverage = state.coverage.concat(eqp);
-            return{
-                coverage
-            }
-        })
-
-        this.setState({operaciones_cobertura: 'add'})
+        setCoverage([...cobertura, eqp])
+        setOperacion('add');
     }
 
-    delete = i =>{
-        this.setState(state => {
-            const coverage = state.coverage.filter((elemento, j) => elemento.idequipo !== parseInt(i));
-            return {
-                coverage,
-            };
-        });    
-        this.setState({operaciones_cobertura: 'delete'})
+    const eliminar = i =>{
+        setCoverage(cobertura.filter((elemento, j) => elemento.idequipo !== parseInt(i)))
+        setOperacion('delete')
     }
     
-    componentDidUpdate(prevProps){
-        const {coverage, rows} = this.props;
+    useEffect(()=>{
         
-        let info = rows.find(item => item.idregws === parseInt(this.props.idregws))
-
-        if(coverage !== prevProps.coverage){
-            this.setState({coverage, info})
+        let info = rows.filter(item => item.idregws === parseInt(idregws))
+        
+        if(prevCVG !== propsCVG){
+            setCoverage(propsCVG)
+            setInfo(info)
+           
         }
-
-        const actualcobertura = this.state.coverage.slice();
-        const {operaciones_cobertura} = this.state
         
-        if(operaciones_cobertura === 'add'){
-            for (let index = 0; index < actualcobertura.length; index++) {
+        if(operacion === 'add'){
+            for (let index = 0; index < cobertura.length; index++) {
                 document.getElementsByName('delete')[index].disabled=true;
             }
         }
-        if(operaciones_cobertura === 'delete'){
+        if(operacion === 'delete'){
             
             document.getElementsByName('add')[0].disabled=true;
         }
-        if(operaciones_cobertura === ''){
-            for (let index = 0; index < actualcobertura.length; index++) {
+        if(operacion === ''){
+            for (let index = 0; index < cobertura.length; index++) {
                 document.getElementsByName('delete')[index].disabled=false;
             }
             document.getElementsByName('add')[0].disabled=false;
         }
 
-    }
-
-
-    guardar = () =>{
-        let {idregws} = this.props;
-        let {operaciones_cobertura, info} = this.state;
-        let previousC = this.props.coverage;
-        let currentC = this.state.coverage;
+    },[propsCVG, cobertura])
+    
+    const guardar = () =>{
+        
+        let previousC = propsCVG;
+        let currentC = cobertura;
         let flag=false;
         let count=0;
         let IDS = '-';
 
-        if(operaciones_cobertura === 'add'){
+        console.log(cobertura)
 
+        if(operacion === 'add'){
 
             for (let index = 0; index < currentC.length; index++) {
                 
@@ -96,18 +92,18 @@ class CoberturaEditForm extends Component {
             IDS  = IDS.substring(1, IDS.length);
 
             let data={
-                idregin: info.idregin,
+                idregin: info[0].idregin,
                 idregws,
                 IDS,
                 size: count,
                 opt: `'` + 'ADD' + `'`
             }
 
-            this.props.Cobertura(data);
-            this.setState({operaciones_cobertura: ''})
+            Cobertura(data);
+            setOperacion('')
 
         }
-        if(operaciones_cobertura === 'delete'){
+        if(operacion === 'delete'){
 
             for (let index = 0; index < previousC.length; index++) {
                 
@@ -129,38 +125,34 @@ class CoberturaEditForm extends Component {
                 opt: `'` + 'DEL' + `'`
             }
 
-            this.props.Cobertura(data);
-            this.setState({operaciones_cobertura: ''})
+            Cobertura(data);
+            setOperacion('')
 
         }
-        if(operaciones_cobertura === ''){
-            this.props.noSave({msg:'No se ha notificado al sistema de cambios en la lista de cobertura', type:'info'})
+        if(operacion === ''){
+            noSave({msg:'No se ha notificado al sistema de cambios en la lista de cobertura', type:'info'})
         }
 
     }
 
-    render() {
+    const listarCobertura = cobertura.map((item, i)=>(
+        <tr key={i}>
+            <td> {item.idequipo}</td>
+            <td>{item.equipo}</td>
+            <td>{item.consecutivo}</td>
+            <td>{item.catalogoID}</td>
+            <td>
+                <button 
+                    className="btn btn-sm btn-danger mx-2" 
+                    name="delete"
+                    onClick={()=>eliminar(item.idequipo)}>
+                        DELETE
+                </button>
+            </td>
+        </tr>
+    ))
 
-        const {coverage} = this.state;
-
-        let coberturaLista = coverage.map((item, i)=>(
-            <tr key={i}>
-                <td> {item.idequipo}</td>
-                <td>{item.equipo}</td>
-                <td>{item.consecutivo}</td>
-                <td>{item.usuario}</td>
-                <td>
-                    <button 
-                        className="btn btn-sm btn-danger mx-2" 
-                        name="delete"
-                        onClick={()=>this.delete(item.idequipo)}>
-                            DELETE
-                    </button>
-                </td>
-            </tr>
-        ))
-
-        return (
+    return (
         <Fragment>
             <div className="form-row mt-5">
                 <div className="col-md-3 mb-3">
@@ -173,12 +165,12 @@ class CoberturaEditForm extends Component {
                             <th scope="col">Id</th>
                             <th scope="col">Equipo</th>
                             <th scope="col">Consecutivo</th>
-                            <th scope="col">Usuario</th>
+                            <th scope="col">CatEqpID</th>
                             <th scope="col">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {coberturaLista}
+                        {listarCobertura}
                     </tbody>
                 </table>  
 
@@ -192,16 +184,16 @@ class CoberturaEditForm extends Component {
                     data-target="#coberturaModal"
                     >Agregar
                 </button>
-                <button className="btn btn-outline-primary btn-sm" onClick={this.guardar}>Guardar</button>
+                <button className="btn btn-outline-primary btn-sm" onClick={guardar}>Guardar</button>
             </div>
-            <CoberturaModal getComponentData={this.getEquipoData}/>
+            <CoberturaModal fetchDataComponent={setDataComponent}/>
         </Fragment>
-        );
-    }
+    );
+    
 }
 
 const mapStateToProps = state =>({
-    coverage: state.workshop.coverage,
+    propsCVG: state.workshop.coverage,
     rows: state.workshop.tasks.data.rows
 })
 

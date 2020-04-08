@@ -7,6 +7,7 @@ import FormularioEdicionRepuestos from './FormularioEdicionRepuestos';
 import FormularioEdicionUsuario from './FormularioEdicionUsuario';
 import CoberturaEditForm from './CoberturaEditForm';
 import FooterForm from './FooterForm';
+import { getCatalogo} from '../../redux/actions/tools';
 
 
 class FormularioEdicionAtencion extends Component {
@@ -21,6 +22,7 @@ class FormularioEdicionAtencion extends Component {
         let equipo = equipos.filter(item=>item.idregws === parseInt(idregws))
         
         this.setState({estado: equipo[0].estado})
+        this.props.getCatalogo();
     }
     
     
@@ -60,4 +62,4 @@ const mapStateToProps = state=>({
     equipos: state.workshop.tasks.data.rows
 })
 
-export default connect(mapStateToProps)(FormularioEdicionAtencion);
+export default connect(mapStateToProps,{getCatalogo})(FormularioEdicionAtencion);
