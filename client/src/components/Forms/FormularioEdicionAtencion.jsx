@@ -5,7 +5,7 @@ import FormularioEdicionEquipo from './FormularioEdicionEquipo';
 import FormularioEdiciontareas from './FormularioEdiciontareas';
 import FormularioEdicionRepuestos from './FormularioEdicionRepuestos';
 import FormularioEdicionUsuario from './FormularioEdicionUsuario';
-import CoberturaEditForm from './CoberturaEditForm';
+import FormularioEditarCobertura from './FormularioEditarCobertura';
 import FooterForm from './FooterForm';
 import { getCatalogo} from '../../redux/actions/tools';
 
@@ -45,7 +45,7 @@ class FormularioEdicionAtencion extends Component {
                 <FormularioEdicionRepuestos idregws={this.props.idregws}/>
 
                 {/* FORMULARIO PARA EDICION DE COBERTURA DE LA ATENCION */}
-                <CoberturaEditForm idregws={this.props.idregws}/>
+                <FormularioEditarCobertura idregws={this.props.idregws}/>
                 
                 <FooterForm idregws={this.props.idregws} estado={this.state.estado}/>
                

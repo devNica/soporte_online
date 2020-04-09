@@ -23,7 +23,7 @@ const CoberturaModal = (props)=> {
 
     const {cobertura, fetchDataComponent, catalogoProps} = props;
     const prevCatalogo = usePrevious(catalogoProps);
-    const [eqp, setEquipo] = useState({id: '', equipo: '', consecutivo: '', modelo: '', catalogoID: ''});
+    const [eqp, setEquipo] = useState({id: '', equipo: '', consecutivo: '', modelo: '', usuario: ''});
     const [catalogo, setCatalogo] = useState([]);
 
     useEffect(()=>{
@@ -95,13 +95,13 @@ const CoberturaModal = (props)=> {
                             size='20'
                             disabled
                             />
-                        <label htmlFor="modelo" className="mx-1">CatalogoEqpID:</label>
+                        <label htmlFor="modelo" className="mx-1">Usuario:</label>
                         <input 
                             type="text" 
                             className="form-control mx-1 text-center text-primary" 
                             id="usuario" 
                             name="usuario" 
-                            value={eqp.catalogoID}
+                            value={eqp.usuario}
                             size='50'
                             disabled
                             />

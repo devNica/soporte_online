@@ -19,10 +19,10 @@ const CoberturaTable = (props) => {
         let equipo=`${field.cells[1].innerText}`
         let consecutivo=`${field.cells[2].innerText}`
         let modelo=`${field.cells[3].innerText}`
-        let catalogoID=`${field.cells[7].innerText}`
+        let usuario=`${field.cells[6].innerText}`
         
         let eqp={
-            id, equipo, consecutivo, modelo, catalogoID
+            id, equipo, consecutivo, modelo, usuario
         }
 
         fetchDataComponent(eqp)

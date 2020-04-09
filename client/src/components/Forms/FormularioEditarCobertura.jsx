@@ -27,7 +27,7 @@ const CoberturaEditForm = (props) => {
             idequipo: data.id,
             equipo: data.equipo,
             consecutivo: data.consecutivo,
-            catalogoID: data.catalogoID
+            usuario: data.usuario
         }
 
         setCoverage([...cobertura, eqp])
@@ -118,7 +118,7 @@ const CoberturaEditForm = (props) => {
             IDS  = IDS.substring(1, IDS.length);
 
             let data={
-                idregin: info.idregin,
+                idregin: info[0].idregin,
                 idregws,
                 IDS,
                 size: count,
@@ -140,7 +140,7 @@ const CoberturaEditForm = (props) => {
             <td> {item.idequipo}</td>
             <td>{item.equipo}</td>
             <td>{item.consecutivo}</td>
-            <td>{item.catalogoID}</td>
+            <td>{item.usuario}</td>
             <td>
                 <button 
                     className="btn btn-sm btn-danger mx-2" 
@@ -165,7 +165,7 @@ const CoberturaEditForm = (props) => {
                             <th scope="col">Id</th>
                             <th scope="col">Equipo</th>
                             <th scope="col">Consecutivo</th>
-                            <th scope="col">CatEqpID</th>
+                            <th scope="col">Usuario</th>
                             <th scope="col">Opciones</th>
                         </tr>
                     </thead>
