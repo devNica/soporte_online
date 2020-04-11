@@ -1,62 +1,61 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {modelo_repuestos} from '../../modelos/repuestos'
 
-class RepuestosTable extends Component {
+const mapStateToProps = state=>({
+    propsRepuestos: state.tools.reps
+})
 
-    state={
-        data: modelo_repuestos([]).data
-     }
+const RepuestosTable = (props) =>{
 
-    handleOnClick=e=>{
-        let field= e.currentTarget;
-        // //console.log(e.currentTarget.cells[1])
-        let id=parseInt(field.cells[0].innerText)
-        let repuesto=`${field.cells[1].innerText}`
-        let qty=1;
-        let rep={
+    const {fetchComponentData, propsRepuestos} = props;
+    const [data, setData] = useState(modelo_repuestos([]).data);
+    
+    const handleOnClick=e=>{
+
+        let field='', id='', repuesto='', qty=1, rep={};
+
+        field= e.currentTarget;
+        id=parseInt(field.cells[0].innerText)
+        repuesto=`${field.cells[1].innerText}`
+        qty=1;
+        rep={
             id, repuesto, qty
         }
 
-        this.props.getComponentData(rep)
+        fetchComponentData(rep)
 
     }
 
-    componentDidUpdate(prevProps){
-        const {reps} = this.props;
-        if(reps !== prevProps.reps){
+    useEffect(()=>{
 
+        if(propsRepuestos.data !== undefined){
             let func='clickEvent'
 
-            for(let i=0; i<reps.data.rows.length; i++){
-                Object.defineProperty(reps.data.rows[i], func, {value: this.handleOnClick})
+            for(let i=0; i<propsRepuestos.data.rows.length; i++){
+                Object.defineProperty(propsRepuestos.data.rows[i], func, {value: handleOnClick, writable: true})
                  
             }
             
-            this.setState({data: reps.data});
+            setData(propsRepuestos.data);
         }
-    }
 
-    render() {
-        return (
-            <div className="container my-3 py-3">
-                <MDBDataTable
-                    //striped
-                    bordered
-                    hover
-                    data={this.state.data}
-                    entries={5}
-                    entriesOptions={[5,10,20,40]}
-                />
-            </div>
-        );
+    },[propsRepuestos])
+
+    return (
+        <div className="container my-3 py-3">
+            <MDBDataTable
+                bordered
+                hover
+                data={data}
+                entries={5}
+                entriesOptions={[5,10,20,40]}
+            />
+        </div>
+    );
     
-    }
+    
 }
-
-const mapStateToProps = state=>({
-    reps: state.tools.reps
-})
 
 export default connect(mapStateToProps)(RepuestosTable);

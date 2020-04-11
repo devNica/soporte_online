@@ -1,23 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import {connect} from 'react-redux';
+import React, {Fragment } from 'react';
 import TablaEquiposIngresado from '../Table/TablaEquiposIngresado';
 
-class FormularioAtencionTaller extends Component {
+const FormularioAtencionTaller = () =>{
+    return (
+        <Fragment>
 
-    render() {
-
-        return (
-           <Fragment>
-
-               <TablaEquiposIngresado/>
-                
-           </Fragment>
-        );
-    }
+            <TablaEquiposIngresado/>
+            
+        </Fragment>
+    );
 }
 
-const mapStateToProps = state =>({
-    
-})
-
-export default connect(mapStateToProps)(FormularioAtencionTaller);
+export default FormularioAtencionTaller;

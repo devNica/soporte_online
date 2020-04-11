@@ -29,7 +29,7 @@ const TareasModal = (props) => {
                 </div>
                 <div className="modal-body">
 
-                    <TareasEqpTable  getComponentData={(tareaseqp)=>setTareas(tareaseqp)}/>
+                    <TareasEqpTable  fetchComponentData={(tareaseqp)=>setTareas(tareaseqp)}/>
 
                     <hr/>
                     <div className="form-inline">

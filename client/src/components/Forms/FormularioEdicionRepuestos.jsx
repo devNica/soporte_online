@@ -16,7 +16,7 @@ const FormularioEdicionRepuestos = (props)=>{
     const [repuestos, setRepuestos] = useState([]);
     const [operacion, setOperacion] = useState('');
 
-    const getRepuestoData = data =>{
+    const setDataComponent = data =>{
         
         let repuesto={
             idrepuesto: data.id,
@@ -286,7 +286,7 @@ const FormularioEdicionRepuestos = (props)=>{
                 </button>
                 <button className="btn btn-outline-primary btn-sm" onClick={updateRep}>Guardar</button>
             </div>
-            <RepuestosModal getComponentData={getRepuestoData} idregws={idregws}/>
+            <RepuestosModal fetchComponentData={setDataComponent} idregws={idregws}/>
         </Fragment>
     );
 }

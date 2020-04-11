@@ -1,150 +1,133 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useState, useEffect } from 'react';
 import {connect} from 'react-redux';
-import {setUsuarioRegin, noSave, Tareas} from '../../redux/actions/tools';
+import {noSave, Tareas} from '../../redux/actions/tools';
 import TareasModal from '../Modal/TareasModal';
 
+const mapStateToProps = state=>({
+    propsAsignaciones: state.workshop.tasks.data.rows,
+    propsTareasEqp: state.workshop.tasksEQP
+})
 
+const FormularioEdiciontareas= (props) => {
 
-class FormularioEdiciontareas extends Component {
+    const {noSave, Tareas, propsAsignaciones, propsTareasEqp, idregws} = props;
 
-    state={
-        coverage: [],
-        info: [],
-        tasksEQP: [],
-        idregws: 0,
+    const [info, setInfo] = useState([]);
+    const [tareasEqp, setTareasEqp] = useState([]);
+    const [operacion, setOperacion] = useState('');
+    
+    const setComponentData= data=>{
 
-        operacion_tareas: '',
-        operacion_rep: '',
-    }
-
-
-    getTareaData= tareaseqp=>{
-        
-        let {tasksEQP} =this.state;
-        let addTareaseqp={
-            idtarea: tareaseqp.id,
-            tarea: tareaseqp.tarea,
+        let tareaEqp={
+            idtarea: data.id,
+            tarea: data.tarea,
             propietario: 'P-TECNICO',
             estado: 'PENDIENTE'
         }
-        
-        let existe = tasksEQP.filter(elemento=>elemento.idtarea === tareaseqp.id || elemento.tarea === tareaseqp.tarea)
-        console.log(existe)
+
+        let existe = tareasEqp.filter(elemento=>elemento.idtarea === data.id || elemento.tarea === data.tarea)
+
         if(existe.length < 1){
 
-            if(tasksEQP.length <= 6)
+            if(tareasEqp.length <= 6)
             {
-                this.setState(prevState=>({
-                    tasksEQP: [...prevState.tasksEQP, addTareaseqp]
-                }))
+                setTareasEqp(prevState=>([...prevState, tareaEqp]))
+                setOperacion('add');
 
-                this.setState({operacion_tareas: 'add'})
-            
             }else{
-                this.props.noSave({msg: `El N° de Tareas para este equipo, ha llegado a su limite`, type: 'info'});
+                noSave({msg: `El N° de Tareas para este equipo, ha llegado a su limite`, type: 'info'});
             }
-            
-            
+
+
         }else{
-            this.props.noSave({msg: `La tarea: ${addTareaseqp.tarea}, ya fue agregada`, type: 'info'});
-            
+            noSave({msg: `La tarea: ${tareaEqp.tarea}, ya fue agregada`, type: 'info'});
+
         }
-       
-        
+
+
     }
 
-    delTarea = e =>{
-       
-        let idtarea = e.target.value
-        let {tasksEQP} = this.state;    
-        let notallowed = tasksEQP.filter(
-                T => T.idtarea === parseInt(idtarea) && 
-                (T.tarea === 'REVISION GENERAL' || T.tarea === 'MANTENIMIENTO PREVENTIVO') && 
+    const delTarea = idtarea =>{
+
+        let notallowed = tareasEqp.filter(
+                T => T.idtarea === parseInt(idtarea) &&
+                (T.tarea === 'REVISION GENERAL' || T.tarea === 'MANTENIMIENTO PREVENTIVO') &&
                 T.propietario === 'P-ADMIN')
-        
-        let notfinished = tasksEQP.find(T => T.idtarea === parseInt(idtarea) && T.estado === 'FINALIZADA')
+
+        let notfinished = tareasEqp.find(T => T.idtarea === parseInt(idtarea) && T.estado === 'FINALIZADA')
 
         if(notallowed.length < 1){
-                
+
             if(!notfinished){
-                this.setState(state => {
-                    const tasksEQP = state.tasksEQP.filter((elemento, j) => elemento.idtarea !== parseInt(idtarea));
-                    return {
-                        tasksEQP,
-                    };
-                });
-    
-                this.setState({operacion_tareas: 'delete'})
-                
+
+                setTareasEqp(tareasEqp.filter((elemento) => elemento.idtarea !== parseInt(idtarea)))
+                setOperacion('delete')
+
             }else{
-                this.props.noSave({msg: 'Esta tarea ya fue finalizada y no puede ser eliminada', type: 'danger'});
+                noSave({msg: 'Esta tarea ya fue finalizada y no puede ser eliminada', type: 'danger'});
             }
 
-            
-     
         }else{
-            this.props.noSave({msg: 'Esta tarea creada por el Administrador, no puede ser eliminada', type: 'danger'});
+            noSave({msg: 'Esta tarea creada por el Administrador, no puede ser eliminada', type: 'danger'});
         }
 
-        
+
     }
 
-    finTarea = (e) =>{
-        let idtarea = e.target.value
-        let {tasksEQP} = this.state;
-        let notallowed = tasksEQP.filter(
+    const finTarea = idtarea =>{
+
+        console.log('idtarea', idtarea)
+
+        let notallowed = tareasEqp.filter(
             T => T.idtarea === parseInt(idtarea) && T.estado === 'FINALIZADA')
 
         if(notallowed.length < 1){
-            this.setState(state => {
-                state.tasksEQP.map((item, j) => {
-                  if (item.idtarea === parseInt(idtarea)) {
-                    return item.estado = 'FINALIZADA';
-                  } else {
-                    return item;
-                  }
-                });
-                return {
-                  tasksEQP,
-                };
-              });
+           
+            setTareasEqp(()=>(
+                tareasEqp.map((item)=>{
+                    if(item.idtarea === parseInt(idtarea)){
+                        item.estado = 'FINALIZADA';
+                        return item;
+                    }else{
+                        return item;
+                    }
+    
+                })
+            ))
+            setOperacion('update')
 
-              this.setState({operacion_tareas: 'update'})
-              
 
         }
         else{
-            this.props.noSave({msg: 'Esta tarea ya fue finalizada', type: 'warning'});
+            noSave({msg: 'Esta tarea ya fue finalizada', type: 'warning'});
         }
     }
 
-    updateTarea = ()=>{
-        
-        const {operacion_tareas, info} = this.state; //BANDERA PARA DETERMINAR QUE ACCION EJECUTAR SOBRE LAS TAREAS
-        const currentT = this.state.tasksEQP.slice(); //TAREAS ACTUALES EN EL SPOOL
-        const previousT = this.props.tasksEQP.slice(); //TAREAS PREVIAS A LA MODIFICACION
-        
+    const updateTarea = ()=>{
+
+        const currentT = tareasEqp.slice(); //TAREAS ACTUALES EN EL STATE DEL COMPONENTE
+        const previousT = propsTareasEqp.slice(); //TAREAS PREVIAS PROVENIENTE DE LOS PROPS
         let flag=[];
         let count=0;
         let IDS='-' //ID'S DE TODAS LAS TAREAS A ELIMINAR
         let idregin = info[0].idregin //ID REGISTRO INGRESO
         let idregws = info[0].idregws //ID REGISTRO TALLER
 
-        
-        if(operacion_tareas === 'delete'){
+
+        if(operacion === 'delete'){
 
             for (let index = 0; index < previousT.length; index++) {
-                
+
                 flag = currentT.filter(item => item.idtarea === previousT[index].idtarea)
                 if(!flag.length > 0){
-                   
+
                     IDS = IDS + previousT[index].idtarea + `-`;
                     count = count+1;
                 }
             }
 
             IDS  = IDS.substring(1, IDS.length);
-            
+
             let cluster={
                 data:{
                     idregws,
@@ -156,15 +139,15 @@ class FormularioEdiciontareas extends Component {
                 currentT
             }
 
-            this.props.Tareas(cluster);
-            this.setState({operacion_tareas: ''})
+            Tareas(cluster);
+            setOperacion('')
 
         }
-        if(operacion_tareas === 'add'){
+        if(operacion === 'add'){
 
 
             for (let index = 0; index < currentT.length; index++) {
-                
+
                 flag = previousT.filter(item => item.idtarea === currentT[index].idtarea)
 
                 if(!flag.length > 0){
@@ -174,7 +157,7 @@ class FormularioEdiciontareas extends Component {
             }
 
             IDS  = IDS.substring(1, IDS.length);
-            
+
             let cluster={
                 data:{
                     idregws,
@@ -186,12 +169,12 @@ class FormularioEdiciontareas extends Component {
                 currentT
             }
 
-            
-            this.props.Tareas(cluster);
-            this.setState({operacion_tareas: ''})
+
+            Tareas(cluster);
+            setOperacion('')
 
         }
-        if(operacion_tareas === 'update'){
+        if(operacion === 'update'){
 
             let cluster={
                 data:{
@@ -202,125 +185,110 @@ class FormularioEdiciontareas extends Component {
                 currentT
             }
 
-            this.props.Tareas(cluster);
-            this.setState({operacion_tareas: ''})
-           
+            Tareas(cluster);
+            setOperacion('')
+
         }
-        if(operacion_tareas === ''){
-            this.props.noSave({msg:'No se ha notificado al sistema de cambios en las tareas del equipo', type:'info'})
+        if(operacion === ''){
+            noSave({msg:'No se ha notificado al sistema de cambios en las tareas del equipo', type:'info'})
         }
-       
+
 
     }
 
-    componentDidMount(){
-        let info = this.props.tasks
-        this.setState({info})
-    }
+    useEffect(()=>{
+       setInfo(propsAsignaciones)
+    })
 
+    useEffect(()=>{
+        setTareasEqp(propsTareasEqp)
 
-    componentDidUpdate(prevProps){
-        const {idregws, tasksEQP} = this.props;
-        
-        if(idregws !== prevProps.idregws){
-            this.setState({idregws})
-        }
-        if(tasksEQP !== prevProps.tasksEQP){
-            this.setState({tasksEQP})
-        }
+    }, [propsTareasEqp])
 
-        const tareasactuales = this.state.tasksEQP.slice();
-        const {operacion_tareas} = this.state
-        if(operacion_tareas==='add'){
-            for (let index = 0; index < tareasactuales.length; index++) {
+    useEffect(()=>{
+
+        if(operacion === 'add'){
+            for (let index = 0; index < tareasEqp.length; index++) {
                 document.getElementsByName('deltarea')[index].disabled=true;
                 document.getElementsByName('fintarea')[index].disabled=true;
             }
         }
-        if(operacion_tareas==='delete'){
-            for (let index = 0; index < tareasactuales.length; index++) {
-                
+        if(operacion === 'delete'){
+            for (let index = 0; index < tareasEqp.length; index++) {
+
                 document.getElementsByName('fintarea')[index].disabled=true;
             }
             document.getElementsByName('addtarea')[0].disabled=true;
         }
-        if(operacion_tareas==='update'){
-            for (let index = 0; index < tareasactuales.length; index++) {
-                
+        if(operacion === 'update'){
+            for (let index = 0; index < tareasEqp.length; index++) {
+
                 document.getElementsByName('deltarea')[index].disabled=true;
             }
             document.getElementsByName('addtarea')[0].disabled=true;
         }
-        if(operacion_tareas===''){
-            for (let index = 0; index < tareasactuales.length; index++) {
+        if(operacion === ''){
+            for (let index = 0; index < tareasEqp.length; index++) {
                 document.getElementsByName('deltarea')[index].disabled=false;
                 document.getElementsByName('fintarea')[index].disabled=false;
             }
             document.getElementsByName('addtarea')[0].disabled=false;
         }
-    }
-
-    render() {
-
-        const {tasksEQP} = this.state;
-
-        let taskEqpList = tasksEQP.map((task, i)=>(
-            <tr key={i}>
-                <td>{task.idtarea}</td>
-                <td>{task.tarea}</td>
-                <td>{task.propietario}</td>
-                <td>{task.estado}</td>
-                <td>
-                    <button className="btn btn-sm btn-success" value={task.idtarea} onClick={this.finTarea}  name="fintarea">F</button>
-                    <button className="btn btn-sm btn-danger mx-2" value={task.idtarea} onClick={this.delTarea}  name="deltarea">D</button>
-                </td>
-            </tr>
-        ))
+    },[operacion, tareasEqp])
 
 
-        return (
-            <Fragment>
-                <div className="form-row mt-5">
-                    <div className="col-md-3 mb-3">
-                        <label htmlFor="tarea" className="font-weight-bold h5" style={{color: '#686fe9'}}>Tareas:</label>
-                    </div>
-                    
-                    <table className="table table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Tarea</th>
-                                <th scope="col">Propietario</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {taskEqpList}
-                        </tbody>
-                    </table>  
+    
+    let listaTareasEqp = tareasEqp.map((task, i)=>(
+        <tr key={i}>
+            <td>{task.idtarea}</td>
+            <td>{task.tarea}</td>
+            <td>{task.propietario}</td>
+            <td>{task.estado}</td>
+            <td>
+                <button className="btn btn-sm btn-success" onClick={()=>finTarea(task.idtarea)}  name="fintarea">F</button>
+                <button className="btn btn-sm btn-danger mx-2" onClick={()=>delTarea(task.idtarea)}  name="deltarea">D</button>
+            </td>
+        </tr>
+    ))
 
+
+    return (
+        <Fragment>
+            <div className="form-row mt-5">
+                <div className="col-md-3 mb-3">
+                    <label htmlFor="tarea" className="font-weight-bold h5" style={{color: '#686fe9'}}>Tareas:</label>
                 </div>
 
-                <div className="form-row">
-                    <button
-                        id="addtarea" name="addtarea"
-                        className="btn btn-outline-dark btn-sm mx-2"
-                        data-toggle="modal"
-                        data-target="#tareasModal"
-                        >Agregar
-                    </button>
-                    <button className="btn btn-outline-primary btn-sm" onClick={this.updateTarea}>Guardar</button>
-                </div>
-                <TareasModal fetchComponentData={this.getTareaData} idregws={this.props.idregws}/>
-            </Fragment>
-        );
-    }
+                <table className="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Tarea</th>
+                            <th scope="col">Propietario</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {listaTareasEqp}
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div className="form-row">
+                <button
+                    id="addtarea" name="addtarea"
+                    className="btn btn-outline-dark btn-sm mx-2"
+                    data-toggle="modal"
+                    data-target="#tareasModal"
+                    >Agregar
+                </button>
+                <button className="btn btn-outline-primary btn-sm" onClick={updateTarea}>Guardar</button>
+            </div>
+            <TareasModal fetchComponentData={setComponentData} idregws={idregws}/>
+        </Fragment>
+    );
 }
 
-const mapStateToProps = state=>({
-    tasks: state.workshop.tasks.data.rows,
-    tasksEQP: state.workshop.tasksEQP
-})
-
-export default connect(mapStateToProps,{setUsuarioRegin,  noSave, Tareas})(FormularioEdiciontareas);
+export default connect(mapStateToProps,{noSave, Tareas})(FormularioEdiciontareas);
