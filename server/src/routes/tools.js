@@ -143,7 +143,7 @@ router.post('/tools/upd-cvg-eqp', (req, res) => {
         idregws: req.body.data.idregws,
         IDS: `'` + req.body.data.IDS + `'`,
         size: req.body.data.size,
-        opt: req.body.data.opt
+        opt: `'` + req.body.data.opt + `'`
     }
 
     console.log(data);

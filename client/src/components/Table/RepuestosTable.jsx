@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {modelo_repuestos} from '../../modelos/repuestos'
@@ -12,8 +12,7 @@ const RepuestosTable = (props) =>{
     const {fetchComponentData, propsRepuestos} = props;
     const [data, setData] = useState(modelo_repuestos([]).data);
     
-    const handleOnClick=e=>{
-
+    const handleOnClick = useCallback((e)=>{
         let field='', id='', repuesto='', qty=1, rep={};
 
         field= e.currentTarget;
@@ -25,8 +24,8 @@ const RepuestosTable = (props) =>{
         }
 
         fetchComponentData(rep)
+    },[fetchComponentData])
 
-    }
 
     useEffect(()=>{
 
@@ -41,7 +40,7 @@ const RepuestosTable = (props) =>{
             setData(propsRepuestos.data);
         }
 
-    },[propsRepuestos])
+    },[propsRepuestos, handleOnClick])
 
     return (
         <div className="container my-3 py-3">

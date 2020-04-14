@@ -1,19 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {cobertura} from '../../redux/actions/tools';
 import CoberturaTable from '../Table/CoberturaTable';
-
-
-// Hook
-function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-  
-      ref.current = value;
-  
-    }, [value]); // Only re-run if value changes
-    return ref.current;
-}
 
 const mapStateToProps = state =>({
     catalogoProps: state.tools.catalogo,
@@ -22,28 +10,27 @@ const mapStateToProps = state =>({
 const CoberturaModal = (props)=> {
 
     const {cobertura, fetchDataComponent, catalogoProps} = props;
-    const prevCatalogo = usePrevious(catalogoProps);
     const [eqp, setEquipo] = useState({id: '', equipo: '', consecutivo: '', modelo: '', usuario: ''});
     const [catalogo, setCatalogo] = useState([]);
 
-    useEffect(()=>{
-        if(catalogoProps !== prevCatalogo){
-            
-            setCatalogo(catalogoProps)
-        }
-       
-    })
-
     const handleOnSave = () =>{
-       fetchDataComponent(eqp)
+        fetchDataComponent(eqp)
     }
-    
+     
     const handleSelect = e =>{
         let idequipo = e.target.value        
         if(idequipo > 0){
             cobertura({idequipo})
         }
     }
+
+    useEffect(()=>{
+        if(catalogoProps !== undefined){
+            
+            setCatalogo(catalogoProps)
+        }
+       
+    },[catalogoProps])
 
     const catalogList = catalogo.map((cat, i)=>(
         <option value={cat.idcatalogo} key={i}>{cat.equipo}</option>

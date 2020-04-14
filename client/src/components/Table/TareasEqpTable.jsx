@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {modelo_tareas} from '../../modelos/tareas';
@@ -12,9 +12,7 @@ const TareasEqpTable = (props) =>{
     const {propsTareasEqp, fetchComponentData} = props
     const [data, setData] = useState(modelo_tareas([]).data);
     
-    const handleOnClick=e=>{
-        /*console.log(e.currentTarget.cells[1])*/
-        
+    const handleOnClick = useCallback((e)=>{
         let field='', id='', tarea='', tipoequipo='', tareaseqp={};
 
         field= e.currentTarget;
@@ -27,7 +25,7 @@ const TareasEqpTable = (props) =>{
         }
 
         fetchComponentData(tareaseqp)
-    }
+    },[fetchComponentData])
 
     useEffect(()=>{
 
@@ -39,7 +37,7 @@ const TareasEqpTable = (props) =>{
             }
             setData(propsTareasEqp.data);
         }
-    },[propsTareasEqp])
+    },[propsTareasEqp, handleOnClick])
 
     return (
         <div className="container my-5 py-5">

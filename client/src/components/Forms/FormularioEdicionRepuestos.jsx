@@ -181,7 +181,7 @@ const FormularioEdicionRepuestos = (props)=>{
 
     useEffect(()=>{
         setInfo(propsAsignaciones)
-    })
+    },[propsAsignaciones])
 
     useEffect(()=>{
         setRepuestos(propsRepuestos)

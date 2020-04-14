@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {modelo_cobertura} from '../../modelos/cobertura'
@@ -12,7 +12,7 @@ const CoberturaTable = (props) => {
     const {cobertura, fetchDataComponent} = props;
     const [data, setData] = useState(modelo_cobertura([]).data);
     
-    const  handleOnClick=e=>{
+    const handleOnClick = useCallback((e)=>{
         let field= e.currentTarget;
         // //console.log(e.currentTarget.cells[1])
         let id=parseInt(field.cells[0].innerText)
@@ -26,8 +26,7 @@ const CoberturaTable = (props) => {
         }
 
         fetchDataComponent(eqp)
-
-    }
+    },[fetchDataComponent])
 
     useEffect(()=>{
 
@@ -42,7 +41,7 @@ const CoberturaTable = (props) => {
             setData(cobertura.data);
         }
 
-    },[cobertura])
+    },[cobertura, handleOnClick])
 
     return (
         <div className="container my-5 py-5">

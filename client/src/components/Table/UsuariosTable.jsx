@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {modelo_empleados} from '../../modelos/empleados';
@@ -8,7 +8,8 @@ const UsuariosTable = (props)=>{
     const {fetchDataComponent, empleados} = props;
     const [data, setData] = useState(modelo_empleados([]).data)
 
-    const handleOnClick = e => {
+    
+    const handleOnClick = useCallback((e)=>{
         let field= e.currentTarget;
         // //console.log(e.currentTarget.cells[1])
         let id=parseInt(field.cells[0].innerText)
@@ -21,8 +22,9 @@ const UsuariosTable = (props)=>{
 
         fetchDataComponent(emp)
 
-    }
+    },[fetchDataComponent])
 
+    
     useEffect(()=>{
         
         if(empleados.data !== undefined){
@@ -35,8 +37,7 @@ const UsuariosTable = (props)=>{
             setData(empleados.data);
         }
                
-        },[empleados]
-    )
+    },[empleados, handleOnClick])
 
     return (
         <div className="container my-5 py-5">

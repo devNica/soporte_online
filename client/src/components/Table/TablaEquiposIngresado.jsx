@@ -1,11 +1,9 @@
-import React, {Fragment, useState, useEffect } from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {noSave} from '../../redux/actions/tools';
 import {registrar_atencion_taller} from '../../redux/actions/recepcion';
 import Notification from '../Notifications/Notification'
-import {modelo_recepcion} from '../../modelos/recepcion';
 
 const mapStateToProps = state=>({
     ingreso: state.recepcion.ingreso,
@@ -15,10 +13,10 @@ const mapStateToProps = state=>({
 const TablaEquiposIngresados = (props) =>{
     
     const {noSave, registrar_atencion_taller, ingreso, tecnicos} = props;
-    const [tiposeleccion, setTipo] = useState(0);
     const [tecnico, setTecnico] = useState([]);
     const [equipos, setEquipos] = useState([]);
-    const [data, setData] = useState(modelo_recepcion([]).data)
+    const [tipoSeleccion, setTipo] = useState(0);
+    const [equiposIngresados, setEquiposIngresados] = useState([])
 
     const reset = () =>{
        setEquipos([]);
@@ -28,96 +26,7 @@ const TablaEquiposIngresados = (props) =>{
     const selecionarTecnico = idtecnico =>{
         let tecnico = tecnicos.filter(item=>item.idusuario === parseInt(idtecnico))
         setTecnico(tecnico)
-    }
-
-    const handleOnChange = e =>{
-        setTipo(parseInt(e.target.value))
-    }
-
-    const handleOnClick=e=>{
-        let field= e.currentTarget;
-        let listaPrevia = data.rows.slice();
-        let listaActual = equipos.slice();
-        
-        let flag;
-        let addEquipo;
-        
-        if(tiposeleccion<1){
-            noSave({msg: 'No ha seleccionado el tipo de Agregado', type: 'info'})
-        }
-        if(tiposeleccion === 1){
-
-            addEquipo={
-                idregin: parseInt(field.cells[0].innerText),
-                orden: `${field.cells[1].innerText}`,
-                consecutivo: `${field.cells[2].innerText}`
-            }
-
-
-            let existe = equipos.filter(item => item.consecutivo === addEquipo.consecutivo)
-            if(existe.length < 1){
-                
-                // this.setState(prevState=>({
-                //     equipos: [...prevState.equipos, addEquipo]
-                // }))
-
-                setEquipos(prevState=>([...prevState, addEquipo]))
-
-                
-            }else{
-                noSave({msg: `El Equipo: ${addEquipo.consecutivo}, ya fue agregado`, type: 'info'});
-            }
-        }
-        if(tiposeleccion === 2){
-
-            let orden =`${field.cells[1].innerText}`;
-
-            for (let i = 0; i < listaPrevia.length; i++) {
-                
-                if(listaActual.length < 1){
-
-                    if(listaPrevia[i].orden === parseInt(orden)){
-                        let add={
-                            idregin: listaPrevia[i].idregin,
-                            orden: listaPrevia[i].orden,
-                            consecutivo: listaPrevia[i].consecutivo
-                        }
-    
-    
-                        // this.setState(prevState=>({
-                        //     equipos: [...prevState.equipos, add]
-                        // }))
-
-                        setEquipos(prevState=>([...prevState, add]))
-                    }
-                    
-                }else{
-                    
-                    flag = listaActual.filter(item => item.consecutivo === listaPrevia[i].consecutivo)
-                    
-                    if(flag.length <1){
-                        
-                        if(listaPrevia[i].orden === parseInt(orden)){
-                            let add={
-                                idregin: listaPrevia[i].idregin,
-                                orden: listaPrevia[i].orden,
-                                consecutivo: listaPrevia[i].consecutivo
-                            }
-        
-                            // this.setState(prevState=>({
-                            //     equipos: [...prevState.equipos, add]
-                            // }))
-
-                            setEquipos(prevState=>([...prevState, add]))
-                        }
-                    }
-                }
-                
-                
-            }
-        }
-        
-
+       
     }
 
     const asignar = () =>{
@@ -168,22 +77,101 @@ const TablaEquiposIngresados = (props) =>{
        
     }
 
-    useEffect(()=>{
+    const leerFila = (e) =>{
+        let field= e.currentTarget;
+        let listaPrevia = equiposIngresados.slice();
+        let listaActual = equipos.slice();
+        let flag;
+        let addEquipo;
+        
+      
+        if(tipoSeleccion < 1){
+            noSave({msg: 'No ha seleccionado el tipo de Agregado', type: 'info'})
+        }        
+        if(tipoSeleccion === 1){
 
-        if(ingreso.data !== undefined){
-            let funcion='clickEvent'
-
-            for(let i=0; i<ingreso.data.rows.length; i++){
-                Object.defineProperty(ingreso.data.rows[i], funcion, {value: this.handleOnClick})
-                 
+            addEquipo={
+                idregin: parseInt(field.cells[0].innerText),
+                orden: `${field.cells[1].innerText}`,
+                consecutivo: `${field.cells[2].innerText}`
             }
-            
-            setData(ingreso.data);
-        }
 
+
+            let existe = equipos.filter(item => item.consecutivo === addEquipo.consecutivo)
+            if(existe.length < 1){
+
+                setEquipos(prevState=>([...prevState, addEquipo]))
+                
+            }else{
+                noSave({msg: `El Equipo: ${addEquipo.consecutivo}, ya fue agregado`, type: 'info'});
+            }
+        }
+        if(tipoSeleccion === 2){
+
+            let orden =`${field.cells[1].innerText}`;
+
+            for (let i = 0; i < listaPrevia.length; i++) {
+
+                if(listaActual.length < 1){
+
+                    if(listaPrevia[i].orden === parseInt(orden)){
+                        let add={
+                            idregin: listaPrevia[i].idregin,
+                            orden: listaPrevia[i].orden,
+                            consecutivo: listaPrevia[i].consecutivo
+                        }
+
+                        setEquipos(prevState=>([...prevState, add]))
+                    }
+
+                }else{
+
+                    flag = listaActual.filter(item => item.consecutivo === listaPrevia[i].consecutivo)
+
+                    if(flag.length <1){
+
+                        if(listaPrevia[i].orden === parseInt(orden)){
+                            let add={
+                                idregin: listaPrevia[i].idregin,
+                                orden: listaPrevia[i].orden,
+                                consecutivo: listaPrevia[i].consecutivo
+                            }
+
+                            setEquipos(prevState=>([...prevState, add]))
+                        }
+                        
+                    }
+                }
+
+
+            }
+        }
+        
+    }
+
+    useEffect(()=>{
+        if(ingreso.data !== undefined){
+            
+            setEquiposIngresados(ingreso.data.rows)
+        }
+       
     },[ingreso])
 
-    const ListaTecnicos = tecnicos.map((tecnico, i)=>(
+
+    const listaIngresoEquipos = equiposIngresados.map((ingreso, i)=>(
+        <tr key={i} onClick={leerFila}>
+            <td>{ingreso.idregin}</td>
+            <td>{ingreso.orden}</td>
+            <td>{ingreso.consecutivo}</td>
+            <td>{ingreso.modelo}</td>
+            <td>{ingreso.nombreusuario}</td>
+            <td>{ingreso.ubicacion}</td>
+            <td>{ingreso.ingreso}</td>
+        </tr>
+    ))
+
+
+    const listaTecnicos = tecnicos.map((tecnico, i)=>(
         <tr key={i}>
             <td>{tecnico.full_name}</td>
             <td>
@@ -194,7 +182,7 @@ const TablaEquiposIngresados = (props) =>{
     
     ))
 
-    const ListaEquipos = equipos.map((eqp,i)=>(
+    const listaEquipos = equipos.map((eqp,i)=>(
         <tr key={i}>
             <td  value={eqp.idregin}>CONSECUTIVO: {eqp.consecutivo} -/- ORDEN: {eqp.orden}</td>
         </tr>
@@ -214,31 +202,42 @@ const TablaEquiposIngresados = (props) =>{
                             </tr>
                         </thead>
                         <tbody>
-                            {ListaTecnicos}
+                            {listaTecnicos}
                         </tbody>
                     </table>
                 </div>
 
                 <div className="col-lg-7 my-3">
-                    <select name="tiposeleccion" id="tiposeleccion" className="form-control mb-5" onChange={handleOnChange}>
-                        <option value="0">Selecciones una opcion de agregado...</option>
+
+                    <select name="tiposeleccion" id="tiposeleccion" className="form-control mb-5" onChange={(e)=>setTipo(parseInt(e.target.value))}>
+                        <option value="0">Seleccione una opcion de agregado...</option>
                         <option value="1">Agregar por Equipos</option>
                         <option value="2">Agregar por Numero de Orden</option>
                     </select>
 
-                    <MDBDataTable
-                        //striped
-                        bordered
-                        hover
-                        data={data}
-                        entries={10}
-                        entriesOptions={[10,20,40,60]}
-                    />
+                    {/* TABLA EQUIPOS INGRESADOS AL TALLER PARA REPARACION */}
+                    <table className="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Orden</th>
+                                <th>Consecutivo</th>
+                                <th>Modelo</th>
+                                <th>Usuario</th>
+                                <th>Ubicacion</th>
+                                <th>Ingreso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {listaIngresoEquipos}
+                        </tbody>
+                    </table>
 
                 </div>
 
                 {/* LISTA DE EQUIPOS A ASIGNAR */}
                 <div className="col-lg-2 my-3">
+
                     <table className="table table-hover table-bordered">
                         <thead className="text-white" style={{background: '#1b35b6'}}>
                             <tr>
@@ -246,7 +245,7 @@ const TablaEquiposIngresados = (props) =>{
                             </tr>
                         </thead>
                         <tbody>
-                            {ListaEquipos}
+                            {listaEquipos}
                         </tbody>
 
                     </table>
@@ -264,16 +263,19 @@ const TablaEquiposIngresados = (props) =>{
                 </div>
 
             </div>
-            <Notification/>
-            <div className="row">
-                <div className="col-lg-3"></div>
-                <div className="col-lg-7">
+
+            <div className="row border px-3 py-3 mx-1 shadow">
+                
+                <div className="col-md-6 offset-md-3 text-center">
                     <button className="btn btn-sm btn-primary" onClick={asignar}>ASIGNAR</button>
                     <button className="btn btn-sm btn-warning mx-1" onClick={reset}>RESET</button>
                     <Link className="btn btn-sm btn-dark" to='/profile'>REGRESAR</Link>
                 </div>
                 <div className="col-lg-2"></div>
             </div>
+
+            <Notification/>
+            
         </Fragment>
         
     );

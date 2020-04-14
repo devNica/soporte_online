@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState, useEffect } from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {noSave, Tareas} from '../../redux/actions/tools';
 import TareasModal from '../Modal/TareasModal';
@@ -198,7 +198,7 @@ const FormularioEdiciontareas= (props) => {
 
     useEffect(()=>{
        setInfo(propsAsignaciones)
-    })
+    },[propsAsignaciones])
 
     useEffect(()=>{
         setTareasEqp(propsTareasEqp)

@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import {getRepuestos} from '../../redux/actions/tools';
 import RepuestosTable from '../Table/RepuestosTable';
@@ -18,7 +18,7 @@ const RepuestosModal = (props) =>{
 
     useEffect(()=>{
         getRepuestos({idregws})
-    },[note])
+    },[note, getRepuestos, idregws])
 
     const handleOnchange = e =>{
 

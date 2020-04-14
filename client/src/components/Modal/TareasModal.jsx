@@ -10,7 +10,7 @@ const TareasModal = (props) => {
 
     useEffect(()=>{
         getTareasEqp({idregws: idregws})
-    },[getTareasEqp, note])
+    },[getTareasEqp, note, idregws])
 
     
     const handleOnSave = () =>{

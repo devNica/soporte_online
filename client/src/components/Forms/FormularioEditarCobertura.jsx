@@ -1,24 +1,19 @@
-import React, {Fragment, useState, useEffect, useRef } from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {noSave, Cobertura} from '../../redux/actions/tools';
 import {connect} from 'react-redux';
 import CoberturaModal from '../Modal/CoberturaModal';
 
-function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-  
-      ref.current = value;
-  
-    }, [value]);
-    return ref.current;
-}
+const mapStateToProps = state =>({
+    propsCobertura: state.workshop.coverage,
+    rows: state.workshop.tasks.data.rows
+})
 
 const CoberturaEditForm = (props) => {
 
-    const {noSave, Cobertura, propsCVG, rows, idregws} = props;
-    const prevCVG = usePrevious(propsCVG)
+    const {noSave, Cobertura, propsCobertura, rows, idregws} = props;
+    //const prevCVG = usePrevious(propsCVG)
     const [info, setInfo] = useState([]);
-    const [cobertura, setCoverage] = useState([]);
+    const [cobertura, setCobertura] = useState([]);
     const [operacion, setOperacion] = useState('');
     
     const setDataComponent = data =>{
@@ -30,24 +25,25 @@ const CoberturaEditForm = (props) => {
             usuario: data.usuario
         }
 
-        setCoverage([...cobertura, eqp])
+        setCobertura([...cobertura, eqp])
         setOperacion('add');
     }
 
     const eliminar = i =>{
-        setCoverage(cobertura.filter((elemento, j) => elemento.idequipo !== parseInt(i)))
+        setCobertura(cobertura.filter((elemento, j) => elemento.idequipo !== parseInt(i)))
         setOperacion('delete')
     }
     
     useEffect(()=>{
         
         let info = rows.filter(item => item.idregws === parseInt(idregws))
-        
-        if(prevCVG !== propsCVG){
-            setCoverage(propsCVG)
-            setInfo(info)
-           
-        }
+        setCobertura(propsCobertura)
+        setInfo(info)
+    
+    },[propsCobertura, idregws, rows])
+
+
+    useEffect(()=>{
         
         if(operacion === 'add'){
             for (let index = 0; index < cobertura.length; index++) {
@@ -65,11 +61,11 @@ const CoberturaEditForm = (props) => {
             document.getElementsByName('add')[0].disabled=false;
         }
 
-    },[propsCVG, cobertura])
+    },[cobertura, operacion])
     
     const guardar = () =>{
         
-        let previousC = propsCVG;
+        let previousC = propsCobertura;
         let currentC = cobertura;
         let flag=false;
         let count=0;
@@ -96,7 +92,7 @@ const CoberturaEditForm = (props) => {
                 idregws,
                 IDS,
                 size: count,
-                opt: `'` + 'ADD' + `'`
+                opt: 'ADD'
             }
 
             Cobertura(data);
@@ -117,12 +113,14 @@ const CoberturaEditForm = (props) => {
 
             IDS  = IDS.substring(1, IDS.length);
 
+            
             let data={
                 idregin: info[0].idregin,
                 idregws,
                 IDS,
                 size: count,
-                opt: `'` + 'DEL' + `'`
+                opt: 'DEL',
+                
             }
 
             Cobertura(data);
@@ -191,10 +189,5 @@ const CoberturaEditForm = (props) => {
     );
     
 }
-
-const mapStateToProps = state =>({
-    propsCVG: state.workshop.coverage,
-    rows: state.workshop.tasks.data.rows
-})
 
 export default connect(mapStateToProps,{noSave, Cobertura})(CoberturaEditForm);

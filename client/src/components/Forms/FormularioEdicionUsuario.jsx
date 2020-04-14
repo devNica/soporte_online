@@ -45,7 +45,7 @@ const FormularioEdicionUsuario = (props)=>{
 
             empleados_activos();
 
-        },[empleados_activos]
+        },[empleados_activos, asignaciones, idregws]
     )
 
     return (
