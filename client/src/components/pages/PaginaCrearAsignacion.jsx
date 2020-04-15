@@ -1,30 +1,24 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import {empleados_activos, tecnicos_activos} from '../../redux/actions/empleados';
 import FormularioCrearAsistencia from '../Forms/FormularioCrearAsistencia';
 
 
-class PaginaCrearAsignacion extends Component {
+const PaginaCrearAsignacion = (props) =>{
 
-    state={
-        user:{
-            idusuario: '',
-            full_name: ''
-        }
-    }
+    const {empleados_activos, tecnicos_activos} = props;
 
-    componentDidMount(){
-        this.props.empleados_activos();
-        this.props.tecnicos_activos();
-    }
+    useEffect(()=>{
+        empleados_activos();
+        tecnicos_activos();
+    },[empleados_activos, tecnicos_activos])
 
-    render() {
-        return (
-            <div>
-                <FormularioCrearAsistencia/>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <FormularioCrearAsistencia/>
+        </div>
+    );
+    
 }
 
 export default connect(null,{empleados_activos, tecnicos_activos})(PaginaCrearAsignacion);

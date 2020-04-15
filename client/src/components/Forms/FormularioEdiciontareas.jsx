@@ -4,13 +4,13 @@ import {noSave, Tareas} from '../../redux/actions/tools';
 import TareasModal from '../Modal/TareasModal';
 
 const mapStateToProps = state=>({
-    propsAsignaciones: state.workshop.tasks.data.rows,
-    propsTareasEqp: state.workshop.tasksEQP
+    asignaciones_fr: state.workshop.tasks.data.rows,
+    tareasEquipo_fr: state.workshop.tasksEQP
 })
 
 const FormularioEdiciontareas= (props) => {
 
-    const {noSave, Tareas, propsAsignaciones, propsTareasEqp, idregws} = props;
+    const {noSave, Tareas, asignaciones_fr, tareasEquipo_fr, idregws_fc} = props;
 
     const [info, setInfo] = useState([]);
     const [tareasEqp, setTareasEqp] = useState([]);
@@ -106,7 +106,7 @@ const FormularioEdiciontareas= (props) => {
     const updateTarea = ()=>{
 
         const currentT = tareasEqp.slice(); //TAREAS ACTUALES EN EL STATE DEL COMPONENTE
-        const previousT = propsTareasEqp.slice(); //TAREAS PREVIAS PROVENIENTE DE LOS PROPS
+        const previousT = tareasEquipo_fr.slice(); //TAREAS PREVIAS PROVENIENTE DE LOS PROPS
         let flag=[];
         let count=0;
         let IDS='-' //ID'S DE TODAS LAS TAREAS A ELIMINAR
@@ -197,13 +197,13 @@ const FormularioEdiciontareas= (props) => {
     }
 
     useEffect(()=>{
-       setInfo(propsAsignaciones)
-    },[propsAsignaciones])
+       setInfo(asignaciones_fr)
+    },[asignaciones_fr])
 
     useEffect(()=>{
-        setTareasEqp(propsTareasEqp)
+        setTareasEqp(tareasEquipo_fr)
 
-    }, [propsTareasEqp])
+    }, [tareasEquipo_fr])
 
     useEffect(()=>{
 
@@ -286,7 +286,7 @@ const FormularioEdiciontareas= (props) => {
                 </button>
                 <button className="btn btn-outline-primary btn-sm" onClick={updateTarea}>Guardar</button>
             </div>
-            <TareasModal fetchComponentData={setComponentData} idregws={idregws}/>
+            <TareasModal fetchComponentData={setComponentData} idregws={idregws_fc}/>
         </Fragment>
     );
 }

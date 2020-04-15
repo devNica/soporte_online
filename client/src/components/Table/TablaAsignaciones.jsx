@@ -10,6 +10,66 @@ const mapStateToProps = state=>({
     rol: state.auth.user.rol
 })
 
+const administrador_opciones = (data)=>{
+
+    let opciones = (
+        <div>
+            <Link 
+                className="btn btn-sm btn-outline-primary" 
+                //value={tasks.data.rows[i].idregin} 
+                to={`/assignament/report/view/${data.idregws}`}
+                >Ver
+            </Link>
+            <Link 
+                className="btn btn-sm btn-outline-dark mx-1" 
+                //value={tasks.data.rows[i].idregin} 
+                to={`/assignament/admin/view/${data.idregws}`}
+                >Adm
+            </Link>
+        </div>
+    )
+
+    return opciones;
+    
+}
+
+const tecnico_opciones_edicion = (data) =>{
+    let opciones = (
+        <div>
+            <Link 
+                className="btn btn-sm btn-primary mx-1 mt-1" 
+                //value={tasks.data.rows[i].idregin} 
+                to={`/assignament/report/view/${data.idregws}`}
+                >Ver
+            </Link>
+            <Link 
+                className="btn btn-sm btn-warning my-1" 
+                //value={tasks.data.rows[i].idregin} 
+                to={`/assignament/edit/view/${data.idregws}`}
+                >Edit
+            </Link>
+        </div>
+    )
+
+    return opciones;
+}
+
+const tecnico_opciones_finalizado = (data) =>{
+    let opciones = (
+        <div>
+            <Link 
+                className="btn btn-sm btn-primary mx-1" 
+                //value={tasks.data.rows[i].idregin} 
+                to={`/assignament/report/view/${data.idregws}`}
+                >Ver
+            </Link>
+            
+        </div>
+    )
+
+    return opciones;
+}
+
 const TablaAsignaciones = (props) =>{
 
     const {tasks, rol} = props;
@@ -23,74 +83,23 @@ const TablaAsignaciones = (props) =>{
 
                 if(rol !== 'ADMINISTRADOR'){
 
-                    Object.defineProperty(tasks.data.rows[i], 'nombre', {value: tasks.data.rows[i].nombreusuario, writable: true })
+                    Object.defineProperty(tasks.data.rows[i], 'nombre', {value: tasks.data.rows[i].nombreusuario, configurable: true})
 
+                   
                     if(tasks.data.rows[i].control !== 'APROBADO' && tasks.data.rows[i].control !== 'SOLICITADO' && tasks.data.rows[i].control !== 'DENEGADO'){
                         Object.defineProperty(tasks.data.rows[i], 'opciones', {
-                            value: (
-                                <div>
-                                    <Link 
-                                        className="btn btn-sm btn-primary mx-1 mt-1" 
-                                        value={tasks.data.rows[i].idregin} 
-                                        to={`/assignament/report/view/${tasks.data.rows[i].idregws}`}
-                                        >Ver
-                                    </Link>
-                                    <Link 
-                                        className="btn btn-sm btn-warning my-1" 
-                                        value={tasks.data.rows[i].idregin} 
-                                        to={`/assignament/edit/view/${tasks.data.rows[i].idregws}`}
-                                        >Edit
-                                    </Link>
-                                </div>
-                            
-                            ),
-                            writable: true
-                            
-                        }) 
+                            value: tecnico_opciones_edicion(tasks.data.rows[i]), configurable: true}) 
                     }else{
                         
                         Object.defineProperty(tasks.data.rows[i], 'opciones', {
-                            value: (
-                                <div>
-                                    <Link 
-                                        className="btn btn-sm btn-primary mx-1" 
-                                        value={tasks.data.rows[i].idregin} 
-                                        to={`/assignament/report/view/${tasks.data.rows[i].idregws}`}
-                                        >Ver
-                                    </Link>
-                                    
-                                </div>
-                            ),
-                            writable: true
-                        }) 
+                            value: tecnico_opciones_finalizado(tasks.data.rows[i]), configurable: true}) 
                     }
                 }else{
-                    Object.defineProperty(tasks.data.rows[i], 'nombre', {value: tasks.data.rows[i].nombretecnico })
-                    Object.defineProperty(tasks.data.rows[i], 'opciones', {
-                        value: (
-                            <div>
-                                <Link 
-                                    className="btn btn-sm btn-outline-primary" 
-                                    value={tasks.data.rows[i].idregin} 
-                                    to={`/assignament/report/view/${tasks.data.rows[i].idregws}`}
-                                    >Ver
-                                </Link>
-                                <Link 
-                                    className="btn btn-sm btn-outline-dark mx-1" 
-                                    value={tasks.data.rows[i].idregin} 
-                                    to={`/assignament/admin/view/${tasks.data.rows[i].idregws}`}
-                                    >Adm
-                                </Link>
-                            </div>
-                        
-                        ),
-                        writable: true
-                    }) 
+                    Object.defineProperty(tasks.data.rows[i], 'nombre', {value: tasks.data.rows[i].nombretecnico, configurable: true})
+                    Object.defineProperty(tasks.data.rows[i], 'opciones', { value: administrador_opciones(tasks.data.rows[i]), configurable: true}) 
                     
                 }
 
-                
-                
             }
             
             setData(tasks.data);

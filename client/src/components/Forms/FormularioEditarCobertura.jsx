@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import CoberturaModal from '../Modal/CoberturaModal';
 
 const mapStateToProps = state =>({
-    propsCobertura: state.workshop.coverage,
-    rows: state.workshop.tasks.data.rows
+    cobertura_fr: state.workshop.coverage,
+    asignaciones_fr: state.workshop.tasks.data.rows
 })
 
 const CoberturaEditForm = (props) => {
 
-    const {noSave, Cobertura, propsCobertura, rows, idregws} = props;
+    const {noSave, Cobertura, cobertura_fr, asignaciones_fr, idregws_fc} = props;
     //const prevCVG = usePrevious(propsCVG)
     const [info, setInfo] = useState([]);
     const [cobertura, setCobertura] = useState([]);
@@ -36,11 +36,11 @@ const CoberturaEditForm = (props) => {
     
     useEffect(()=>{
         
-        let info = rows.filter(item => item.idregws === parseInt(idregws))
-        setCobertura(propsCobertura)
+        let info = asignaciones_fr.filter(item => item.idregws === parseInt(idregws_fc))
+        setCobertura(cobertura_fr)
         setInfo(info)
     
-    },[propsCobertura, idregws, rows])
+    },[cobertura_fr, idregws_fc, asignaciones_fr])
 
 
     useEffect(()=>{
@@ -65,7 +65,7 @@ const CoberturaEditForm = (props) => {
     
     const guardar = () =>{
         
-        let previousC = propsCobertura;
+        let previousC = cobertura_fr;
         let currentC = cobertura;
         let flag=false;
         let count=0;
@@ -89,7 +89,7 @@ const CoberturaEditForm = (props) => {
 
             let data={
                 idregin: info[0].idregin,
-                idregws,
+                idregws: idregws_fc,
                 IDS,
                 size: count,
                 opt: 'ADD'
@@ -116,7 +116,7 @@ const CoberturaEditForm = (props) => {
             
             let data={
                 idregin: info[0].idregin,
-                idregws,
+                idregws: idregws_fc,
                 IDS,
                 size: count,
                 opt: 'DEL',

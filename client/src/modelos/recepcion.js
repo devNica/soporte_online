@@ -1,22 +1,6 @@
-
-// const handleOnClick = (e) => {
-//     console.log(e)
-// }
-
 export const modelo_recepcion = (data) => {
 
     let rows = data;
-
-
-
-    // let funcion = 'clickEvent'
-
-    // for (let i = 0; i < rows.length; i++) {
-    //     Object.defineProperty(rows[i], funcion, { value: handleOnClick })
-
-    // }
-
-    // console.log(rows)
 
     return {
         data: {

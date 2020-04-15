@@ -18,7 +18,7 @@ const PaginaEdicionAtencion = (props) =>{
     
     return (
         <div className="px-5 py-5">
-            <FormularioEdicionAtencion idregws={idregws.id}/>
+            <FormularioEdicionAtencion idregws_fc={idregws.id}/>
         </div>
     );
     

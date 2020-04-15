@@ -1,32 +1,26 @@
-import React, { Component } from 'react';
+import React, {useEffect } from 'react';
 import {connect} from 'react-redux';
 import {getCoverage, getParts, getTasksEQP} from '../../redux/actions/workshop';
 import AtencionReporte from '../Reports/AtencionReporte';
 
 
-class PaginaAtenciones extends Component {
+const PaginaAtenciones = (props)=> {
 
-    state={
-        task: 0,
-        tasks:[],
-        idregws: 0
-    }
-    componentDidMount(){
-        let idregws = this.props.match.params;
-        this.setState({idregws: idregws.id})
-        
-        this.props.getCoverage(idregws);
-        this.props.getParts(idregws);
-        this.props.getTasksEQP(idregws)
-    }
+    const {getCoverage, getParts, getTasksEQP} = props;
+    const idregws = props.match.params;
     
-    render() {
-        return (
-            <div className="px-5 py-5">
-               <AtencionReporte idregws={this.state.idregws}/>
-            </div>
-        );
-    }
+    useEffect(()=>{
+        getCoverage(idregws);
+        getParts(idregws);
+        getTasksEQP(idregws)
+    },[getCoverage, getParts, getTasksEQP, idregws])
+    
+    return (
+        <div className="px-5 py-5">
+            <AtencionReporte idregws={idregws.id}/>
+        </div>
+    );
+    
 }
 
 export default connect(null, {getCoverage, getParts, getTasksEQP})(PaginaAtenciones);

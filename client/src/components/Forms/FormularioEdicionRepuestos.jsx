@@ -4,13 +4,13 @@ import {noSave, Repuestos} from '../../redux/actions/tools';
 import RepuestosModal from '../Modal/RepuestosModal';
 
 const mapStateToProps = state=>({
-    propsRepuestos: state.workshop.parts,
-    propsAsignaciones: state.workshop.tasks.data.rows,
+    repuestos_fr: state.workshop.parts,
+    asignaciones_fr: state.workshop.tasks.data.rows,
 })
 
 const FormularioEdicionRepuestos = (props)=>{
 
-    const {noSave, Repuestos, propsRepuestos, propsAsignaciones, idregws} = props;
+    const {noSave, Repuestos, repuestos_fr, asignaciones_fr, idregws_fc} = props;
 
     const [info, setInfo] = useState([]);
     const [repuestos, setRepuestos] = useState([]);
@@ -105,7 +105,7 @@ const FormularioEdicionRepuestos = (props)=>{
     const updateRep = () =>{
         
         const currentP = repuestos.slice();
-        const previousP = propsRepuestos.slice();
+        const previousP = repuestos_fr.slice();
         let idregws = info[0].idregws;
         let flag = false;
         let count = 0;
@@ -180,12 +180,12 @@ const FormularioEdicionRepuestos = (props)=>{
     }
 
     useEffect(()=>{
-        setInfo(propsAsignaciones)
-    },[propsAsignaciones])
+        setInfo(asignaciones_fr)
+    },[asignaciones_fr])
 
     useEffect(()=>{
-        setRepuestos(propsRepuestos)
-    },[propsRepuestos])
+        setRepuestos(repuestos_fr)
+    },[repuestos_fr])
 
     useEffect(()=>{
         if(operacion === 'add'){
@@ -286,7 +286,7 @@ const FormularioEdicionRepuestos = (props)=>{
                 </button>
                 <button className="btn btn-outline-primary btn-sm" onClick={updateRep}>Guardar</button>
             </div>
-            <RepuestosModal fetchComponentData={setDataComponent} idregws={idregws}/>
+            <RepuestosModal fetchComponentData={setDataComponent} idregws={idregws_fc}/>
         </Fragment>
     );
 }

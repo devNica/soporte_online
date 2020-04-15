@@ -4,9 +4,14 @@ import { setEquipoRegin ,noSave} from '../../redux/actions/tools';
 import EquiposModal from '../Modal/EquiposModal';
 import SearchIcon from '@material-ui/icons/Search';
 
+const mapStateToProps = state=>({
+    userID_fr: state.auth.user.idusuarios,
+    asignaciones_fr: state.workshop.tasks.data.rows,
+})
+
 const FormularioEdicionEquipo =(props)=> {
 
-    const {setEquipoRegin, noSave, userID, tasks, idregws } = props;
+    const {setEquipoRegin, noSave, userID_fr, asignaciones_fr, idregws_fc } = props;
     const [info, setInfo]=useState([]);
     const [eqp, setEquipo] = useState({id: '', consecutivo: '', modelo: '', equipo: '', idcategoria: ''})
 
@@ -31,7 +36,7 @@ const FormularioEdicionEquipo =(props)=> {
                     fk_tiemporevision: parseInt(idcategoria)
                 },
                 info:{
-                    userID,
+                    userID: userID_fr,
                     fecha: fecha.toISOString()
                 }
             }
@@ -46,13 +51,13 @@ const FormularioEdicionEquipo =(props)=> {
     }
 
     const resetEqp = () =>{
-        setEqp({ id: '', consecutivo: '', modelo: ''})
+        setEquipo({ id: '', consecutivo: '', modelo: ''})
     }
 
     useEffect(()=>{
-        let info = tasks.filter(item => item.idregws === parseInt(idregws))
+        let info = asignaciones_fr.filter(item => item.idregws === parseInt(idregws_fc))
         setInfo(info)
-    },[tasks, idregws])
+    },[asignaciones_fr, idregws_fc])
 
     return (
         <Fragment>
@@ -95,10 +100,5 @@ const FormularioEdicionEquipo =(props)=> {
     );
     
 }
-
-const mapStateToProps = state=>({
-    userID: state.auth.user.idusuarios,
-    tasks: state.workshop.tasks.data.rows,
-})
 
 export default connect(mapStateToProps, {setEquipoRegin, noSave})(FormularioEdicionEquipo);

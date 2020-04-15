@@ -6,10 +6,13 @@ import {empleados_activos} from '../../redux/actions/empleados';
 import {setUsuarioRegin} from '../../redux/actions/tools'
 import {noSave} from '../../redux/actions/tools';
 
+const mapStateToProps = state=>({
+    asignaciones_fr: state.workshop.tasks
+})
 
 const FormularioEdicionUsuario = (props)=>{
 
-    const {empleados_activos, setUsuarioRegin, noSave, asignaciones, idregws} = props;
+    const {empleados_activos, setUsuarioRegin, noSave, asignaciones_fr, idregws_fc} = props;
     
     const [usr, setUsr] = useState({id: '',full_name: '',carnet: ''});
     const [info, setInfo] = useState([]);
@@ -33,20 +36,19 @@ const FormularioEdicionUsuario = (props)=>{
         setUsr({id: '',full_name: '', carnet: ''})
     }
 
-    useEffect(()=>
-        {
-            let {data} = asignaciones;
-            let info=[];
+    useEffect(()=> {
 
-            if(data){
-                info = data.rows.filter(item => item.idregws === parseInt(idregws))
-                setInfo(info)
-            }
+        let {data} = asignaciones_fr;
+        let info=[];
 
-            empleados_activos();
+        if(data){
+            info = data.rows.filter(item => item.idregws === parseInt(idregws_fc))
+            setInfo(info)
+        }
 
-        },[empleados_activos, asignaciones, idregws]
-    )
+        empleados_activos();
+
+    },[empleados_activos, asignaciones_fr, idregws_fc])
 
     return (
         <Fragment>
@@ -88,10 +90,5 @@ const FormularioEdicionUsuario = (props)=>{
         </Fragment>
     );
 }
-
-
-const mapStateToProps = state=>({
-    asignaciones: state.workshop.tasks
-})
 
 export default connect(mapStateToProps,{empleados_activos, setUsuarioRegin, noSave})(FormularioEdicionUsuario);

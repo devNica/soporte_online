@@ -30,10 +30,6 @@ class Notification extends Component {
         }
     }
 
-    componentDidMount(){
-       
-    }
-
     render() {
         return (
             <div/>
