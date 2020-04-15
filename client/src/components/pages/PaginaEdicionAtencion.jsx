@@ -1,32 +1,27 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import {getCoverage, getParts, getTasksEQP} from '../../redux/actions/workshop';
 import FormularioEdicionAtencion from '../Forms/FormularioEdicionAtencion';
 
 
-class PaginaEdicionAtencion extends Component {
+const PaginaEdicionAtencion = (props) =>{
 
-    state={
-        task: 0,
-        tasks:[],
-        idregws: 0
-    }
-    componentDidMount(){
-        
-        let idregws = this.props.match.params;
-        this.props.getCoverage(idregws);
-        this.props.getParts(idregws);
-        this.props.getTasksEQP(idregws)
-        
-    }
+    const {getCoverage, getParts, getTasksEQP} = props;
+    const idregws = props.match.params
+
+    useEffect(()=>{
+        getCoverage(idregws);
+        getParts(idregws);
+        getTasksEQP(idregws)
+    },[getTasksEQP, getParts, getCoverage, idregws])
     
-    render() {
-        return (
-            <div className="px-5 py-5">
-               <FormularioEdicionAtencion idregws={this.props.match.params.id}/>
-            </div>
-        );
-    }
+    
+    return (
+        <div className="px-5 py-5">
+            <FormularioEdicionAtencion idregws={idregws.id}/>
+        </div>
+    );
+    
 }
 
 export default connect(null, {getCoverage, getParts, getTasksEQP})(PaginaEdicionAtencion);

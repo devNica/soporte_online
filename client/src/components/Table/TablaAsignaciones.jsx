@@ -1,28 +1,29 @@
-import React, { Component } from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {modelo_asignaciones} from '../../modelos/asignaciones';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 
+const mapStateToProps = state=>({
+    tasks: state.workshop.tasks,
+    rol: state.auth.user.rol
+})
 
+const TablaAsignaciones = (props) =>{
 
-class TablaAsignaciones extends Component {
+    const {tasks, rol} = props;
+    const [data, setData] = useState(modelo_asignaciones([]).data);
 
-    state={
-        data: modelo_asignaciones([]).data
-    }
+    useEffect(()=>{
 
-    
-    componentDidUpdate(prevProps){
-        const {tasks, rol} = this.props;
-        if(tasks !== prevProps.tasks){
+        if(tasks.data !== undefined){
 
             for(let i=0; i<tasks.data.rows.length; i++){
 
                 if(rol !== 'ADMINISTRADOR'){
 
-                    Object.defineProperty(tasks.data.rows[i], 'nombre', {value: tasks.data.rows[i].nombreusuario })
+                    Object.defineProperty(tasks.data.rows[i], 'nombre', {value: tasks.data.rows[i].nombreusuario, writable: true })
 
                     if(tasks.data.rows[i].control !== 'APROBADO' && tasks.data.rows[i].control !== 'SOLICITADO' && tasks.data.rows[i].control !== 'DENEGADO'){
                         Object.defineProperty(tasks.data.rows[i], 'opciones', {
@@ -42,7 +43,9 @@ class TablaAsignaciones extends Component {
                                     </Link>
                                 </div>
                             
-                            )
+                            ),
+                            writable: true
+                            
                         }) 
                     }else{
                         
@@ -57,8 +60,8 @@ class TablaAsignaciones extends Component {
                                     </Link>
                                     
                                 </div>
-                            
-                            )
+                            ),
+                            writable: true
                         }) 
                     }
                 }else{
@@ -80,7 +83,8 @@ class TablaAsignaciones extends Component {
                                 </Link>
                             </div>
                         
-                        )
+                        ),
+                        writable: true
                     }) 
                     
                 }
@@ -89,32 +93,27 @@ class TablaAsignaciones extends Component {
                 
             }
             
-            this.setState({data: tasks.data});
+            setData(tasks.data);
         }
-    }
 
-    render() {
-        return (
-            <div className="my-2">
+    },[rol, tasks])
 
-                <button id="export" className="btn btn-outline-dark btn-sm mb-4"><ImportExportIcon/>Export To Excel</button>     
-                <MDBDataTable
-                    //striped
-                    bordered
-                    hover
-                    data={this.state.data}
-                    entries={5}
-                    entriesOptions={[5,10,20,40]}
-                
-                />
-            </div>
-        );
-    }
+    return (
+        <div className="my-2">
+
+            <button id="export" className="btn btn-outline-dark btn-sm mb-4"><ImportExportIcon/>Export To Excel</button>     
+            <MDBDataTable
+                //striped
+                bordered
+                hover
+                data={data}
+                entries={5}
+                entriesOptions={[5,10,20,40]}
+            
+            />
+        </div>
+    );
+    
 }
-
-const mapStateToProps = state=>({
-    tasks: state.workshop.tasks,
-    rol: state.auth.user.rol
-})
 
 export default connect(mapStateToProps)(TablaAsignaciones);

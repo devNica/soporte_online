@@ -1,21 +1,27 @@
-import React, { Component, Fragment } from 'react';
+import React, {Fragment, useState, useEffect, useCallback } from 'react';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import Line from '../chart/Line';
 import {rep_desemepeno_tec} from '../../redux/actions/reportes';
 import { modelo_desempeno } from '../../modelos/desempeno'
 
-class TablaDesempeno extends Component {
+const mapStateToProps = state=>({
+    desempeno_fr: state.reportes.desempeno,
+    rol_fr: state.auth.user.rol,
+    userID_fr: state.auth.user.idusuarios
+})
 
-    state={
-        etiquetas: [],
-        datasets:[],
-        data: modelo_desempeno([]).data
-    }
 
-    generar_dataset = () =>{
+const TablaDesempeno = (props) => {
+
+    const {rep_desemepeno_tec, desempeno_fr, rol_fr, userID_fr, tipo_fc, inicio_fc, finalizo_fc, idtecnico_fc} = props;
+    const [data, setData] = useState(modelo_desempeno([]).data);
+    const [datasets, setDatasets] = useState([]);
+    const [etiquetas, setEtiquetas] = useState([]);
+
+    const generar_dataset = useCallback(()=>{
         let dataA=[], dataB=[], colorA=[], colorB=[], etiquetas =[];
-        const {rows} = this.props.desempeno.data;
+        const {rows} = desempeno_fr.data;
         
         rows.forEach((item, i) => {
             etiquetas[i]=item.consecutivo
@@ -25,11 +31,9 @@ class TablaDesempeno extends Component {
             colorB[i]='rgba(205, 19, 111, 0.8)'
         });
 
-        this.setState({
-
-            etiquetas,
-
-            datasets:[
+        setEtiquetas(etiquetas);
+        setDatasets(()=>(
+            [
                 {
                     fill: false,
                     lineTension: 0.2,
@@ -49,81 +53,63 @@ class TablaDesempeno extends Component {
                     backgroundColor: colorB
                 }
             ]
+        ))
 
-        })
-    }
+       
+    },[desempeno_fr])
 
-    
-
-    handleOnSearch = e =>{
-        const {tipo, startDate, endDate, rol, userID} = this.props;
+    const handleOnSearch = e =>{
         let filtro;
-        if(tipo==='tecnico'){
-            filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') AND RT.fk_tecnico_regtaller = ${this.props.idtecnico}`
+        if(tipo_fc==='tecnico'){
+            filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') AND RT.fk_tecnico_regtaller = ${idtecnico_fc}`
             
         }
-        if(tipo==='fecha'){
-            if(rol==='ADMINISTRADOR'){
-                filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') AND RT.inicio BETWEEN ('${startDate.toISOString()}') AND ('${endDate.toISOString()}')`
+        if(tipo_fc==='fecha'){
+            if(rol_fr==='ADMINISTRADOR'){
+                filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') AND RT.inicio BETWEEN ('${inicio_fc.toISOString()}') AND ('${finalizo_fc.toISOString()}')`
             }else{
                 filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') 
-                            AND RT.inicio BETWEEN ('${startDate.toISOString()}') AND ('${endDate.toISOString()}')
-                            AND RT.fk_tecnico_regtaller = ${userID}`
+                            AND RT.inicio BETWEEN ('${inicio_fc.toISOString()}') AND ('${finalizo_fc.toISOString()}')
+                            AND RT.fk_tecnico_regtaller = ${userID_fr}`
             }
             
         }
-        this.props.rep_desemepeno_tec({filtro});
+        rep_desemepeno_tec({filtro});
     }
 
-    handleOnClick=e=>{
-       
-        this.generar_dataset();
+    useEffect(()=>{
         
-    }
-
-    componentDidUpdate(prevProps){
-        const {desempeno} = this.props;
-        if(desempeno !== prevProps.desempeno){
-
+        if(desempeno_fr.data !== undefined){
             let funcion='clickEvent'
             
             /*ESTA VERSION DE CICLO FOR TIENE MEJOR TIEMPO DE RESPUESTA*/
-            for (const key in desempeno.data.rows) {
-                Object.defineProperty(desempeno.data.rows[key], funcion, {value: this.handleOnClick})
+            for (const key in desempeno_fr.data.rows) {
+                Object.defineProperty(desempeno_fr.data.rows[key], funcion, {value: generar_dataset, writable: true})
             }
             
-            this.setState({data: desempeno.data});
+           setData(desempeno_fr.data);
         }
-    }
 
-    render() {
+    },[desempeno_fr, generar_dataset])
 
-        const {datasets, etiquetas} = this.state;
-        
-        return (
-            <Fragment>
-                <div className="my-5">
-                    <MDBDataTable
-                        bordered
-                        hover
-                        data={this.state.data}
-                        entries={3}
-                        entriesOptions={[3,5,10,20,40]}
-                        onSearch={this.handleOnSearch}
-                        
-                    />
+    return (
+        <Fragment>
+            <div className="my-5">
+                <MDBDataTable
+                    bordered
+                    hover
+                    data={data}
+                    entries={3}
+                    entriesOptions={[3,5,10,20,40]}
+                    onSearch={handleOnSearch}
+                    
+                />
 
-                    {datasets.length > 0 ? <Line datasets={datasets} labels={etiquetas}/> : null}
-                </div>
-            </Fragment>
-        );
-    }
+                {datasets.length > 0 ? <Line datasets={datasets} labels={etiquetas}/> : null}
+            </div>
+        </Fragment>
+    );
+    
 }
-
-const mapStateToProps = state=>({
-    desempeno: state.reportes.desempeno,
-    rol: state.auth.user.rol,
-    userID: state.auth.user.idusuarios
-})
 
 export default connect(mapStateToProps,{rep_desemepeno_tec})(TablaDesempeno);

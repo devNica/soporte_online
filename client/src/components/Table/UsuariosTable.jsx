@@ -3,6 +3,9 @@ import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {modelo_empleados} from '../../modelos/empleados';
 
+const mapStateToProps = state=>({
+    empleados: state.employee.employees
+})
 
 const UsuariosTable = (props)=>{
     const {fetchDataComponent, empleados} = props;
@@ -52,9 +55,5 @@ const UsuariosTable = (props)=>{
     );
     
 }
-
-const mapStateToProps = state=>({
-    empleados: state.employee.employees
-})
 
 export default connect(mapStateToProps)(UsuariosTable);
