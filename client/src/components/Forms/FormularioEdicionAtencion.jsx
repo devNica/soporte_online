@@ -18,8 +18,8 @@ const mapStateToProps = state=>({
 const FormularioEdicionAtencion = (props) => {
 
     const {getCatalogo, idregws_fc, equipos_fr} = props;
-    const [estado, setEstado]= useState('')
-
+    const [estado, setEstado]= useState('');
+    
     useEffect(()=>{
         let equipo = equipos_fr.filter(item=>item.idregws === parseInt(idregws_fc))
         setEstado(equipo[0].estado)
@@ -49,7 +49,7 @@ const FormularioEdicionAtencion = (props) => {
             <FormularioEditarCobertura idregws_fc={idregws_fc}/>
             
             {
-                <FooterForm idregws={idregws_fc} estado={estado}/> 
+                <FooterForm idregws_fc={idregws_fc} estado_fc={estado}/> 
             }
             
             <Notification/>

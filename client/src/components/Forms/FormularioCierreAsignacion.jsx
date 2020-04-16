@@ -157,29 +157,29 @@ const FormularioCierreAsignacion = (props) =>{
                 <p style={{textAlign: 'justify'}}>
                 Este formulario, fue creado para que cada tecnico finalice de forma individual
                 las tareas que le son asignadas ya sean aquellas que se realizan dentro del taller
-                y/o externas en sus diferentes modalidades.
+                y las externas en sus diferentes modalidades.
                 </p>
                 <p style={{textAlign: 'justify'}}>
-                Dicho proceso parte de una asignacion en estado de: <b>EDICION</b>, el cual le permite al tecnico adjuntar
+                Dicho proceso parte de una asignacion en control de: <b>EDICION</b>, el cual le permite al tecnico adjuntar
                 toda la informacion correspondiente a la misma en el momento en que ha dejado de trabajar en el equipo, y si
-                todas las tareas asociadas a la revision estan debidamente finalizadas, se podra promocionar al estado: <b>SOLICITADO</b>.
-                Una vez promocionado, la edicion quedara deshabilitada; sí nota que la informacion que adjuntó no es correcta,
+                todas las tareas asociadas a la revision estan debidamente finalizadas, se podra promocionar al control: <b>SOLICITADO</b>.
+                Una vez promocionado, la <b>EDICION</b> quedara deshabilitada. Si nota que la información que adjuntó no es correcta,
                 debe informar al responsable del area para que habilite nuevamente la opcion de <b>EDICION</b>, la cual no afectara
                 la medicion del tiempo de revision.
                 </p>
                 <p style={{textAlign: 'justify'}}>
-                El responsable del area, sera informado de cada solicitud de cierre con fin de que examine la informacion asociada y tome
-                la desicion de: <b>APROBAR</b> ó <b>DENEGAR</b> la misma, con el efecto de que solo aquellas solicitudes que sean aprobadas
-                sera tomadas en consideracion para los reportes y calculos de desempeño. En caso de que se le deniegue, puede recurrir al 
-                responsable para que aborden el caso y bajo justificacion se opte finalmente por aprobar una peticion.
+                El responsable del area sera informado de cada solicitud de cierre con fin de que examine la informacion asociada y promueva
+                la asignacion al control de: <b>APROBADO</b> ó <b>DENEGADO</b>, con el efecto de que solo aquellas solicitudes que sean aprobadas
+                sera tomadas en consideracion para los reportes y calculos de desempeño; en caso de que una asignacion sea denegada, puede recurrir al 
+                responsable para que aborden el caso y bajo justificacion se opte finalmente por aprobarla.
                 </p>
                 <p style={{textAlign: 'justify'}}>
                 Cuando la asignacion se trate de un equipo Ingresado al taller, tendra disponible las opciones de:
                 </p>
                 <ul className="list-group list-group-horizontal-sm my-2">
                     <li className="list-group-item">EQUIPO REPARADO</li>
-                    <li className="list-group-item">EQUIPO DE BAJA</li>
-                    <li className="list-group-item">EQUIPO EN ESPERA DE REPUESTO</li>
+                    <li className="list-group-item">EQUIPO OBSOLETO</li>
+                    <li className="list-group-item">EQUIPO PENDIENTE DE REPUESTO</li>
                 </ul>
                 <p style={{textAlign: 'justify'}}>
                 Por otro lado cuando sea una solicitud externa al taller, solo dispondra de las opciones de:
@@ -246,8 +246,8 @@ const FormularioCierreAsignacion = (props) =>{
                                         equipo[0].asistencia === 'REMISION' ?
                                         <div className="row">
                                             <button className="btn btn-outline-dark btn-sm" onClick={reparado}>REPARADO</button>
-                                            <button className="btn btn-outline-dark mx-2 btn-sm" onClick={baja_tecnica}>BAJA TECNICA</button>
-                                            <button className="btn btn-outline-dark btn-sm" onClick={espera_de_repuesto}>ESPERA DE REPUESTO</button>
+                                            <button className="btn btn-outline-dark mx-2 btn-sm" onClick={baja_tecnica}>OBSOLETO</button>
+                                            <button className="btn btn-outline-dark btn-sm" onClick={espera_de_repuesto}>PENDIENTE DE REPUESTO</button>
                                         </div>
                                         : 
                                         <div className="row">

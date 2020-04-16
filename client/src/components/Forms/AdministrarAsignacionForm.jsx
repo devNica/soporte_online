@@ -1,7 +1,7 @@
 import React, {Fragment, useState, useEffect } from 'react';
 import {Link} from 'react-router-dom'
 import {aprobar, pausar, reiniciar, reasignar, denegar, habililitar_edicion} from '../../redux/actions/workload';
-import {empleados_activos} from '../../redux/actions/empleados';
+import {tecnicos_activos} from '../../redux/actions/empleados';
 import 'moment-timezone';
 import {connect} from 'react-redux';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
@@ -17,7 +17,7 @@ const mapStateToProps = state =>({
 
 const AdministrarAsignacionForm = (props) =>{
 
-    const {aprobar, pausar, reiniciar, reasignar, denegar, empleados_activos, habililitar_edicion, history} = props;
+    const {aprobar, pausar, reiniciar, reasignar, denegar, tecnicos_activos, habililitar_edicion, history} = props;
     const idregws = props.match.params.id;
     const {user_fr, asignaciones_fr, rol_fr, tecnicos_fr} = props;
     
@@ -164,9 +164,9 @@ const AdministrarAsignacionForm = (props) =>{
 
     useEffect(()=>{
         
-        empleados_activos();
+        tecnicos_activos();
 
-    },[empleados_activos])
+    },[tecnicos_activos])
 
     const listaTecnicos = tecnicos_fr.map((tecnico, i)=>(
         <tr key={i}>
@@ -176,7 +176,8 @@ const AdministrarAsignacionForm = (props) =>{
             </td>
         </tr>
     ))
-        
+    
+    
     const inicio = (
         <Fragment>
             <div className="row">
@@ -188,7 +189,7 @@ const AdministrarAsignacionForm = (props) =>{
                     <Link className="btn btn-primary btn-md" to="/profile" role="button">Regresar al Perfil</Link>
                     </div>
                     
-                    <h3 style={{color: '#174ec1'}} className="mb-4">¿Que deseas hacer con esta solicitud de { tecnico !== undefined ? tecnico : null }?</h3>
+                    <h3 style={{color: '#2e3d79'}} className="mb-4">¿Que deseas hacer con esta solicitud de { tecnico !== undefined ? tecnico : null }?</h3>
 
                     <table className="table table-bordered table-hover">
                         <thead style={{background: '#962857'}} className="text-white">
@@ -226,7 +227,11 @@ const AdministrarAsignacionForm = (props) =>{
                                                     :info.control === 'APROBADO' ?
                                                     <button className="btn btn-outline-warning btn-sm" onClick={onclickHabilitarEdicion}>Habilitar Edicion</button>
                                                     :
-                                                    <button className="btn btn-outline-primary btn-sm" onClick={onClickAprobar}>Aprobar</button>
+                                                    <div>
+                                                        <button className="btn btn-outline-primary btn-sm" onClick={onClickAprobar}>Aprobar</button>
+                                                        <button className="btn btn-outline-warning btn-sm" onClick={onclickHabilitarEdicion}>Habilitar Edicion</button>
+                                                    </div>
+                                                    
                                                 :null
                                             :null   
                                         : null 
@@ -237,7 +242,7 @@ const AdministrarAsignacionForm = (props) =>{
                     </table>
 
                     <table className="table table-bordered table-hover">
-                        <thead style={{background: '#962857'}} className="text-white">
+                        <thead style={{background: '#2e3d79'}} className="text-white">
                             <tr>
                                 <th>Actividad</th>
                                 <th>Ordinario</th>
@@ -262,7 +267,7 @@ const AdministrarAsignacionForm = (props) =>{
                                                 info.estado === 'PAUSADO' ?
                                                 <div>
                                                     <button className="btn btn-sm btn-success mx-1" onClick={onclickReiniciar}><PlayCircleFilledIcon/></button>
-                                                    <button className="btn btn-sm btn-primary"><TransferWithinAStationIcon/></button>
+                                                    <button className="btn btn-sm btn-primary" onClick={habilitarSeleccionTecnico}><TransferWithinAStationIcon/></button>
                                                 </div>
                                                 :
                                                 <div>
@@ -283,10 +288,10 @@ const AdministrarAsignacionForm = (props) =>{
 
                 <div className={`col-12 col-sm-12 col-md-12 col-lg-3 ${display_none}`} id="panel-asignar">
                     <table className="table table-hover table-bordered table-sm">
-                        <thead className="text-white" style={{backgroundColor: '#1d4bab'}}>
+                        <thead className="text-white py-3" style={{backgroundColor: '#2e3d79'}}>
                             <tr>
-                                <th scope="col">TECNICOS</th>
-                                <th scope="col">OP</th>
+                                <th scope="col py-3">TECNICOS</th>
+                                <th scope="col py-3">OP</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -294,7 +299,7 @@ const AdministrarAsignacionForm = (props) =>{
                         </tbody>
                     </table>
                     <div className="card">
-                        <div className="card-header text-white" style={{background: '#1d4bab' }}>
+                        <div className="card-header text-white" style={{background: '#2e3d79' }}>
                             TECNICO DESIGNADO PARA LA REASIGNACION
                         </div>
                         <div className="card-body">
@@ -338,4 +343,4 @@ const AdministrarAsignacionForm = (props) =>{
     
 }
 
-export default connect(mapStateToProps,{aprobar, pausar, reiniciar, reasignar, denegar, empleados_activos, habililitar_edicion})(AdministrarAsignacionForm);
+export default connect(mapStateToProps,{aprobar, pausar, reiniciar, reasignar, denegar, tecnicos_activos, habililitar_edicion})(AdministrarAsignacionForm);

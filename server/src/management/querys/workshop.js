@@ -122,9 +122,14 @@ const workshop = {
         return `UPDATE seguimiento SET fk_control = '4' WHERE seguimiento.fk_regtaller = ${idregws};`
     },
 
-    //CONSULTA HABILITAR EDICION DE ASIGNACION
-    CHEA: (idregws) => {
-        return `UPDATE seguimiento SET fk_control = '1' WHERE seguimiento.fk_regtaller = ${idregws};`
+    //PROCEDIMIENTO HABILITAR EDICION DE ASIGNACION
+    PHEA: (idregws) => {
+        return `CALL PROCEDIMIENTO_HABILITAR_EDICION_ASIGNACION(${idregws})`
+    },
+
+    //PROCEDIMIENTO RESTAURAR SEGUIMIENTO DE LA ASIGNACION
+    PRSA: (idregws) => {
+        return `CALL PROCEDIMIENTO_RESTAURAR_SEGUIMIENTO_ASIGNACION(${idregws})`
     }
 }
 

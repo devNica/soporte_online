@@ -1,5 +1,5 @@
 var mysql = require('mysql2/promise');
-var { FAFT, CDSC, CHEA } = require('../querys/workshop');
+var { FAFT, CDSC, PHEA, PRSA } = require('../querys/workshop');
 var { Asistencia } = require('../querys/checkin');
 var { cnc } = require('../../database/connection');
 var config = require('../../database/config');
@@ -30,8 +30,14 @@ const process = {
     },
 
     habilitar_edicion: (idregws) => {
-        return cnc(mysql, configuration, CHEA(idregws))
-    }
+        return cnc(mysql, configuration, PHEA(idregws))
+    },
+
+    restaurar_seguimiento: (idregws) => {
+        return cnc(mysql, configuration, PRSA(idregws))
+    },
+
+
 
 }
 

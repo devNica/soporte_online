@@ -77,6 +77,16 @@ router.post('/workload/habilitar-edicion-asignacion', (req, res) => {
 
 })
 
+router.post('/workload/restaurar-seguimiento-asignacion', (req, res) => {
+    //console.log(req.body)
+    workload.restaurar_seguimiento(req.body.idregws).then(response => {
+        res.status(201).json({ msg: 'El seguimiento de la Asignacion se ha restaurado' })
+    }).catch(err => {
+        console.log(err);
+    })
+
+})
+
 router.post('/workload/aprobar-asignacion', (req, res) => {
 
     let data = {
