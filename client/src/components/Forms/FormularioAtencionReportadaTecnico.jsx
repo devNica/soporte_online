@@ -1,9 +1,14 @@
 import React, { Fragment, useState } from 'react';
-import TimePicker from 'react-times';
+//import TimePicker from 'react-times';
 import DatePicker  from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-times/css/classic/default.css';
 import 'react-times/css/material/default.css';
+
+import {Timepicker} from '../tpicker/tpicker.js'
+import '../tpicker/tpicker.css';
+
+
 import FormularioBuscarUsuarioEquipo from './FormularioBuscarUsuarioEquipo';
 import FormularioBuscarEquipo from './FormularioBuscarEquipo';
 import {noSave} from '../../redux/actions/tools';
@@ -20,6 +25,56 @@ const  FormularioAtencionReportadaTecnico = ({noSave}) => {
     const [equipo, setEquipo]=useState('');
     const [usuario, setUsuario]=useState('');
     const [tipoactividad, setTipoActividad] = useState(0);
+    
+    const establecerTiempoInicio = (h,m) =>{
+       let hora, minutos;
+
+        if(h < 10 && m >= 10){
+            hora = '0'+h.toString();
+            minutos = m.toString();
+        }
+        if(h >= 10 && m >= 10){
+            hora = h.toString();
+            minutos = m.toString();
+        }
+        if(h < 10 && m < 10){
+            hora = '0'+h.toString();
+            minutos = '0'+m.toString();
+        }
+        if (h >= 10 && m < 10){
+            hora = h.toString();
+            minutos = '0'+m.toString();
+        }
+
+        setTiempoInicio({hh: hora, mm: minutos})
+
+        console.log(hora,':',minutos)
+    }
+
+    const establecerTiempoFinalizo = (h,m) =>{
+        let hora, minutos;
+ 
+         if(h < 10 && m >= 10){
+             hora = '0'+h.toString();
+             minutos = m.toString();
+         }
+         if(h >= 10 && m >= 10){
+             hora = h.toString();
+             minutos = m.toString();
+         }
+         if(h < 10 && m < 10){
+             hora = '0'+h.toString();
+             minutos = '0'+m.toString();
+         }
+         if (h >= 10 && m < 10){
+             hora = h.toString();
+             minutos = '0'+m.toString();
+         }
+ 
+         setTiempoFinalizo({hh: hora, mm: minutos})
+ 
+         console.log(hora,':',minutos)
+     }
 
     const  setComponentDataUser = usuario =>{
         setUsuario(usuario)
@@ -64,14 +119,10 @@ const  FormularioAtencionReportadaTecnico = ({noSave}) => {
             
     }
 
-    // const onFocusChange = (focusStatue) => {
-       
-    // }
-
     return (
         <Fragment>
 
-            <h4 style={{color: '#7fa0bf'}} className="text-center mt-2 mb-4">FICHA REGISTRO DE ATENCIONES EXTERNAS AL TALLER</h4>
+            <h4 style={{color: '#3c7ab8'}} className="text-center mt-2 mb-4">FICHA REGISTRO DE ATENCIONES EXTERNAS AL TALLER</h4>
             
             <form className="border px-4 py-2 mb-4" onSubmit={handleOnSubmit}>
                 <div className="row">
@@ -91,9 +142,10 @@ const  FormularioAtencionReportadaTecnico = ({noSave}) => {
                         </div>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row text-center">
                     <div className="col-12 col-sm-12 col-md-6 col-lg-6">
                         <div className="form-group my-4">
+                            
                             <label htmlFor=""  style={{color: '#2f9fcb'}} className="h5">DESDE:</label>
                             <DatePicker
                                 selected={fechaInicio}
@@ -101,9 +153,15 @@ const  FormularioAtencionReportadaTecnico = ({noSave}) => {
                                 className="form-control text-center"
                                 //withPortal
                                 placeholderText="MM/DD/YYYY"
-                            />
+                            /> 
                         </div>
-                        <TimePicker
+                        <Timepicker
+                                size={240}
+                                radius={100}
+                                onChange={establecerTiempoInicio}
+                               
+                            />
+                        {/* <TimePicker
                             minuteStep={1}
                             //focused // whether to show timepicker modal after rendered. default false
                             colorPalette="white" // main color, default "light"
@@ -114,19 +172,30 @@ const  FormularioAtencionReportadaTecnico = ({noSave}) => {
                             //onFocusChange={this.onFocusChange}
                             onTimeChange={(e)=>setTiempoInicio({hh: e.hour, mm: e.minute})}
                         />
+                         */}
+                       
+
                     </div>
                     <div className="col-12 col-sm-12 col-md-6 col-lg-6">
                         <div className="form-group my-4">
-                            <label htmlFor=""  style={{color: '#2f9fcb'}} className="h5">HASTA:</label>
-                            <DatePicker
-                                selected={fechaFinalizo}
-                                onChange={(date)=>setFechaFinalizo(date)}
-                                className="form-control text-center"
-                                //withPortal
-                                placeholderText="MM/DD/YYYY"
-                            />
+
+                           
+                        <label htmlFor=""  style={{color: '#2f9fcb'}} className="h5">HASTA:</label>
+                        <DatePicker
+                            selected={fechaFinalizo}
+                            onChange={(date)=>setFechaFinalizo(date)}
+                            className="form-control text-center"
+                            //withPortal
+                            placeholderText="MM/DD/YYYY"
+                        />
                         </div>
-                        <TimePicker
+                        <Timepicker
+                                size={240}
+                                radius={100}
+                                onChange={establecerTiempoFinalizo}
+                             
+                            />
+                        {/* <TimePicker
                             minuteStep={1}
                             //focused // whether to show timepicker modal after rendered. default false
                             colorPalette="white" // main color, default "light"
@@ -136,8 +205,10 @@ const  FormularioAtencionReportadaTecnico = ({noSave}) => {
                             closeOnOutsideClick={true}
                             //onFocusChange={this.onFocusChange}
                             onTimeChange={(e)=>setTiempoFinalizo({hh: e.hour, mm: e.minute})}
-                        />
+                        /> */}
                     </div>
+                    
+
                 </div>
 
                 <div className="row my-4">

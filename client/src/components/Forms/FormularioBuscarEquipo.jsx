@@ -1,28 +1,21 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-//import { setEquipoRegin ,noSave} from '../../redux/actions/tools';
 import EquiposModal from '../Modal/EquiposModal';
+import { getCatalogo} from '../../redux/actions/tools';
 import SearchIcon from '@material-ui/icons/Search';
 
-const FormularioBuscarEquipoHooks = ({fetchDataComponent}) => {
+const FormularioBuscarEquipoHooks = ({fetchDataComponent, getCatalogo}) => {
 
     const  [eqp, setEqp] = useState('')
 
-    const ODEC = (eqp)=> {
+    const setComponentData = (eqp)=> {
         setEqp(eqp);
         fetchDataComponent(eqp);
     }
 
-    // const reset_equipo = () =>{
-    //     this.setState({
-    //         eqp: {
-    //             id: '',
-    //             consecutivo: '',
-    //             modelo: ''
-    //         }
-    //     })
-    // }
-
+    useEffect(()=>{
+        getCatalogo();
+    })
 
     return (
         <Fragment>
@@ -55,9 +48,9 @@ const FormularioBuscarEquipoHooks = ({fetchDataComponent}) => {
 
             </div>
 
-            <EquiposModal odec={ODEC}/>
+            <EquiposModal fetchDataComponent={setComponentData}/>
         </Fragment>
     );
 };
 
-export default connect(null, {})(FormularioBuscarEquipoHooks);
+export default connect(null, {getCatalogo})(FormularioBuscarEquipoHooks);

@@ -4,12 +4,12 @@ import {getEqpActivos} from '../../redux/actions/tools';
 import EqpTable from '../Table/EqpTable';
 
 const mapStateToProps = state =>({
-    propCatalogo: state.tools.catalogo,
+    catalogo_fr: state.tools.catalogo,
 })
 
 const EquiposModal = (props)=> {
 
-    const {getEqpActivos, propCatalogo, fetchDataComponent} = props;
+    const {getEqpActivos, catalogo_fr, fetchDataComponent} = props;
     const [eqp, setEquipo] = useState({id: '', equipo: '', consecutivo: '', modelo: '', idcategoria: ''});
     const [catalogo, setCatalogo] = useState([]);
 
@@ -23,13 +23,13 @@ const EquiposModal = (props)=> {
             getEqpActivos({idequipo})
         }
     }
-    
+ 
     useEffect(()=>{
-        if(propCatalogo !== undefined){
+        if(catalogo_fr !== undefined){
         
-            setCatalogo(propCatalogo)
+            setCatalogo(catalogo_fr)
         }
-    },[propCatalogo])
+    },[catalogo_fr])
 
    
     const catalogList = catalogo.map((cat, i)=>(
