@@ -2,9 +2,14 @@ import { GET_CATALOGO_EQP, GET_EQUIPOS_ACTIVOS, GET_TAREAS_BY_EQP, CREATE_NOTIFI
 import { modelos } from '../../modelos/modelos';
 import api from '../../api/api'
 
+export const fn_limpiar_eqp = () => dispatch => {
+    dispatch({
+        type: 'CLEAR_EQP'
+    })
+}
 
-export const getEqpActivos = id => dispatch => {
-    api.eqp.getActivos(id).then(res => {
+export const fn_equipos_activos = id => dispatch => {
+    api.eqp.inventarioActivo(id).then(res => {
 
         let eqps = modelos.equipos(res.eqps)
 
@@ -18,8 +23,8 @@ export const getEqpActivos = id => dispatch => {
     })
 }
 
-export const cobertura = id => dispatch => {
-    api.eqp.getActivos(id).then(res => {
+export const fn_equipos_cobertura = id => dispatch => {
+    api.eqp.inventarioActivo(id).then(res => {
 
         let eqps = modelos.equipos(res.eqps)
 
@@ -33,8 +38,8 @@ export const cobertura = id => dispatch => {
     })
 }
 
-export const getCatalogo = () => dispatch => {
-    api.eqp.getCatalogo().then(res => {
+export const fn_catalog_eqp = () => dispatch => {
+    api.eqp.catalogoEquipos().then(res => {
 
 
         dispatch({
@@ -212,7 +217,7 @@ export const Tareas = cluster => dispatch => {
 
 }
 
-export const Cobertura = data => dispatch => {
+export const fn_adm_cobertura = data => dispatch => {
     api.cvg.cobertura(data).then(res => {
 
         dispatch({

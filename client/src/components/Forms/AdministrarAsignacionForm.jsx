@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect } from 'react';
 import {Link} from 'react-router-dom'
-import {aprobar, pausar, reiniciar, reasignar, denegar, habililitar_edicion} from '../../redux/actions/workload';
+import {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion} from '../../redux/actions/workload';
 import {tecnicos_activos} from '../../redux/actions/empleados';
 import 'moment-timezone';
 import {connect} from 'react-redux';
@@ -17,7 +17,7 @@ const mapStateToProps = state =>({
 
 const AdministrarAsignacionForm = (props) =>{
 
-    const {aprobar, pausar, reiniciar, reasignar, denegar, tecnicos_activos, habililitar_edicion, history} = props;
+    const {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion, tecnicos_activos, history} = props;
     const idregws = props.match.params.id;
     const {user_fr, asignaciones_fr, rol_fr, tecnicos_fr} = props;
     
@@ -37,7 +37,7 @@ const AdministrarAsignacionForm = (props) =>{
             idregws: info.idregws,
         }
 
-        pausar(data);
+        fn_pausar(data);
         setLoading(true);
         setOperacion('pausar')
 
@@ -77,7 +77,7 @@ const AdministrarAsignacionForm = (props) =>{
             idrevision: info.idcategoria
         }
 
-        reasignar(data);
+        fn_reasignar(data);
         setTimeout(() => {
             history.push('/profile');
         }, 3500);
@@ -90,7 +90,7 @@ const AdministrarAsignacionForm = (props) =>{
             idregws: info.idregws,
         }
 
-        reiniciar(data);
+        fn_reiniciar(data);
         setLoading(true);
         setOperacion('reiniciar');
         
@@ -107,7 +107,7 @@ const AdministrarAsignacionForm = (props) =>{
             idcateqp: info.idcategoria
         }
 
-        aprobar(data);
+        fn_aprobar(data);
         setLoading(true);
         setOperacion('aprobar');
         
@@ -125,7 +125,7 @@ const AdministrarAsignacionForm = (props) =>{
         setLoading(true);
         setOperacion('denegar');
 
-        denegar(data);
+        fn_denegar(data);
 
         setTimeout(() => {
             history.push('/profile');
@@ -140,7 +140,7 @@ const AdministrarAsignacionForm = (props) =>{
         setLoading(true);
         setOperacion('editar');
 
-        habililitar_edicion(data);
+        fn_habililitar_edicion(data);
 
         setTimeout(() => {
             history.push('/profile');
@@ -343,4 +343,14 @@ const AdministrarAsignacionForm = (props) =>{
     
 }
 
-export default connect(mapStateToProps,{aprobar, pausar, reiniciar, reasignar, denegar, tecnicos_activos, habililitar_edicion})(AdministrarAsignacionForm);
+export default connect(mapStateToProps,
+    {
+        fn_aprobar, 
+        fn_pausar, 
+        fn_reiniciar, 
+        fn_reasignar, 
+        fn_denegar, 
+        fn_habililitar_edicion,
+        tecnicos_activos 
+    }
+)(AdministrarAsignacionForm);

@@ -4,17 +4,17 @@ import {connect} from 'react-redux';
 import {modelo_cobertura} from '../../modelos/cobertura'
 
 const mapStateToProps = state=>({
-    cobertura: state.tools.cobertura
+    equipos_fr: state.tools.cobertura
 })
 
 const CoberturaTable = (props) => {
 
-    const {cobertura, fetchDataComponent} = props;
+    const {equipos_fr, fetchDataComponent} = props;
     const [data, setData] = useState(modelo_cobertura([]).data);
     
     const handleOnClick = useCallback((e)=>{
         let field= e.currentTarget;
-        // //console.log(e.currentTarget.cells[1])
+        console.log(e.currentTarget.cells[1])
         let id=parseInt(field.cells[0].innerText)
         let equipo=`${field.cells[1].innerText}`
         let consecutivo=`${field.cells[2].innerText}`
@@ -30,18 +30,18 @@ const CoberturaTable = (props) => {
 
     useEffect(()=>{
 
-        if(cobertura.data !== undefined){
+        if(equipos_fr.data !== undefined){
             let funcion='clickEvent'
 
-            for(let i=0; i<cobertura.data.rows.length; i++){
-                Object.defineProperty(cobertura.data.rows[i], funcion, {value: handleOnClick, writable: true})
+            for(let i=0; i<equipos_fr.data.rows.length; i++){
+                Object.defineProperty(equipos_fr.data.rows[i], funcion, {value: handleOnClick, writable: true})
                  
             }
             
-            setData(cobertura.data);
+            setData(equipos_fr.data);
         }
 
-    },[cobertura, handleOnClick])
+    },[equipos_fr, handleOnClick])
 
     return (
         <div className="container my-5 py-5">

@@ -7,7 +7,7 @@ import FormularioEdicionRepuestos from './FormularioEdicionRepuestos';
 import FormularioEdicionUsuario from './FormularioEdicionUsuario';
 import FormularioEditarCobertura from './FormularioEditarCobertura';
 import FooterForm from './FooterForm';
-import { getCatalogo} from '../../redux/actions/tools';
+import { fn_catalog_eqp} from '../../redux/actions/tools';
 
 const mapStateToProps = state=>({
     // coverage: state.workshop.coverage,
@@ -17,7 +17,7 @@ const mapStateToProps = state=>({
 
 const FormularioEdicionAtencion = (props) => {
 
-    const {getCatalogo, idregws_fc, equipos_fr} = props;
+    const {fn_catalog_eqp, idregws_fc, equipos_fr} = props;
     const [estado, setEstado]= useState('');
     
     useEffect(()=>{
@@ -26,8 +26,8 @@ const FormularioEdicionAtencion = (props) => {
     },[setEstado, equipos_fr, idregws_fc])
 
     useEffect(()=>{
-        getCatalogo();
-    },[getCatalogo])
+        fn_catalog_eqp();
+    },[fn_catalog_eqp])
 
     return (
         <div className="container border border-primary py-3 px-3">
@@ -58,4 +58,4 @@ const FormularioEdicionAtencion = (props) => {
     
 }
 
-export default connect(mapStateToProps,{getCatalogo})(FormularioEdicionAtencion);
+export default connect(mapStateToProps,{fn_catalog_eqp})(FormularioEdicionAtencion);

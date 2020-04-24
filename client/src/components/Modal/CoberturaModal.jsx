@@ -1,36 +1,37 @@
 import React, { useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {cobertura} from '../../redux/actions/tools';
+import {fn_equipos_cobertura} from '../../redux/actions/tools';
 import CoberturaTable from '../Table/CoberturaTable';
 
 const mapStateToProps = state =>({
-    catalogoProps: state.tools.catalogo,
+    catalogo_fr: state.tools.catalogo,
 })
 
 const CoberturaModal = (props)=> {
 
-    const {cobertura, fetchDataComponent, catalogoProps} = props;
+    const {fn_equipos_cobertura, fetchDataComponent, catalogo_fr} = props;
     const [eqp, setEquipo] = useState({id: '', equipo: '', consecutivo: '', modelo: '', usuario: ''});
     const [catalogo, setCatalogo] = useState([]);
 
     const handleOnSave = () =>{
         fetchDataComponent(eqp)
+        
     }
      
     const handleSelect = e =>{
         let idequipo = e.target.value        
         if(idequipo > 0){
-            cobertura({idequipo})
+            fn_equipos_cobertura({idequipo})
         }
     }
 
     useEffect(()=>{
-        if(catalogoProps !== undefined){
+        if(catalogo_fr !== undefined){
             
-            setCatalogo(catalogoProps)
+            setCatalogo(catalogo_fr)
         }
        
-    },[catalogoProps])
+    },[catalogo_fr])
 
     const catalogList = catalogo.map((cat, i)=>(
         <option value={cat.idcatalogo} key={i}>{cat.equipo}</option>
@@ -114,4 +115,4 @@ const CoberturaModal = (props)=> {
     
 }
 
-export default connect(mapStateToProps,{cobertura})(CoberturaModal);
+export default connect(mapStateToProps,{fn_equipos_cobertura})(CoberturaModal);

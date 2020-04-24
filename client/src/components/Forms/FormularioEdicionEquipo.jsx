@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { setEquipoRegin ,noSave} from '../../redux/actions/tools';
+import { setEquipoRegin ,noSave, fn_limpiar_eqp} from '../../redux/actions/tools';
 import EquiposModal from '../Modal/EquiposModal';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -11,7 +11,7 @@ const mapStateToProps = state=>({
 
 const FormularioEdicionEquipo =(props)=> {
 
-    const {setEquipoRegin, noSave, userID_fr, asignaciones_fr, idregws_fc } = props;
+    const {setEquipoRegin, noSave, userID_fr, asignaciones_fr, idregws_fc, fn_limpiar_eqp } = props;
     const [info, setInfo]=useState([]);
     const [eqp, setEquipo] = useState({id: '', consecutivo: '', modelo: '', equipo: '', idcategoria: ''})
 
@@ -43,6 +43,7 @@ const FormularioEdicionEquipo =(props)=> {
 
             console.log(cluster);
             setEquipoRegin(cluster);
+            fn_limpiar_eqp();
 
         }else{
             noSave({msg: 'No se ha notificado al sistema de cambios en el equipo', type:'info'})
@@ -52,6 +53,7 @@ const FormularioEdicionEquipo =(props)=> {
 
     const resetEqp = () =>{
         setEquipo({ id: '', consecutivo: '', modelo: ''})
+        fn_limpiar_eqp();
     }
 
     useEffect(()=>{
@@ -101,4 +103,4 @@ const FormularioEdicionEquipo =(props)=> {
     
 }
 
-export default connect(mapStateToProps, {setEquipoRegin, noSave})(FormularioEdicionEquipo);
+export default connect(mapStateToProps, {setEquipoRegin, noSave, fn_limpiar_eqp})(FormularioEdicionEquipo);

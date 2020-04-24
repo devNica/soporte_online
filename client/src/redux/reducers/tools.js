@@ -42,6 +42,13 @@ export default function (state = initialState, action) {
                 reps: action.reps,
             }
 
+        case 'CLEAR_EQP':
+            return {
+                ...state,
+                cobertura: [],
+                eqps: []
+            }
+
 
         default:
             return state;

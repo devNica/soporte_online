@@ -80,10 +80,10 @@ export default {
     },
 
     eqp: {
-        getActivos: id =>
+        inventarioActivo: id =>
             axios.post('/api/tool/eqp-active-list', id).then(res => res.data),
 
-        getCatalogo: () =>
+        catalogoEquipos: () =>
             axios.get('/api/tool/catalogoeqp-list').then(res => res.data),
 
         getTareasEqp: idregws =>

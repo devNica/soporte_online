@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
-import {getEqpActivos} from '../../redux/actions/tools';
+import {fn_equipos_activos} from '../../redux/actions/tools';
 import EqpTable from '../Table/EqpTable';
 
 const mapStateToProps = state =>({
@@ -9,7 +9,7 @@ const mapStateToProps = state =>({
 
 const EquiposModal = (props)=> {
 
-    const {getEqpActivos, catalogo_fr, fetchDataComponent} = props;
+    const {fn_equipos_activos, catalogo_fr, fetchDataComponent} = props;
     const [eqp, setEquipo] = useState({id: '', equipo: '', consecutivo: '', modelo: '', idcategoria: ''});
     const [catalogo, setCatalogo] = useState([]);
 
@@ -20,7 +20,7 @@ const EquiposModal = (props)=> {
     const handleSelect = e =>{
         let idequipo = e.target.value        
         if(idequipo > 0){
-            getEqpActivos({idequipo})
+            fn_equipos_activos({idequipo})
         }
     }
  
@@ -113,4 +113,4 @@ const EquiposModal = (props)=> {
     
 }
 
-export default connect(mapStateToProps,{getEqpActivos})(EquiposModal);
+export default connect(mapStateToProps,{fn_equipos_activos})(EquiposModal);

@@ -1,10 +1,10 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import EquiposModal from '../Modal/EquiposModal';
-import { getCatalogo} from '../../redux/actions/tools';
+import { fn_catalog_eqp} from '../../redux/actions/tools';
 import SearchIcon from '@material-ui/icons/Search';
 
-const FormularioBuscarEquipoHooks = ({fetchDataComponent, getCatalogo}) => {
+const FormularioBuscarEquipoHooks = ({fetchDataComponent, fn_catalog_eqp}) => {
 
     const  [eqp, setEqp] = useState('')
 
@@ -14,7 +14,7 @@ const FormularioBuscarEquipoHooks = ({fetchDataComponent, getCatalogo}) => {
     }
 
     useEffect(()=>{
-        getCatalogo();
+        fn_catalog_eqp();
     })
 
     return (
@@ -53,4 +53,4 @@ const FormularioBuscarEquipoHooks = ({fetchDataComponent, getCatalogo}) => {
     );
 };
 
-export default connect(null, {getCatalogo})(FormularioBuscarEquipoHooks);
+export default connect(null, {fn_catalog_eqp})(FormularioBuscarEquipoHooks);

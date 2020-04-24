@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {noSave, Cobertura} from '../../redux/actions/tools';
+import {noSave, fn_adm_cobertura, fn_limpiar_eqp} from '../../redux/actions/tools';
 import {connect} from 'react-redux';
 import CoberturaModal from '../Modal/CoberturaModal';
 
@@ -10,7 +10,7 @@ const mapStateToProps = state =>({
 
 const CoberturaEditForm = (props) => {
 
-    const {noSave, Cobertura, cobertura_fr, asignaciones_fr, idregws_fc} = props;
+    const {noSave, fn_adm_cobertura, fn_limpiar_eqp, cobertura_fr, asignaciones_fr, idregws_fc} = props;
     //const prevCVG = usePrevious(propsCVG)
     const [info, setInfo] = useState([]);
     const [cobertura, setCobertura] = useState([]);
@@ -95,7 +95,8 @@ const CoberturaEditForm = (props) => {
                 opt: 'ADD'
             }
 
-            Cobertura(data);
+            fn_adm_cobertura(data);
+            fn_limpiar_eqp();
             setOperacion('')
 
         }
@@ -123,7 +124,8 @@ const CoberturaEditForm = (props) => {
                 
             }
 
-            Cobertura(data);
+            fn_adm_cobertura(data);
+            fn_limpiar_eqp();
             setOperacion('')
 
         }
@@ -190,4 +192,4 @@ const CoberturaEditForm = (props) => {
     
 }
 
-export default connect(mapStateToProps,{noSave, Cobertura})(CoberturaEditForm);
+export default connect(mapStateToProps,{noSave, fn_adm_cobertura, fn_limpiar_eqp})(CoberturaEditForm);

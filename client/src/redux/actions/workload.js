@@ -52,7 +52,7 @@ export const ACR = data => dispatch => {
 
 }
 
-export const aprobar = data => dispatch => {
+export const fn_aprobar = data => dispatch => {
     api.workload.aprobar(data).then(res => {
 
         dispatch({
@@ -68,7 +68,7 @@ export const aprobar = data => dispatch => {
     })
 }
 
-export const denegar = data => dispatch => {
+export const fn_denegar = data => dispatch => {
     api.workload.denegar(data).then(res => {
         dispatch({
             type: CREATE_NOTIFICATION,
@@ -82,7 +82,7 @@ export const denegar = data => dispatch => {
     })
 }
 
-export const habililitar_edicion = data => dispatch => {
+export const fn_habililitar_edicion = data => dispatch => {
     api.workload.edicion(data).then(res => {
         dispatch({
             type: CREATE_NOTIFICATION,
@@ -96,7 +96,7 @@ export const habililitar_edicion = data => dispatch => {
     })
 }
 
-export const pausar = data => dispatch => {
+export const fn_pausar = data => dispatch => {
     api.workshop.pausarAtencion(data).then(res => {
         dispatch({
             type: CREATE_NOTIFICATION,
@@ -108,7 +108,7 @@ export const pausar = data => dispatch => {
     })
 }
 
-export const reiniciar = data => dispatch => {
+export const fn_reiniciar = data => dispatch => {
     api.workshop.reiniciarAtencion(data).then(res => {
         dispatch({
             type: CREATE_NOTIFICATION,
@@ -120,7 +120,7 @@ export const reiniciar = data => dispatch => {
     })
 }
 
-export const reasignar = cluster => dispatch => {
+export const fn_reasignar = cluster => dispatch => {
     api.workshop.reasignarAtencion(cluster).then(res => {
 
         //SI SE LOGRO REALIZAR LA REASIGNACION HAGO EL RESTO DE CALCULOS
