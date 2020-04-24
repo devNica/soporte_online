@@ -130,7 +130,25 @@ const workshop = {
     //PROCEDIMIENTO RESTAURAR SEGUIMIENTO DE LA ASIGNACION
     PRSA: (idregws) => {
         return `CALL PROCEDIMIENTO_RESTAURAR_SEGUIMIENTO_ASIGNACION(${idregws})`
-    }
+    },
+
+    //PROCEDIMIENTO ATENCION REGISTRADA TECNICOS
+    PART: (data) => {
+        return `CALL PROCEDIMIENTO_ATENCION_REPORTADA_TECNICO(
+            ${data.fecha},
+            ${data.fk_usuario},
+            ${data.fk_tecnico},
+            ${data.inicio},
+            ${data.final},
+            ${data.fk_eqp},
+            ${data.fk_categoria},
+            ${data.fk_tipo_atencion},
+            ${data.ordsec},
+            ${data.extrasec},
+            ${data.repsec},
+            ${data.tmpsec}
+        )`
+    },
 }
 
 module.exports = workshop;

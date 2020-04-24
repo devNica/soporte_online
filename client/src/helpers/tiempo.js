@@ -42,14 +42,28 @@ export const mayorHora = (inicio, final) => {
     let i_minutos = parseInt(inicio.mm);
     let f_minutos = parseInt(final.mm);
 
-    if (f_hora >= i_hora && (f_hora > 0 && i_hora > 0)) {
-        if (f_minutos >= i_minutos) {
+
+
+    if (f_hora > i_hora) {
+        return { msg: '', flag: true }
+        // if (f_minutos >= i_minutos) {
+        //     console.log('fminutos:', f_minutos, '- iminutos:', i_minutos)
+        //     return { msg: '', flag: true }
+        // } else {
+        //     console.log('fminutos:', f_minutos, '- iminutos:', i_minutos)
+        //     return { msg: 'Incongruencia en las horas', flag: false }
+        // }
+
+    }
+    else if (f_hora === i_hora) {
+        if (f_minutos > i_minutos) {
             return { msg: '', flag: true }
         } else {
             return { msg: 'Incongruencia en las horas', flag: false }
         }
-
-    } else {
+    }
+    else {
+        console.log('fminutos:', f_minutos, '- iminutos:', i_minutos)
         return { msg: 'Incongruencia en las horas', flag: false }
     }
 }
@@ -76,19 +90,14 @@ export const selecionar_tipo_actividad = (inicio, final) => {
 }
 
 
-/*RETORNA EL TIEMPO TRABAJADO EN SEGUNDOS QUE HAY ENTRE DOS FECHAS SIN DISCRIMINAR 
+/*RETORNA EL TIEMPO ORDINARIO TRABAJADO EN SEGUNDOS QUE HAY ENTRE DOS FECHAS SIN DISCRIMINAR 
 SI ENTRE ESTAS HAY FINES DE SEMANAS*/
-export const calcular_tiempo_ordinario = (f_inicio, f_final, opc) => {
+export const TO_CFS = (f_inicio, f_final, opc) => {
 
     const DD = timeTools.datediff(f_inicio, f_final);
     const TD = timeTools.totalTimeInSeconds(f_inicio, f_final);
     const X = 15; //HORAS ENTRE LAS 17:00:00 DE UN DIA Y LAS 08:00:00 DEL DIA SIGUIENTE
     const Y = 3600; //SEGUNDOS DE UNA HORA
-
-    // const ih = t_inicio.hh;
-    // const fh = t_final.hh;
-    // const im = t_inicio.mm;
-    // const fm = t_final.mm;
 
     const ti = f_inicio.substring(f_inicio.length - 13, f_inicio.length - 5)
     const tf = f_final.substring(f_final.length - 13, f_final.length - 5)
@@ -105,59 +114,59 @@ export const calcular_tiempo_ordinario = (f_inicio, f_final, opc) => {
             tb = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
             tc = ((DD * (X + 1) + 1) * Y)
             td = (TD - ((tc) + (ta) + (tb)))
-            return { segundos: td }
+            return { td, ta, tb, tc, tt: TD, dd: DD }
 
         /*INCIO ANTES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 12:00:00*/
         case 2:
             ta = timeTools.timeDifferenceInSeconds('08:00:00', ti)
             tc = ((DD * (X + 1) + 1) * Y)
             td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            return { td, ta, tb: 0, tc, tt: TD, dd: DD }
 
         /*INCIO ANTES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 08:00:00*/
         case 3:
             ta = timeTools.timeDifferenceInSeconds('08:00:00', ti)
             tc = ((DD * (X + 1)) * Y)
             td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            return { td, ta, tb: 0, tc, tt: TD, dd: DD }
 
         /*INICIO ANTES DE LAS 08:00:00 FINALIZO ANTES DE LAS 08:00:00*/
         case 4:
-            ta = timeTools.timeDifferenceInSeconds('08:00:00', tf)
-            ta = ((X * 3600) - ta)
-            tb = timeTools.timeDifferenceInSeconds('08:00:00', ti)
+            tb = timeTools.timeDifferenceInSeconds('08:00:00', tf)
+            tb = ((X * 3600) - tb)
+            ta = timeTools.timeDifferenceInSeconds('08:00:00', ti)
             tc = ((((DD - 1) * X) + DD) * Y)
             td = (TD - ((tc) + (ta) + (tb)))
-            return { segundos: td }
+            return { td, ta, tb: (54000 - tb), tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 17:00:00 */
         case 5:
-            ta = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
+            tb = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
             tc = ((DD * (X + 1) + 1) * Y)
             td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            return { td, ta: 0, tb, tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 12:00:00 FINALIZO DESPUES DE LAS 17:00:00*/
         case 6:
-            ta = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
+            tb = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
             tc = ((DD * (X + 1)) * Y)
-            td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            td = (TD - ((tc) + (tb)))
+            return { td, ta: 0, tb, tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 17:00:00 FINALIZO DESPUES DE LAS 17:00:00 */
         case 7:
-            ta = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
-            tb = timeTools.timeDifferenceInSeconds(ti, '17:00:00')
-            tb = ((X * 3600) - tb)
+            tb = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
+            ta = timeTools.timeDifferenceInSeconds(ti, '17:00:00')
+            ta = ((X * 3600) - ta)
             tc = ((((DD - 1) * X) + DD) * Y)
             td = (TD - ((tc) + (tb) + (ta)))
-            return { segundos: td }
+            return { td, ta: (54000 - ta), tb, tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 12:00:00*/
         case 8:
             tc = ((DD * (X + 1) + 1) * Y)
             td = (TD - (tc))
-            return { segundos: td }
+            return { td, ta: 0, tb: 0, tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 12:00:00 FINALIZO DESPUES DE LAS 12:00:00*/
         /*INICIO DESPUES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 08:00:00*/
@@ -165,13 +174,13 @@ export const calcular_tiempo_ordinario = (f_inicio, f_final, opc) => {
         case 10:
             tc = ((DD * (X + 1)) * Y)
             td = (TD - (tc))
-            return { segundos: td }
+            return { td, ta: 0, tb: 0, tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 12:00:00 FINALIZO DESPUES DE LAS 08:00:00*/
         case 11:
             tc = (((DD * X) + (DD - 1)) * Y)
             td = (TD - (tc))
-            return { segundos: td }
+            return { td, ta: 0, tb: 0, tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 17:00:00 FINALIZO DESPUES DE LAS 12:00:00*/
         case 12:
@@ -179,7 +188,7 @@ export const calcular_tiempo_ordinario = (f_inicio, f_final, opc) => {
             ta = ((X * 3600) - ta)
             tc = ((((DD - 1) * X) + DD) * Y)
             td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            return { td, ta: (54000 - ta), tb: 0, tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 17:00:00 FINALIZO DESPUES DE LAS 08:00:00*/
         case 13:
@@ -187,33 +196,34 @@ export const calcular_tiempo_ordinario = (f_inicio, f_final, opc) => {
             ta = ((X * 3600) - ta)
             tc = ((((DD - 1) * X) + (DD - 1)) * Y)
             td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            return { td, ta: (54000 - ta), tb: 0, tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 17:00:00 FINALIZO ANTES DE LAS 08:00:00*/
         case 14:
-            ta = timeTools.timeDifferenceInSeconds('08:00:00', tf)
-            ta = ((X * 3600) - ta)
-            tb = timeTools.timeDifferenceInSeconds(ti, '17:00:00')
+            tb = timeTools.timeDifferenceInSeconds('08:00:00', tf)
             tb = ((X * 3600) - tb)
+            ta = timeTools.timeDifferenceInSeconds(ti, '17:00:00')
+            ta = ((X * 3600) - ta)
             tc = ((((DD - 2) * X) + (DD - 1)) * Y)
             td = (TD - ((tc) + (tb) + (ta)))
-            return { segundos: td }
+            return { td, ta: (54000 - ta), tb: (54000 - tb), tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 12:00:00 FINALIZO ANTES DE LAS 08:00:00*/
         case 15:
-            ta = timeTools.timeDifferenceInSeconds('08:00:00', tf)
-            ta = ((X * 3600) - ta)
+
+            tb = timeTools.timeDifferenceInSeconds('08:00:00', tf)
+            tb = ((X * 3600) - tb)
             tc = (((DD - 1) * (X + 1)) * Y)
-            td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            td = (TD - ((tc) + (tb)))
+            return { td, ta: 0, tb: (5400 - tb), tc, tt: TD, dd: DD }
 
         /*INICIO DESPUES DE LAS 08:00:00 FINALIZO ANTES DE LAS 08:00:00*/
         case 16:
-            ta = timeTools.timeDifferenceInSeconds('08:00:00', tf)
-            ta = ((X * 3600) - ta)
+            tb = timeTools.timeDifferenceInSeconds('08:00:00', tf)
+            tb = ((X * 3600) - tb)
             tc = ((((DD - 1) * X) + DD) * Y)
-            td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            td = (TD - ((tc) + (tb)))
+            return { td, ta: 0, tb: (54000 - tb), tc, tt: TD, dd: DD }
 
         default:
             return {}
@@ -282,6 +292,11 @@ export const nolaborable = (f_inicio, f_final) => {
     let a = 0, b = 0, nonWorking = 0;
     const aWorkDay = 28800; //TIEMPO EN SEGUNDOS DE UN DIA DE TRABAJO
 
+    // console.log('DD', DD);
+    // console.log('WD', WD);
+    // console.log('TF', tf);
+    // console.log('isWeekend', weekend);
+
     switch (weekend) {
         case 1:
             if (tf < '08:00:00') {
@@ -309,13 +324,13 @@ export const nolaborable = (f_inicio, f_final) => {
             break;
     }
 
-    return nonWorking
+    return { nwk: nonWorking }
 
 }
 
 /*LOS ARGUMENTOS DEBEN SER PASADOS EN FORMATO ISO8601*/
 /*CALCULA EL TIEMPO ORDINARIO TRABAJADO SIN TOMAR EN CUENTA FINES DE SEMANAS ENTRE LAS FECHAS*/
-export const funcionsinnombre = (f_inicio, f_final, opc) => {
+export const TO_SFS = (f_inicio, f_final, opc) => {
 
     const DD = timeTools.datediff(f_inicio, f_final);
     const TD = timeTools.totalTimeInSeconds(f_inicio, f_final);
@@ -333,63 +348,63 @@ export const funcionsinnombre = (f_inicio, f_final, opc) => {
     switch (opc) {
         /*INCIO ANTES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 17:00:00*/
         case 1:
-            ta = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
-            tb = timeTools.timeDifferenceInSeconds('08:00:00', ti)
+            tb = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
+            ta = timeTools.timeDifferenceInSeconds('08:00:00', ti)
             tc = ((((DD * X) + (((DD - WD) + 1) * Z)) + (DD - (DD - WD))) * Y)
             td = (TD - ((tc) + (ta) + (tb)))
-            return { segundos: td }
+            return { td, ta, tb, tc, tt: TD, dd: DD, wd: WD }
 
         /*INCIO ANTES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 12:00:00*/
         case 2:
             ta = timeTools.timeDifferenceInSeconds('08:00:00', ti)
             tc = (((DD * X) + (((DD - WD) + 1) * Z) + (DD - (DD - WD))) * Y)
             td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            return { td, ta, tb: 0, tc, tt: TD, dd: DD, wd: WD }
 
         /*INCIO ANTES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 08:00:00*/
         case 3:
             ta = timeTools.timeDifferenceInSeconds('08:00:00', ti)
             tc = (((DD * 15) + (((DD - WD) + 1) * Z) + (DD - (DD - WD + 1))) * Y)
             td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            return { td, ta, tb: 0, tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO ANTES DE LAS 08:00:00 FINALIZO ANTES DE LAS 08:00:00*/
         case 4:
-            ta = timeTools.timeDifferenceInSeconds('08:00:00', tf)
-            ta = (X * Y) - ta
-            tb = timeTools.timeDifferenceInSeconds('08:00:00', ti)
+            tb = timeTools.timeDifferenceInSeconds('08:00:00', tf)
+            tb = (X * Y) - tb
+            ta = timeTools.timeDifferenceInSeconds('08:00:00', ti)
             tc = ((((DD - 1) * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 1))) * Y)
             td = (TD - ((tc) + (ta) + (tb)))
-            return { segundos: td }
+            return { td, ta, tb: (54000 - tb), tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 17:00:00 */
         case 5:
-            ta = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
+            tb = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
             tc = (((DD * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD))) * Y)
-            td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            td = (TD - ((tc) + (tb)))
+            return { td, ta: 0, tb, tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 12:00:00 FINALIZO DESPUES DE LAS 17:00:00*/
         case 6:
-            ta = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
+            tb = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
             tc = (((DD * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 1))) * Y)
-            td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            td = (TD - ((tc) + (tb)))
+            return { td, ta: 0, tb, tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 17:00:00 FINALIZO DESPUES DE LAS 17:00:00 */
         case 7:
-            ta = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
-            tb = timeTools.timeDifferenceInSeconds(ti, '17:00:00')
-            tb = (X * Y) - tb
+            tb = timeTools.timeDifferenceInSeconds(tf, '17:00:00')
+            ta = timeTools.timeDifferenceInSeconds(ti, '17:00:00')
+            ta = (X * Y) - ta
             tc = ((((DD - 1) * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 1))) * Y)
             td = (TD - ((tc) + (ta) + (tb)))
-            return { segundos: td }
+            return { td, ta: (54000 - ta), tb, tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 12:00:00*/
         case 8:
             tc = (((DD * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD))) * Y)
             td = (TD - (tc))
-            return { segundos: td }
+            return { td, ta: 0, tb: 0, tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 12:00:00 FINALIZO DESPUES DE LAS 12:00:00*/
         /*INICIO DESPUES DE LAS 08:00:00 FINALIZO DESPUES DE LAS 08:00:00*/
@@ -397,13 +412,16 @@ export const funcionsinnombre = (f_inicio, f_final, opc) => {
         case 10:
             tc = (((DD * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 1))) * Y)
             td = (TD - (tc))
-            return { segundos: td }
+            return { td, ta: 0, tb: 0, tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 12:00:00 FINALIZO DESPUES DE LAS 08:00:00*/
         case 11:
-            tc = (((DD * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 2))) * Y)
-            td = (TD - (tc))
-            return { segundos: td }
+            tb = Math.abs(timeTools.timeDifferenceInSeconds(tf, '08:00:00') * (WD - 2))
+            tc = (((DD * X) + ((DD - 1) * Z)) * Y)
+            td = (TD - ((tc) + (tb)))
+            //tc = (((DD * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 2))) * Y)
+            //td = (TD - (tc))
+            return { td, ta: 0, tb, tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 17:00:00 FINALIZO DESPUES DE LAS 12:00:00*/
         case 12:
@@ -411,7 +429,7 @@ export const funcionsinnombre = (f_inicio, f_final, opc) => {
             ta = (X * Y) - ta
             tc = ((((DD - 1) * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 1))) * Y)
             td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            return { td, ta: (54000 - ta), tb: 0, tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 17:00:00 FINALIZO DESPUES DE LAS 08:00:00*/
         case 13:
@@ -419,33 +437,33 @@ export const funcionsinnombre = (f_inicio, f_final, opc) => {
             ta = (X * Y) - ta
             tc = ((((DD - 1) * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 2))) * Y)
             td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            return { td, ta: (54000 - ta), tb: 0, tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 17:00:00 FINALIZO ANTES DE LAS 08:00:00*/
         case 14:
-            ta = timeTools.timeDifferenceInSeconds('08:00:00', tf)
-            ta = (X * Y) - ta
-            tb = timeTools.timeDifferenceInSeconds(ti, '17:00:00')
+            tb = timeTools.timeDifferenceInSeconds('08:00:00', tf)
             tb = (X * Y) - tb
+            ta = timeTools.timeDifferenceInSeconds(ti, '17:00:00')
+            ta = (X * Y) - ta
             tc = ((((DD - 2) * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 2))) * Y)
             td = (TD - ((tc) + (tb) + (ta)))
-            return { segundos: td }
+            return { td, ta: (54000 - ta), tb: (54000 - tb), tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 12:00:00 FINALIZO ANTES DE LAS 08:00:00*/
         case 15:
-            ta = timeTools.timeDifferenceInSeconds('08:00:00', tf)
-            ta = (X * Y) - ta
+            tb = timeTools.timeDifferenceInSeconds('08:00:00', tf)
+            tb = (X * Y) - tb
             tc = ((((DD - 1) * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 2))) * Y)
-            td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            td = (TD - ((tc) + (tb)))
+            return { td, ta: 0, tb: (54000 - tb), tc, tt: TD, dd: DD, wd: WD }
 
         /*INICIO DESPUES DE LAS 08:00:00 FINALIZO ANTES DE LAS 08:00:00*/
         case 16:
-            ta = timeTools.timeDifferenceInSeconds('08:00:00', tf)
-            ta = (X * Y) - ta
+            tb = timeTools.timeDifferenceInSeconds('08:00:00', tf)
+            tb = (X * Y) - tb
             tc = ((((DD - 1) * X) + ((DD - WD + 1) * Z) + (DD - (DD - WD + 1))) * Y)
-            td = (TD - ((tc) + (ta)))
-            return { segundos: td }
+            td = (TD - ((tc) + (tb)))
+            return { td, ta: 0, tb: (54000 - tb), tc, tt: TD, dd: DD, wd: WD }
 
         default:
             break;

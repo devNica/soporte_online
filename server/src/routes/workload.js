@@ -160,6 +160,14 @@ router.post('/workload/aprobar-asignacion', (req, res) => {
 })
 
 router.post('/workload/crear-atencion-externa-taller', (req, res) => {
+    console.log(req.body)
+
+    workload.crear_atencion_tecnico(req.body.data).then(response => {
+        res.status(201).json({ msg: 'La atencion ha sido reportada satisfactoriamente', flag: true })
+    }).catch(err => {
+        console.log(err);
+        res.status(200).json({ msg: 'Fallo Registro de Atencion Reportada por el Tecnico', flag: false, });
+    })
 
 })
 

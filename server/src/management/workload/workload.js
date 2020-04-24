@@ -1,5 +1,5 @@
 var mysql = require('mysql2/promise');
-var { FAFT, CDSC, PHEA, PRSA } = require('../querys/workshop');
+var { FAFT, CDSC, PHEA, PRSA, PART } = require('../querys/workshop');
 var { Asistencia } = require('../querys/checkin');
 var { cnc } = require('../../database/connection');
 var config = require('../../database/config');
@@ -22,6 +22,10 @@ const process = {
 
     crear_asistencia: (nota, recepcionestado, selector, idtecnico, carnet, fecha) => {
         return cnc(mysql, configuration, Asistencia(nota, recepcionestado, selector, idtecnico, carnet, fecha))
+    },
+
+    crear_atencion_tecnico: (data) => {
+        return cnc(mysql, configuration, PART(data))
     },
 
     //CONEXION A CONSULTA PARA DENEGAR CIERRE DE ATENCION

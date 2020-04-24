@@ -2,6 +2,23 @@ import api from '../../api/api';
 import { CREATE_NOTIFICATION } from './types'
 
 
+export const registrar_atencion = data => dispatch => {
+    api.workload.crearAtencionTecnico(data).then(res => {
+
+        dispatch({
+            type: CREATE_NOTIFICATION,
+            payload: {
+                msg: res.msg,
+                type: 'success'
+            }
+        })
+
+
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
 export const crear_assistencia = data => dispatch => {
     api.workload.crearAsistencia(data).then(res => {
 

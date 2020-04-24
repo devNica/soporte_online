@@ -66,7 +66,7 @@ export default {
         restaurarSeguimiento: data =>
             axios.post('/api/workload/restaurar-seguimiento-asignacion', data).then(res => res.data),
 
-        crearAtencionExterna: data =>
+        crearAtencionTecnico: data =>
             axios.post('/api/workload/crear-atencion-externa-taller', { data }).then(res => res.data),
 
     },

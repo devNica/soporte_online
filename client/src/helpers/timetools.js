@@ -1,7 +1,10 @@
 export const timeTools = {
     /*RETORNA UNA FECHA EN FORMATO ISO8601 CON LOS ARGUMENTOS FECHA Y HORA*/
     fechaISO8601: (fecha, hora) => {
-        const a = new Date(fecha).toISOString();
+
+        let a = fecha.toString();
+        a = a.substring(0, (a.length - 42))
+        a = new Date(a).toISOString();
         let b = `${a.substring(0, 10)}T${hora.hh}:${hora.mm}:00.000Z`
         return b
     },
@@ -52,6 +55,29 @@ export const timeTools = {
 
     },
 
+    identifyTimeWindow: (f_inicio, f_final) => {
+        let a = ([5, 6].indexOf(new Date(f_inicio).getDay()) !== -1);
+        let b = ([5, 6].indexOf(new Date(f_final).getDay()) !== -1);
+
+        /**NINGUNA DE LAS FECHAS ES FIN DE SEMANA*/
+        if (!a && !b) {
+            return 1;
+        }
+        /**FECHA DE FINALIZACION ES FIN DE SEMANA */
+        if (!a && b) {
+            return 2;
+        }
+        /**FECHA DE INICIO ES FIN DE SEMANA */
+        if (a && !b) {
+            return 3;
+        }
+        /**AMBAS FECHAS SON FIN DE SEMANA*/
+        if (a && b) {
+            return 4;
+        }
+
+    },
+
     /*RETORNA EL INDICE DE LA FECHA QUE SE LE PASA EN EL ARGUMENTO
     LUNES = 0;
     MARTES = 1;
@@ -66,6 +92,58 @@ export const timeTools = {
         let n = d.getDay();
         return n;
     },
+
+    /* 
+    CSF: RESULTADOS QUE INCLUYE EL TIEMPO EN FIN DE SEMANA,
+    SFS: RESULTADOS QUE EXCLUYEN EL TIEMPO EN FIN DE SEMANA
+    */
+    maxOverTime: (cfs, nonWorking) => {
+
+        let alpha = cfs.ta + cfs.tb + cfs.tc;
+        let ganma = cfs.tc;
+        let beta = cfs.tt - (cfs.td - nonWorking.nwk);
+        let kappa = 3600;
+        let delta = 32400;
+        //console.log('alpha: ', alpha, ' ganma: ', ganma, ' beta: ', beta)
+        let rho = 0;
+
+        if ((alpha + kappa) > beta) {
+            if (cfs.dd < 1) {
+                if (ganma < 3600) {
+                    rho = beta;
+                } else {
+                    rho = alpha - kappa;
+                }
+
+            } else {
+                rho = beta - (cfs.dd * delta) - (cfs.ta + cfs.tb)
+            }
+        } else {
+            if (cfs.dd < 1) {
+                rho = beta;
+            } else {
+                if (ganma < 61200) {
+                    rho = beta - (cfs.dd * delta) - (cfs.ta + cfs.tb)
+                } else {
+                    rho = beta - (cfs.dd * delta) - ((cfs.dd + 1) * (cfs.ta + cfs.tb))
+                }
+
+            }
+        }
+
+        let overtime = rho / kappa;
+        return overtime * 3600;
+        //console.log('overtime:', overtime);
+
+    },
+
+    timeStringToSeconds: (time) => {
+        const horas_to_segundos = parseInt(time.hh) * 3600;
+        const minutos_to_segundos = parseInt(time.mm) * 60;
+        let segundos = horas_to_segundos + minutos_to_segundos;
+        return segundos;
+    },
+
 
 
 }
