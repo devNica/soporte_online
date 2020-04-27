@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
+import Progressbar from '../progressbar/Progressbar';
 
 const mapStateToProps = state =>({
     user_fr: state.auth.user,
@@ -24,12 +25,10 @@ const AdministrarAsignacionForm = (props) =>{
     const [tecnico, setTecnico] = useState('');
     const [nombre, setNombre] = useState('');
     const [info, setInfo] = useState('');
-    const [loading, setLoading] = useState(false);
     const [tec, setTec] = useState([]);
-    //const [tecnicos, setTecnicos] = useState([]);
     const [display_none, setDisplay] = useState('d-none')
-    const [operacion, setOperacion] = useState('');
-
+    const [showProgressBar, setProgressBar]= useState('d-none') 
+    
     const onclickPausar= () =>{
         
         let data={
@@ -37,13 +36,10 @@ const AdministrarAsignacionForm = (props) =>{
             idregws: info.idregws,
         }
 
+        setProgressBar('');
         fn_pausar(data);
-        setLoading(true);
-        setOperacion('pausar')
-
-        setTimeout(() => {
-            history.push('/profile');
-        }, 3500);
+        handleProgressbar()
+        
 
     }
 
@@ -51,7 +47,7 @@ const AdministrarAsignacionForm = (props) =>{
         
         let tec = tecnicos_fr.filter(item=>item.idusuario === parseInt(idtecnico))
         setTec(tec);
-        setOperacion('reasignar');
+        
     }
 
 
@@ -77,10 +73,10 @@ const AdministrarAsignacionForm = (props) =>{
             idrevision: info.idcategoria
         }
 
+        setProgressBar('');
         fn_reasignar(data);
-        setTimeout(() => {
-            history.push('/profile');
-        }, 3500);
+        handleProgressbar();
+        
 
     }
 
@@ -90,13 +86,10 @@ const AdministrarAsignacionForm = (props) =>{
             idregws: info.idregws,
         }
 
+        setProgressBar('');
         fn_reiniciar(data);
-        setLoading(true);
-        setOperacion('reiniciar');
+        handleProgressbar()
         
-        setTimeout(() => {
-            history.push('/profile');
-        }, 3500);
     }
 
     const onClickAprobar=()=>{
@@ -107,13 +100,10 @@ const AdministrarAsignacionForm = (props) =>{
             idcateqp: info.idcategoria
         }
 
+        setProgressBar('');
         fn_aprobar(data);
-        setLoading(true);
-        setOperacion('aprobar');
-        
-        setTimeout(() => {
-            history.push('/profile');
-        }, 3500);
+        handleProgressbar()
+       
         
     }
 
@@ -122,14 +112,11 @@ const AdministrarAsignacionForm = (props) =>{
         let data={
             idregws: info.idregws
         }
-        setLoading(true);
-        setOperacion('denegar');
-
+        
+        setProgressBar('');
         fn_denegar(data);
-
-        setTimeout(() => {
-            history.push('/profile');
-        }, 3500);
+        handleProgressbar()
+       
     }
 
     const onclickHabilitarEdicion = () =>{
@@ -137,16 +124,33 @@ const AdministrarAsignacionForm = (props) =>{
         let data={
             idregws: info.idregws
         }
-        setLoading(true);
-        setOperacion('editar');
-
+        
+        setProgressBar('');
         fn_habililitar_edicion(data);
+        handleProgressbar();
+       
 
-        setTimeout(() => {
-            history.push('/profile');
-        }, 3500);
     }
 
+
+    const handleProgressbar = () => {
+        let progressBar = document.getElementsByClassName('progress-bar')[0]
+        let contador = 0;
+
+        let proceso = setInterval(() => {
+            const computedStyle = getComputedStyle(progressBar);
+            const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
+            progressBar.style.setProperty('--width', width + .1)
+
+            contador++;
+
+            if (contador === 500) {
+                clearInterval(proceso)
+                history.push('/profile');
+            }
+
+        }, 5)
+    }
 
    
     useEffect(()=>{
@@ -181,6 +185,9 @@ const AdministrarAsignacionForm = (props) =>{
     const inicio = (
         <Fragment>
             <div className="row">
+                
+                <Progressbar visible={showProgressBar}/>
+
                 <div className="col-12 col-sm-12 col-md-12 col-lg-9">
                     <div className="jumbotron">
                     <h1 className="display-5">Hola, {nombre}!</h1>
@@ -317,26 +324,11 @@ const AdministrarAsignacionForm = (props) =>{
         </Fragment>
     )
 
-    const msg = (
-        <div>
-            <div className="progress">
-                <div 
-                    className="progress-bar progress-bar-striped bg-success" 
-                    role="progressbar" 
-                    aria-valuenow="0" 
-                    aria-valuemin="0" 
-                    aria-valuemax="100"
-                    id="progressbar"
-                    >
-                    
-                </div>
-            </div>
-        </div>
-    )
+    //const msg = ( <Progressbar/> )
 
     return (
         <div className="my-5 mx-5">
-            { loading ? null: inicio }
+            {inicio}
 
         </div>
     );

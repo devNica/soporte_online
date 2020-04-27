@@ -46,14 +46,6 @@ export const mayorHora = (inicio, final) => {
 
     if (f_hora > i_hora) {
         return { msg: '', flag: true }
-        // if (f_minutos >= i_minutos) {
-        //     console.log('fminutos:', f_minutos, '- iminutos:', i_minutos)
-        //     return { msg: '', flag: true }
-        // } else {
-        //     console.log('fminutos:', f_minutos, '- iminutos:', i_minutos)
-        //     return { msg: 'Incongruencia en las horas', flag: false }
-        // }
-
     }
     else if (f_hora === i_hora) {
         if (f_minutos > i_minutos) {

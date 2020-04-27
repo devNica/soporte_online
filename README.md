@@ -24,8 +24,8 @@ de equipos, sin tener que recurrir al habitual MsWord.
 
 ## Autores ✒️
 
-* **Ing. Alejandro G. Sanchez(Ingeniero Electronico UNI, con mas de 12 años de experiencia)
-* **Ing. Miguel Rosales (Ingeniero en Computacion UNI, con mas de 25 años de experiencia)
-* **Lic. Vanessa Cruma (Web Designer and Developer)
+* Ing. Alejandro G. Sanchez(Ingeniero Electronico UNI, con mas de 12 años de experiencia)
+* Ing. Miguel Rosales (Ingeniero en Computacion UNI, con mas de 25 años de experiencia)
+* Lic. Vanessa Cruma (Web Designer and Developer)
 
 
