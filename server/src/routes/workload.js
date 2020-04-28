@@ -119,6 +119,7 @@ router.post('/workload/aprobar-asignacion', (req, res) => {
             let compensation = response.rows[0][0].COMPENSATION;
 
             console.log('compensacion calculada', compensation);
+            compensation = parseFloat(compensation).toFixed(4);
 
             //ESTABLECE LOS VALORES DE DESEMPEÑO
             bio.actualizarDesempeno(arrayID.length, compensation, data.idregws).then(response => {

@@ -34,7 +34,7 @@ const UsuariosTable = (props)=>{
 
             let func='clickEvent'
             for(let i=0; i<empleados.data.rows.length; i++){
-                Object.defineProperty(empleados.data.rows[i], func, {value: handleOnClick, writable: true})
+                Object.defineProperty(empleados.data.rows[i], func, {value: handleOnClick, configurable: true})
                     
             }
             setData(empleados.data);

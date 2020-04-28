@@ -13,18 +13,18 @@ const reportes = {
         DATE_FORMAT(RT.inicio, '%d-%m-%Y %H:%i:%s') as inicio,
         DATE_FORMAT(RT.final, '%d-%m-%Y %H:%i:%s') as final,
 
-        SEC_TO_TIME(RT.ordsec) as ordtmp,
-        SEC_TO_TIME(RT.pausec) as pautmp,
-        SEC_TO_TIME(RT.extrasec) as extratmp,
-        SEC_TO_TIME(RT.repsec) as reptmp,
-        SEC_TO_TIME(RT.shdsec) as shdtmp,
-        SEC_TO_TIME(RT.tmpsec) as tmp,
+        SEC_TO_TIME(RT.tmp_ordinario) as ordtmp,
+        SEC_TO_TIME(RT.tmp_pausado) as pautmp,
+        SEC_TO_TIME(RT.tmp_extra_t1) as extratmp,
+        SEC_TO_TIME(RT.tmp_extra_t2) as reptmp,
+        SEC_TO_TIME(RT.tmp_ajustado) as shdtmp,
+        SEC_TO_TIME(RT.tmp_acumulado) as tmp,
         RT.dias,
 
         IF(ISNULL(FORMAT(20*LOG10(RT.dias),2)),0,FORMAT(20*LOG10(RT.dias),2)) as diaslog,
-        IF(ISNULL(FORMAT(20*LOG10(RT.shdsec),2)),0,FORMAT(20*LOG10(RT.shdsec),2)) as shdlog,
-        IF(ISNULL(FORMAT(20*LOG10(RT.ordsec),2)),0,FORMAT(20*LOG10(RT.ordsec),2)) as ordlog,
-        IF(ISNULL(FORMAT(20*LOG10(RT.tmpsec),2)),0,FORMAT(20*LOG10(RT.tmpsec),2)) as tmplog,
+        IF(ISNULL(FORMAT(20*LOG10(RT.tmp_ajustado),2)),0,FORMAT(20*LOG10(RT.tmp_ajustado),2)) as shdlog,
+        IF(ISNULL(FORMAT(20*LOG10(RT.tmp_ordinario),2)),0,FORMAT(20*LOG10(RT.tmp_ordinario),2)) as ordlog,
+        IF(ISNULL(FORMAT(20*LOG10(RT.tmp_acumulado),2)),0,FORMAT(20*LOG10(RT.tmp_acumulado),2)) as tmplog,
         IF(ISNULL(FORMAT(20*LOG10(TIME_TO_SEC(RV.Tiempo)),2)),0,FORMAT(20*LOG10(TIME_TO_SEC(RV.Tiempo)),2)) as trvlog,
 
         USR.nick

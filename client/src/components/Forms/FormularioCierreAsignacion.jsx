@@ -101,7 +101,7 @@ const FormularioCierreAsignacion = (props) =>{
         let data={
             idregin: parseInt(equipo[0].idregin),
             idregws: parseInt(idregws),
-            stregws: 6, //SOLUCIONADO 
+            stregws: 1, //SOLUCIONADO 
             stregin: 4, //ENTREGADO
         }
 
