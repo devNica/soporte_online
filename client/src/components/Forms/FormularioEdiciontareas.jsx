@@ -35,12 +35,12 @@ const FormularioEdiciontareas= (props) => {
                 setOperacion('add');
 
             }else{
-                noSave({msg: `El N° de Tareas para este equipo, ha llegado a su limite`, type: 'info'});
+                noSave({msg: `El N° de Tareas para este equipo, ha llegado a su limite`, type: 'info', time: 3500});
             }
 
 
         }else{
-            noSave({msg: `La tarea: ${tareaEqp.tarea}, ya fue agregada`, type: 'info'});
+            noSave({msg: `La tarea: ${tareaEqp.tarea}, ya fue agregada`, type: 'info', time: 3500});
 
         }
 
@@ -64,11 +64,11 @@ const FormularioEdiciontareas= (props) => {
                 setOperacion('delete')
 
             }else{
-                noSave({msg: 'Esta tarea ya fue finalizada y no puede ser eliminada', type: 'danger'});
+                noSave({msg: 'Esta tarea ya fue finalizada y no puede ser eliminada', type: 'danger', time: 3500});
             }
 
         }else{
-            noSave({msg: 'Esta tarea creada por el Administrador, no puede ser eliminada', type: 'danger'});
+            noSave({msg: 'Esta tarea creada por el Administrador, no puede ser eliminada', type: 'danger', time: 3500});
         }
 
 
@@ -99,7 +99,7 @@ const FormularioEdiciontareas= (props) => {
 
         }
         else{
-            noSave({msg: 'Esta tarea ya fue finalizada', type: 'warning'});
+            noSave({msg: 'Esta tarea ya fue finalizada', type: 'warning', time: 3500});
         }
     }
 
@@ -190,7 +190,7 @@ const FormularioEdiciontareas= (props) => {
 
         }
         if(operacion === ''){
-            noSave({msg:'No se ha notificado al sistema de cambios en las tareas del equipo', type:'info'})
+            noSave({msg:'No se ha notificado al sistema de cambios en las tareas del equipo', type:'info', time: 3500})
         }
 
 

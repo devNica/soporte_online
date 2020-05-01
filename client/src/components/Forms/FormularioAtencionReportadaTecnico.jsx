@@ -124,7 +124,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                     if(isWeekend < 2){
                         
                         if(t2_seg > 0){
-                            noSave({msg: 'T2 no puede ser diferente de 00:00 porque no hay fines de semana entre las fechas', type:'danger'})
+                            noSave({msg: 'T2 no puede ser diferente de 00:00 porque no hay fines de semana entre las fechas', type:'danger', time: 3500})
                             return;
                         }else{
                             overtime = t1_seg;
@@ -157,7 +157,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                         }
 
                         //console.log(data);
-                        let msg = 'Desea procesar su atencion con los siguientes datos:\n' +
+                        let msg = 'DESEA PROCESAR SU ATENCION CON LOS DATOS SIG:\n\n' +
                                    `Fecha Inicio: ${data.inicio}\n`+
                                    `Fecha Final: ${data.final}\n`+
                                    `Horas Extras T1: ${T1.hh}:${T1.mm}\n`+
@@ -174,17 +174,17 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                         }
                        
                     }else{
-                        noSave({msg: 'El tiempo extra indicado es incongruente', type:'danger'})
+                        noSave({msg: 'El tiempo extra indicado es incongruente', type:'danger', time: 3500})
                     }
                     
                 }else{
-                    noSave({msg: 'El campo del usuario o del equipo, esta vacio', type:'warning'})
+                    noSave({msg: 'El campo del usuario o del equipo, esta vacio', type:'warning', time: 3500})
                 }
             }else{
-                noSave({msg: coherencia.msg, type:'warning'})
+                noSave({msg: coherencia.msg, type:'warning', time: 3500})
             }
         }else{
-            noSave({msg: 'No ha seleccionado el tipo de Actividad que desea registrar', type:'warning'})
+            noSave({msg: 'No ha seleccionado el tipo de Actividad que desea registrar', type:'warning', time: 3500})
         }
         
             
@@ -193,6 +193,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
     /**ESTAS SON HORAS QUE NO SE PERMITE SELECCIONAR EN EL COMPONENTE */
     const excluirHoras =
     [
+        setHours(setMinutes(new Date(), 0), 0),
         setHours(setMinutes(new Date(), 0), 8),
         setHours(setMinutes(new Date(), 0), 12),
         setHours(setMinutes(new Date(), 10), 12),
@@ -207,7 +208,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
     return (
         <Fragment>
 
-            <h4 style={{color: '#269bd9'}} className="text-center mt-2 mb-4">FICHA REGISTRO DE ATENCIONES EXTERNAS AL TALLER</h4>
+            <h4 style={{color: '#355191'}} className="text-center mt-2 mb-4 font-weight-bold">FICHA REGISTRO DE ATENCIONES EXTERNAS AL TALLER</h4>
             
             <form className="border px-4 py-2 mb-4" onSubmit={handleOnSubmit}>
                 <div className="row">
@@ -231,7 +232,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                     <div className="col-12 col-sm-12 col-md-5 col-lg-5">
                         <div className="form-group my-4">
                             
-                            <p htmlFor=""  style={{color: '#269bd9'}} className="h5">
+                            <p htmlFor=""  style={{color: '#355e89'}} className="h5 font-weight-bold">
                                 Por favor seleccione la fecha y la hora en que Inicio el proceso
                                 de atencion
                             </p>
@@ -256,7 +257,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
 
                     <div className="col-12 col-sm-12 col-md-5 col-lg-5">
                         <div className="form-group my-4">
-                        <p htmlFor=""  style={{color: '#269bd9'}} className="h5">
+                        <p htmlFor=""  style={{color: '#355e89'}} className="h5 font-weight-bold">
                                 Por favor seleccione la fecha y la hora en que finalizó el proceso
                                 de atencion
                             </p>
@@ -283,13 +284,13 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                 <div className="row border border-primary">
                     <div className="col-12 col-sm-12">
                         <div className="form-group my-4">
-                            <p style={{color: '#ff9800'}} className="text-center">
+                            <p style={{color: '#355e89'}} className="text-center">
                                 ¿Ocupó tiempo fuera de la jornada ordinaria para realizar esta atención?
                                 Por favor especifique la cantidad en [horas:minutos]
                             </p>
                             <div className="row mt-4">
                                 <div className="col-6">
-                                    <p className="text-center font-weight-bold" style={{color: '#4daedb'}}>
+                                    <p className="text-center font-weight-bold" style={{color: '#e41959'}}>
                                         Extra T1:
                                     </p>
                                     <TimeInput
@@ -300,7 +301,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                                     />
                                 </div>
                                 <div className="col-6">
-                                    <p className="text-center font-weight-bold" style={{color: '#4daedb'}}>
+                                    <p className="text-center font-weight-bold" style={{color: '#e41959'}}>
                                         Extra T2:
                                     </p>
                                     <TimeInput
@@ -328,7 +329,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                 <div className="row">
                     <div className="col-12 col-md-2 col-lg-2">
                         <div className="form-group">
-                            <button className="btn btn-sm btn-success py-2 px-4" type="submit">CREAR</button>
+                            <button className="btn btn-sm btn-dark py-2 px-4" type="submit">CREAR</button>
                         </div>
                     </div>
                 </div>

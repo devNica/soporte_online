@@ -27,7 +27,8 @@ export const registrar_atencion_taller = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
 

@@ -46,7 +46,7 @@ const FormularioEdicionEquipo =(props)=> {
             fn_limpiar_eqp();
 
         }else{
-            noSave({msg: 'No se ha notificado al sistema de cambios en el equipo', type:'info'})
+            noSave({msg: 'No se ha notificado al sistema de cambios en el equipo', type:'info', time: 3500})
         }
        
     }

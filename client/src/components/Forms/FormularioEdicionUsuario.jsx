@@ -28,7 +28,7 @@ const FormularioEdicionUsuario = (props)=>{
 
             setUsuarioRegin({data});
         }else{
-            noSave({msg:'No se ha notificado al sistema de cambios en el usuario', type: 'info'})
+            noSave({msg:'No se ha notificado al sistema de cambios en el usuario', type: 'info', time: 3500})
         }
     }
 

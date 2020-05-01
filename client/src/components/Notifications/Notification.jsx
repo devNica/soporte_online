@@ -25,7 +25,7 @@ class Notification extends Component {
         const {note} = this.props;
         if(note !== prevProps.note){
 
-            this.createNotifiacion(note.msg, note.type, '', 3500);
+            this.createNotifiacion(note.msg, note.type, '', note.time);
            
         }
     }

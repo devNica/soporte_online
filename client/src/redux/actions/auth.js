@@ -37,7 +37,8 @@ export const login = credential => (dispatch) => {
                     type: CREATE_NOTIFICATION,
                     payload: {
                         msg: res.msg,
-                        type: 'success'
+                        type: 'success',
+                        time: 3500
                     }
                 })
             }
@@ -51,7 +52,8 @@ export const login = credential => (dispatch) => {
                     type: CREATE_NOTIFICATION,
                     payload: {
                         msg: res.msg,
-                        type: 'danger'
+                        type: 'danger',
+                        time: 3500
                     }
                 })
 
@@ -85,7 +87,8 @@ export const register = newUser => (dispatch) => {
                     type: CREATE_NOTIFICATION,
                     payload: {
                         msg: res.msg,
-                        type: 'success'
+                        type: 'success',
+                        time: 3500
                     }
                 })
 
@@ -94,7 +97,8 @@ export const register = newUser => (dispatch) => {
                     type: CREATE_NOTIFICATION,
                     payload: {
                         msg: res.msg,
-                        type: 'danger'
+                        type: 'danger',
+                        time: 3500
                     }
                 })
             }

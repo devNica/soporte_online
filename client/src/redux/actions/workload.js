@@ -9,7 +9,8 @@ export const registrar_atencion = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
 
@@ -26,7 +27,8 @@ export const crear_assistencia = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
 
@@ -42,7 +44,8 @@ export const ACR = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
 
@@ -59,7 +62,8 @@ export const fn_aprobar = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
 
@@ -74,7 +78,8 @@ export const fn_denegar = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
     }).catch(err => {
@@ -88,7 +93,8 @@ export const fn_habililitar_edicion = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
     }).catch(err => {
@@ -102,7 +108,8 @@ export const fn_pausar = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
     })
@@ -114,7 +121,8 @@ export const fn_reiniciar = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
     })
@@ -139,7 +147,8 @@ export const fn_reasignar = cluster => dispatch => {
                     type: CREATE_NOTIFICATION,
                     payload: {
                         msg: res.msg,
-                        type: 'success'
+                        type: 'success',
+                        time: 3500
                     }
                 })
 
@@ -153,7 +162,8 @@ export const fn_reasignar = cluster => dispatch => {
                 type: CREATE_NOTIFICATION,
                 payload: {
                     msg: res.msg,
-                    type: 'danger'
+                    type: 'danger',
+                    time: 3500
                 }
             })
         }

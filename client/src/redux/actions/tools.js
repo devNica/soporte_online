@@ -76,7 +76,8 @@ export const setEquipoRegin = cluster => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
 
@@ -109,7 +110,8 @@ export const setUsuarioRegin = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
 
@@ -175,7 +177,8 @@ export const Tareas = cluster => dispatch => {
                     type: CREATE_NOTIFICATION,
                     payload: {
                         msg: res.msg,
-                        type: 'success'
+                        type: 'success',
+                        time: 3500
                     }
                 })
 
@@ -199,7 +202,8 @@ export const Tareas = cluster => dispatch => {
                 type: CREATE_NOTIFICATION,
                 payload: {
                     msg: res.msg,
-                    type: 'success'
+                    type: 'success',
+                    time: 3500
                 }
             })
 
@@ -224,7 +228,8 @@ export const fn_adm_cobertura = data => dispatch => {
             type: CREATE_NOTIFICATION,
             payload: {
                 msg: res.msg,
-                type: 'success'
+                type: 'success',
+                time: 3500
             }
         })
 
@@ -286,7 +291,8 @@ export const Repuestos = data => dispatch => {
                     type: CREATE_NOTIFICATION,
                     payload: {
                         msg: res.msg,
-                        type: 'success'
+                        type: 'success',
+                        time: 3500
                     }
                 })
 
@@ -312,7 +318,8 @@ export const Repuestos = data => dispatch => {
                 type: CREATE_NOTIFICATION,
                 payload: {
                     msg: res.msg,
-                    type: 'success'
+                    type: 'success',
+                    time: 3500
                 }
             })
 
@@ -336,7 +343,8 @@ export const noSave = (data) => dispatch => {
         type: CREATE_NOTIFICATION,
         payload: {
             msg: data.msg,
-            type: data.type
+            type: data.type,
+            time: data.time
         }
     })
 

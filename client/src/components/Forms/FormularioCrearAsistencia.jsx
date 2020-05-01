@@ -53,7 +53,7 @@ const FormularioCrearAsistencia = (props) =>{
         }
 
         if(nota === '' || idusuario === 0 || selector === 0 || emp.carnet === null){
-            noSave({msg:'No ha completado toda la informacion requerida', type: 'warning'});
+            noSave({msg:'No ha completado toda la informacion requerida', type: 'warning', time: 3500});
         }else{
             crear_assistencia(nueva_asistencia);
             limpiarCampos();

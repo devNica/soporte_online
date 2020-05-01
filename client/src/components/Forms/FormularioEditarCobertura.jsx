@@ -130,7 +130,7 @@ const CoberturaEditForm = (props) => {
 
         }
         if(operacion === ''){
-            noSave({msg:'No se ha notificado al sistema de cambios en la lista de cobertura', type:'info'})
+            noSave({msg:'No se ha notificado al sistema de cambios en la lista de cobertura', type:'info', time: 3500})
         }
 
     }

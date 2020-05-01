@@ -36,10 +36,10 @@ const FormularioEdicionRepuestos = (props)=>{
                 setOperacion('add');
             
             }else{
-                noSave({msg: '`El N° de Repuestos para este equipo, ha llegado a su limite`', type: 'warning'});
+                noSave({msg: '`El N° de Repuestos para este equipo, ha llegado a su limite`', type: 'warning', time: 3500});
             }
         }else{
-            noSave({msg: `El repuesto: ${repuesto.repuesto}, ya fue agregado`, type: 'danger'});
+            noSave({msg: `El repuesto: ${repuesto.repuesto}, ya fue agregado`, type: 'danger', time: 3500});
         }
         
     }
@@ -65,7 +65,7 @@ const FormularioEdicionRepuestos = (props)=>{
             setOperacion('update')
 
         }else{
-            noSave({msg:'Cantidad no permitida', type:'warning'})
+            noSave({msg:'Cantidad no permitida', type:'warning', time: 3500})
         }
 
         
@@ -92,7 +92,7 @@ const FormularioEdicionRepuestos = (props)=>{
             setOperacion('update')
 
         }else{
-            noSave({msg:'Cantidad no permitida', type:'warning'})
+            noSave({msg:'Cantidad no permitida', type:'warning', time: 3500})
         }
     }
 
@@ -177,7 +177,7 @@ const FormularioEdicionRepuestos = (props)=>{
 
         }
         if(operacion === ''){
-            noSave({msg:'No se ha notificado al sistema de cambios en los repuestos del equipo', type:'info'})
+            noSave({msg:'No se ha notificado al sistema de cambios en los repuestos del equipo', type:'info', time: 3500})
         }
     }
 

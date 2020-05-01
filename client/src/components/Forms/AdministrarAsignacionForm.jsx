@@ -54,7 +54,7 @@ const AdministrarAsignacionForm = (props) =>{
                     fn_pausar(data);
                     handleProgressbar()
                 }else{
-                    noSave({msg: 'Esta asignacion ya fue pausada', type: 'danger'})
+                    noSave({msg: 'Esta asignacion ya fue pausada', type: 'danger', time: 3500})
                 }
             }
             //EL EQUIPO SE REGISTRO MEDIANTE LA APLICACION WEB
@@ -67,7 +67,7 @@ const AdministrarAsignacionForm = (props) =>{
             
             
         }else{
-            noSave({msg: 'Esta accion solo se puede ejecutar despues de la hora de almuerzo', type: 'danger'})
+            noSave({msg: 'Esta accion solo se puede ejecutar despues de la hora de almuerzo', type: 'danger', time: 3500})
            
         }
 
@@ -116,12 +116,12 @@ const AdministrarAsignacionForm = (props) =>{
                 handleProgressbar();
                 console.log(data);
             }else{
-                noSave({msg: 'Esta accion solo se puede ejecutar despues de la hora de almuerzo', type: 'danger'})
+                noSave({msg: 'Esta accion solo se puede ejecutar despues de la hora de almuerzo', type: 'danger', time: 3500})
             }
 
             
         }else{
-            noSave({msg: 'No se puede reasignar una atencion, al mismo tecnico', type: 'danger'})
+            noSave({msg: 'No se puede reasignar una atencion, al mismo tecnico', type: 'danger', time: 3500})
         }
     }
 
@@ -155,7 +155,7 @@ const AdministrarAsignacionForm = (props) =>{
                 console.log(data)
             }
         }else{
-            noSave({msg: 'Esta accion solo se puede ejecutar despues de la hora de almuerzo', type: 'danger'})
+            noSave({msg: 'Esta accion solo se puede ejecutar despues de la hora de almuerzo', type: 'danger', time: 3500})
         }
     }
 

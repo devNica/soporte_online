@@ -68,7 +68,7 @@ const TablaEquiposIngresados = (props) =>{
             
             for (let j = 0; j < msg.length; j++) {
                 setTimeout(() => {
-                    props.noSave({msg: msg[j].substr(0, (msg[j].length-3)), type: 'danger'});
+                    props.noSave({msg: msg[j].substr(0, (msg[j].length-3)), type: 'danger', time: 3500});
                 }, 100);
             }
             
@@ -86,7 +86,7 @@ const TablaEquiposIngresados = (props) =>{
         
       
         if(tipoSeleccion < 1){
-            noSave({msg: 'No ha seleccionado el tipo de Agregado', type: 'info'})
+            noSave({msg: 'No ha seleccionado el tipo de Agregado', type: 'info', time: 3500})
         }        
         if(tipoSeleccion === 1){
 
@@ -103,7 +103,7 @@ const TablaEquiposIngresados = (props) =>{
                 setEquipos(prevState=>([...prevState, addEquipo]))
                 
             }else{
-                noSave({msg: `El Equipo: ${addEquipo.consecutivo}, ya fue agregado`, type: 'info'});
+                noSave({msg: `El Equipo: ${addEquipo.consecutivo}, ya fue agregado`, type: 'info', time: 3500});
             }
         }
         if(tipoSeleccion === 2){

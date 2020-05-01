@@ -3,7 +3,8 @@ import { CREATE_NOTIFICATION } from '../actions/types';
 const initialState = {
     note: {
         type: null,
-        msg: ''
+        msg: '',
+        time: 0
     }
 }
 
