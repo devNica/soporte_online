@@ -63,14 +63,19 @@ const TablaDesempeno = (props) => {
         if(tipo_fc==='tecnico'){
             filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') AND RT.fk_tecnico_regtaller = ${idtecnico_fc}`
             
+            
         }
         if(tipo_fc==='fecha'){
-            if(rol_fr==='ADMINISTRADOR'){
-                filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') AND RT.inicio BETWEEN ('${inicio_fc.toISOString()}') AND ('${finalizo_fc.toISOString()}')`
+            if(rol_fr==='SUPERUSER'){
+                filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%' OR USR.nick LIKE '%${e}%') 
+                            AND RT.inicio BETWEEN ('${inicio_fc.toISOString()}') 
+                            AND ('${finalizo_fc.toISOString()}')`
+               
             }else{
                 filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') 
                             AND RT.inicio BETWEEN ('${inicio_fc.toISOString()}') AND ('${finalizo_fc.toISOString()}')
                             AND RT.fk_tecnico_regtaller = ${userID_fr}`
+                           
             }
             
         }

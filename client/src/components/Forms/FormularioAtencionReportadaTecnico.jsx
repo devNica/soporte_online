@@ -54,6 +54,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
         }
         let mm = fecha.substring(fecha.length-3, fecha.length-5);
         setTiempoInicio({ hh, mm, ss: '00'})
+        
     }
 
     const establecerFechaFinal = date =>{
@@ -67,8 +68,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
         }
         let mm = fecha.substring(fecha.length-3, fecha.length-5);
         setTiempoFinalizo({ hh, mm, ss: '00'})
-
-       
+    
     }
 
     const  setComponentDataUser = usuario =>{
@@ -102,7 +102,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
         if(tipoactividad){
             if(coherencia.flag){
                 if(usuario !== '' && equipo !== ''){
-                    
+
                     let inicio8601 = timeTools.fechaISO8601(fechaInicio, tiempoInicio);
                     let final8601 = timeTools.fechaISO8601(fechaFinalizo, tiempoFinalizo);
                     
@@ -157,14 +157,26 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                         }
 
                         //console.log(data);
-                        registrar_atencion(data);
-                        limpiarCampos();
+                        let msg = 'Desea procesar su atencion con los siguientes datos:\n' +
+                                   `Fecha Inicio: ${data.inicio}\n`+
+                                   `Fecha Final: ${data.final}\n`+
+                                   `Horas Extras T1: ${T1.hh}:${T1.mm}\n`+
+                                   `Horas Extras T2: ${T2.hh}:${T2.mm}\n`+
+                                   `Usuario Atentido: ${usuario.full_name}\n`+
+                                   `Equipo: ${equipo.equipo}-${equipo.consecutivo}\n`
 
+                        if (window.confirm(msg)){
+                            registrar_atencion(data);
+                            limpiarCampos();
+    
+                        }else{
+                            return;
+                        }
+                       
                     }else{
                         noSave({msg: 'El tiempo extra indicado es incongruente', type:'danger'})
                     }
-
-
+                    
                 }else{
                     noSave({msg: 'El campo del usuario o del equipo, esta vacio', type:'warning'})
                 }
@@ -283,7 +295,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                                     <TimeInput
                                         initTime={`${T1.hh}:${T1.mm}`}
                                         className='form-control text-center font-weight-bold'
-                                        mountFocus='true'
+                                        //mountFocus='true'
                                         onTimeChange={handleOntimeChangeT1}
                                     />
                                 </div>
@@ -294,7 +306,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                                     <TimeInput
                                         initTime={`${T2.hh}:${T2.mm}`}
                                         className='form-control text-center font-weight-bold'
-                                        mountFocus='true'
+                                        //mountFocus='true'
                                         onTimeChange={handleOntimeChangeT2}
                                     />
                                 </div>

@@ -85,26 +85,29 @@ router.post('/workshop/registrar-atencion-taller', (req, res) => {
 router.post('/workshop/pausar-atencion-eqp', (req, res) => {
     let data = {
         idregws: req.body.idregws,
-        idregin: req.body.idregin
+        idregin: req.body.idregin,
+        option: req.body.option
     }
 
-    workshop.pausarAtencion(data.idregws, data.idregin).then(response => {
+    workshop.pausarAtencion(data.idregws, data.idregin, data.option).then(response => {
         let pausado = response.rows[0]
         console.log(pausado);
-        res.json({ msg: 'Esta atencion ha sido puesto en pausa exitosamente', pausado });
-    }).catch(err => console.log(err))
+        res.status(200).json({ msg: 'Esta atencion ha sido puesto en pausa exitosamente', pausado });
+    }).catch(err => res.json({ msg: err }))
 
 })
 
 router.post('/workshop/reiniciar-atencion-eqp', (req, res) => {
 
     let data = {
-        idregws: req.body.idregws
+        idregin: req.body.idregin,
+        idregws: req.body.idregws,
+        option: req.body.option
     }
 
     console.log(data)
 
-    workshop.reiniciarAtencion(data.idregws).then(response => {
+    workshop.reiniciarAtencion(data).then(response => {
         let reinicio = response.rows
         console.log(reinicio);
         res.json({ msg: 'Esta atencion ha sido reiniciada exitosamente', reinicio });
@@ -120,11 +123,20 @@ router.post('/workshop/reasignar-atencion-eqp', (req, res) => {
         idtec: req.body.idtec,
         idtipoactividad: req.body.idtipoactividad,
         idcomplejidad: req.body.idcomplejidad,
-        idrevision: req.body.idrevision
+        idrevision: req.body.idrevision,
+        idestadotaller: req.body.idestadotaller,
+        idestadorecepcion: req.body.idestadorecepcion
     }
 
-    workshop.reasignarAtecion(data.idregws, data.idregin, data.idtec, data.idtipoactividad, data.idcomplejidad, data.idrevision).then(response => {
-        res.status(201).json({ msg: 'La atencion ha sido reasignada exitosamente', flag: true })
+    workshop.reasignarAtecion(data).then(response => {
+        let status = response.rows[0][0].X;
+        console.log(status);
+        if (status) {
+            res.status(201).json({ msg: 'La atencion ha sido reasignada exitosamente', flag: true })
+        } else {
+            res.status(200).json({ msg: 'Ocurrio un error en el procedimiento almacenado ', flag: false })
+        }
+
     }).catch(err => {
         console.log(err);
         res.status(200).json({ msg: 'Ocurrio un error', flag: false })

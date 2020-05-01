@@ -16,11 +16,11 @@ const AdminPanel = ({rolusuario}) => {
     return (
             <div className="list-group pl-4">
                 {
-                    rolusuario === 'ADMINISTRADOR' ?
+                    rolusuario === 'SUPERUSER' ?
                     <div>
                         <h5 className="font-weight-bold text-uppercase" style={{color: "#196ac2"}}>Taller</h5>
-                        <Link className="list-group-item list-group-item-action h5 item-profile text-dark" to="/local/support"> <ControlPointTwoToneIcon  style={{ color: "#5094de"}} fontSize="small"/> Crear Atencion</Link>
-                        <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/control/taller"><EditTwoToneIcon  style={{ color: "#5094de"}} fontSize="small"/> Administrar Taller</Link>
+                        <Link className="list-group-item list-group-item-action h5 item-profile text-dark" to="/createassignment"> <ControlPointTwoToneIcon  style={{ color: "#5094de"}} fontSize="small"/> Crear Atencion</Link>
+                        <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/manageworkshop"><EditTwoToneIcon  style={{ color: "#5094de"}} fontSize="small"/> Administrar Taller</Link>
                         <br/>
                     </div>
                     
@@ -30,12 +30,12 @@ const AdminPanel = ({rolusuario}) => {
                 }
                 
                 <h5 className="font-weight-bold text-uppercase pt-2" style={{color: "#196ac2"}}>Estadisticas</h5>
-                <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/register/person"><PermDataSettingIcon  style={{ color: "#5094de"}} fontSize="small"/> Estadisticas</Link>
-                <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/informes/tecnicos"><PictureAsPdfIcon  style={{ color: "#5094de"}} fontSize="small"/> Informes</Link>
+                {/* <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/register/person"><PermDataSettingIcon  style={{ color: "#5094de"}} fontSize="small"/> Estadisticas</Link> */}
+                <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/reports"><PictureAsPdfIcon  style={{ color: "#5094de"}} fontSize="small"/> Informes</Link>
                 <br/>
                 <h5 className="font-weight-bold text-uppercase pt-2" style={{color: "#196ac2"}}>Atenciones</h5>
-                <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/asignacion-reportada-tecnico"><TimerRoundedIcon  style={{ color: "#5094de"}} fontSize="small"/> Nueva Atencion</Link>
-                <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/customer/list"><TimerOffRoundedIcon  style={{ color: "#5094de"}} fontSize="small"/> Cerrar Atencion</Link>
+                <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/reportedwork"><TimerRoundedIcon  style={{ color: "#5094de"}} fontSize="small"/> Nueva Atencion</Link>
+                {/* <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/customer/list"><TimerOffRoundedIcon  style={{ color: "#5094de"}} fontSize="small"/> Cerrar Atencion</Link> */}
             </div>
     );
 };

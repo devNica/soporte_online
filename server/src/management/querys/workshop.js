@@ -32,7 +32,8 @@ const workshop = {
         CAT.Equipo as equipo, CAT.Descripcion as descripcion, CAT.idEquipo as idcategoria, CNC.Consecutivo as consecutivo,
         (SELECT tallerestados.Estados FROM tallerestados WHERE tallerestados.idTallerEstados = RT.fk_estado_tallerestados) as estado,
         APP.app as aplicacion, 
-       (SELECT tipoactividad.Tipo FROM tipoactividad WHERE tipoactividad.idTipoActividad = RT.fk_tipoactividad_regtaller) as actividad
+       (SELECT tipoactividad.Tipo FROM tipoactividad WHERE tipoactividad.idTipoActividad = RT.fk_tipoactividad_regtaller) as actividad,
+        RE.Estado AS recepcion
 
         FROM registrotaller as RT
         INNER JOIN registroingreso as RI ON RI.idRegistroIngreso = RT.fk_registro_regtaller
@@ -49,8 +50,9 @@ const workshop = {
         INNER JOIN control as CTR ON CTR.idcontrol = SEG.fk_control
         INNER JOIN usuarios as USR ON USR.idusuarios = RT.fk_tecnico_regtaller
         INNER JOIN empleados as EMP ON EMP.Carnet = USR.fk_carnet_usr
+        INNER JOIN recepcionestados AS RE ON RE.idRecepcionEstados = RI.fk_estados_regin
 
-        WHERE ${filtro} ORDER BY  RT.inicio DESC`
+        WHERE ${filtro} ORDER BY  RT.idRegistroTaller DESC`
     },
 
     parts: (idregws) => {
@@ -103,18 +105,27 @@ const workshop = {
     },
 
     //PROCEDIMIENTO PARA PAUSAR UNA ATENCION O ASISTENCIA
-    PPA: (idregws, idregin) => {
-        return `CALL PROCEDIMIENTO_PAUSAR_ATENCION(${idregws}, ${idregin})`
+    PPA: (idregws, idregin, option) => {
+        return `CALL PROCEDIMIENTO_PAUSAR_ATENCION(${idregws}, ${idregin}, ${option})`
     },
 
     //PROCEDIMIENTO PARA REINICIAR UNA ATENCION O ASISTENCIA
-    PRA: (idregws) => {
-        return `CALL PROCEDIMIENTO_REINICIAR_ATENCION(${idregws})`
+    PRA: (data) => {
+        return `CALL PROCEDIMIENTO_REINICIAR_ATENCION(${data.idregin}, ${data.idregws}, ${data.option})`
     },
 
     //PROCEDIMIENTO REASIGNAR ATENCION
-    PREA: (idregws, idregin, idtec, idtipoactividad, idcomplejidad, idrevision) => {
-        return `CALL PROCEDIMIENTO_REASIGNAR_ATENCION(${idregws}, ${idregin}, ${idtec}, ${idtipoactividad}, ${idcomplejidad}, ${idrevision})`
+    PREA: (data) => {
+        return `CALL PROCEDIMIENTO_REASIGNAR_ATENCION(
+                ${data.idregws}, 
+                ${data.idregin}, 
+                ${data.idtec}, 
+                ${data.idtipoactividad}, 
+                ${data.idcomplejidad}, 
+                ${data.idrevision},
+                ${data.idestadotaller},
+                ${data.idestadorecepcion}
+        )`
     },
 
     //CONSULTA DENEGAR SOLCITUD DE CIERRE

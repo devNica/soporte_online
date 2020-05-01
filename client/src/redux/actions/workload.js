@@ -132,6 +132,8 @@ export const fn_reasignar = cluster => dispatch => {
                 idcateqp: cluster.idrevision
             }
 
+            console.log('data para calculos:', data);
+
             api.workload.aprobar(data).then(res => {
                 dispatch({
                     type: CREATE_NOTIFICATION,
@@ -145,6 +147,17 @@ export const fn_reasignar = cluster => dispatch => {
                 console.log(err)
             })
         }
+        /*OCURRIO UN ERROR EN EL PROCEDIMIENTO ALMACENADO QUE REALIZA LA REASIGNACION*/
+        else {
+            dispatch({
+                type: CREATE_NOTIFICATION,
+                payload: {
+                    msg: res.msg,
+                    type: 'danger'
+                }
+            })
+        }
+
 
     }).catch(err => {
         console.log(err)

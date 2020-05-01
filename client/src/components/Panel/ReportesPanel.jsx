@@ -29,7 +29,7 @@ class ReportesPanel extends Component {
                     ><PermDataSettingIcon  style={{ color: "#5094de"}} fontSize="small"/> Reportes por</button>
                 <div className="dropdown-menu  px-2 pt-3" aria-labelledby="dropdownMenuButton">
                     {rol !== undefined ?
-                            rol === 'ADMINISTRADOR' ?
+                            rol === 'SUPERUSER' ?
                             <button className="list-group-item list-group-item-action sub-item-option h5 text-dark" name="pfm_tecnico" onClick={this.handleOnClick}> 
                                 <PersonIcon  style={{ color: "#5094de"}} fontSize="small"/> Tecnico
                             </button>

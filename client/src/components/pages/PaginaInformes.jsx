@@ -30,8 +30,11 @@ const PaginaInformes = () =>{
             {/* AFECTA LO QUE ACA SE MUESTRA */}
             <div id="content">
                 {
-                    tipo !== undefined ?
-                        tipo === 'pfm' ?
+                    //SI NO HE ELEGIDO NADA QUE NO MUESTRE EL COMPONENTE
+                    tipo !== undefined ? 
+                        /*SI TIPO === PFM HE REALIZADO UNA SELECCION, AHORA MUESTRO EL COMPONENTE
+                        Y LE PASO COMO FILTRO EL TIPO DE REPORTE ELEGIDO*/
+                        tipo === 'pfm' ? 
                             <PaginaDesempeno filtro_fc={filtro}/> 
                         :null
                     :null 

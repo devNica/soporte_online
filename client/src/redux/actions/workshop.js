@@ -40,6 +40,8 @@ export const getCoverage = idregws => dispatch => {
 export const getParts = idregws => dispatch => {
     api.workshop.parts(idregws).then(res => {
 
+        //console.log('lista de repuestos', res)
+
         dispatch({
             type: GET_PARTS_BY_IDREGWS,
             payload: {

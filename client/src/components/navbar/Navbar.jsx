@@ -5,12 +5,11 @@ import {logout} from '../../redux/actions/auth';
 import './Navbar.css'
 
 const mapStateToProps = state =>({
-    isAuthenticated : state.auth.isAuthenticated
+    isAuthenticated : state.auth.isAuthenticated,
+    user: state.auth.user
 })
 
-const Navbar = (props) =>{
-
-    const {logout, history} = props;
+const Navbar = ({logout, history, user}) =>{
 
     const handleLogout = e => {
         e.preventDefault();
@@ -20,6 +19,48 @@ const Navbar = (props) =>{
 
     const userLink = (
         <ul className="navbar-nav ml-auto">
+
+            {
+                user !== null ?
+
+                    user.rol === 'SUPERUSER' ?
+
+                    <div> 
+                        <li className="opciones nav-item dropdown">
+                            <button className="nav-link dropdown-toggle" id="opcionesTaller"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                TALLER
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="opcionesTaller">
+                            <Link className="dropdown-item" to="/createassignment">Crear Atencion</Link>
+                            <div className="dropdown-divider"></div>
+                            <Link className="dropdown-item" to="/manageworkshop">Administrar Taller</Link>
+                            </div>
+                        </li>
+
+                        <li className="opciones nav-item dropdown">
+                            <button className="nav-link dropdown-toggle" id="opcionesAtencion"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ATENCIONES
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="opcionesAtencion">
+                            <Link className="dropdown-item" to="/reportedwork">Nueva Atencion</Link>
+                            </div>
+                        </li>
+
+                    </div>
+                    
+                     :
+
+                    <li className="opciones nav-item dropdown">
+                        <button className="nav-link dropdown-toggle" id="opcionesAtencion"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ATENCIONES
+                        </button>
+                        <div className="dropdown-menu" aria-labelledby="opcionesAtencion">
+                        <Link className="dropdown-item" to="/reportedwork">Nueva Atencion</Link>
+                        </div>
+                    </li>
+                :null
+            }
+            
             <li className="nav-item">
                 <Link className="nav-link font-weight-bold text-warning" to="/profile">PROFILE</Link>
             </li>
@@ -32,7 +73,7 @@ const Navbar = (props) =>{
 
     const guestLink = (
         <ul className="navbar-nav ml-auto">
-        
+            
             <li className="nav-item">
                 <Link className="nav-link font-weight-bold text-warning" to="/signin">SIGNIN</Link>
             </li>

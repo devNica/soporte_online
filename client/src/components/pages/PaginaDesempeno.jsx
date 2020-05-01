@@ -17,11 +17,11 @@ const PaginaDesempeno = (props) =>{
     const [idtecnico, setIdTecnico] = useState('');
     const [inicio, setInicio] = useState('');
     const [finalizo, setFinalizo] = useState('');
-    const [tipo, setTipo] = useState('');
+    // const [tipo, setTipo] = useState('');
 
     const fechaInicio = date =>{
         setInicio(date);
-        setTipo('fecha')
+        // setTipo('fecha')
     
     };
 
@@ -30,7 +30,7 @@ const PaginaDesempeno = (props) =>{
 
         let filtro = '';
 
-        if(rol_fr==='ADMINISTRADOR'){
+        if(rol_fr==='SUPERUSER'){
             filtro = `RT.inicio BETWEEN ('${inicio.toISOString()}') AND ('${date.toISOString()}')`
         }else{
             filtro = `RT.inicio BETWEEN ('${inicio.toISOString()}') AND ('${date.toISOString()}') AND RT.fk_tecnico_regtaller = ${user_fr.idusuarios}`
@@ -45,7 +45,7 @@ const PaginaDesempeno = (props) =>{
         //console.log(filtro)
         rep_desemepeno_tec({filtro});
         setIdTecnico(e.target.value)
-        setTipo('tecnico')
+        // setTipo('tecnico')
 
     }
 
@@ -109,7 +109,7 @@ const PaginaDesempeno = (props) =>{
                         filtro_fc === 'tecnico' ? opciones : calendar
                     :null
             }
-            <TablaDesempeno idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={tipo}/>
+            <TablaDesempeno idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc}/>
                 
         </div>
     );

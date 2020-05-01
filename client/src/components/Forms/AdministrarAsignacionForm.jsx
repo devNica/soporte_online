@@ -1,6 +1,7 @@
 import React, {Fragment, useState, useEffect } from 'react';
 import {Link} from 'react-router-dom'
 import {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion} from '../../redux/actions/workload';
+import {noSave} from '../../redux/actions/tools'
 import {tecnicos_activos} from '../../redux/actions/empleados';
 import 'moment-timezone';
 import {connect} from 'react-redux';
@@ -8,6 +9,7 @@ import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 import Progressbar from '../progressbar/Progressbar';
+import Notification from '../Notifications/Notification';
 
 const mapStateToProps = state =>({
     user_fr: state.auth.user,
@@ -18,7 +20,7 @@ const mapStateToProps = state =>({
 
 const AdministrarAsignacionForm = (props) =>{
 
-    const {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion, tecnicos_activos, history} = props;
+    const {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion, tecnicos_activos, history, noSave} = props;
     const idregws = props.match.params.id;
     const {user_fr, asignaciones_fr, rol_fr, tecnicos_fr} = props;
     
@@ -31,15 +33,43 @@ const AdministrarAsignacionForm = (props) =>{
     
     const onclickPausar= () =>{
         
+        let hora = new Date().getHours();
         let data={
             idregin: info.idregin,
             idregws: info.idregws,
+            option: 0
         }
-
-        setProgressBar('');
-        fn_pausar(data);
-        handleProgressbar()
+        console.log(hora)
         
+        //ESTA FUNCION NO PUEDE EJECUTARSE ENTRE LAS 12 Y LAS 13HORAS 
+        if( hora < 12 || hora >= 13){
+
+            console.log(info.aplicacion)
+            //¿EL EQUIPO SE REGISTRO MEDIANTE LA APLICACION DESKTOP?
+            if(info.aplicacion === 'APP-DESKTOP'){
+                //ASEGURAR QUE EL EQUIPO NO ESTE PREVIAMENTE PAUSADO
+                if(info.recepcion !== 'PAUSADO'){
+                    data.option =2;
+                    setProgressBar('');
+                    fn_pausar(data);
+                    handleProgressbar()
+                }else{
+                    noSave({msg: 'Esta asignacion ya fue pausada', type: 'danger'})
+                }
+            }
+            //EL EQUIPO SE REGISTRO MEDIANTE LA APLICACION WEB
+            else{
+                data.option=1;
+                setProgressBar('');
+                fn_pausar(data);
+                handleProgressbar()
+            }
+            
+            
+        }else{
+            noSave({msg: 'Esta accion solo se puede ejecutar despues de la hora de almuerzo', type: 'danger'})
+           
+        }
 
     }
 
@@ -64,32 +94,69 @@ const AdministrarAsignacionForm = (props) =>{
 
     const onclickReasignar = () =>{
         
-        let data = {
-            idregws: info.idregws, //ID DEL REGISTRO EN EL TALLER
-            idregin: info.idregin, //ID DEL REGISTRO EN LA RECEPCION
-            idtec: tec[0].idusuario, //ID DEL TECNICO AL QUE SE LE HARA LA REASIGNACION
-            idtipoactividad: info.idtipoactividad,
-            idcomplejidad: info.idcomplejidad,
-            idrevision: info.idcategoria
-        }
 
-        setProgressBar('');
-        fn_reasignar(data);
-        handleProgressbar();
+        let idtecprev = info.idtecnico;
+
+        if(idtecprev !== tec[0].idusuario){
+            let hora = new Date().getHours();
+            if( hora < 12 || hora >= 13){
+                let data = {
+                    idregws: info.idregws, //ID DEL REGISTRO EN EL TALLER
+                    idregin: info.idregin, //ID DEL REGISTRO EN LA RECEPCION
+                    idtec: tec[0].idusuario, //ID DEL TECNICO AL QUE SE LE HARA LA REASIGNACION
+                    idtipoactividad: info.idtipoactividad,
+                    idcomplejidad: info.idcomplejidad,
+                    idrevision: info.idcategoria,
+                    idestadotaller: info.estado === 'EN PROCESO' ? 5 : info.estado === 'PAUSADO' ? 2: 0,
+                    idestadorecepcion: info.aplicacion === 'APP-DESKTOP' ? 2 : 4
+                }
         
+                setProgressBar('');
+                fn_reasignar(data);
+                handleProgressbar();
+                console.log(data);
+            }else{
+                noSave({msg: 'Esta accion solo se puede ejecutar despues de la hora de almuerzo', type: 'danger'})
+            }
 
+            
+        }else{
+            noSave({msg: 'No se puede reasignar una atencion, al mismo tecnico', type: 'danger'})
+        }
     }
 
     const onclickReiniciar = () =>{
         
+        let hora = new Date().getHours();
+        console.log(hora)
+
         let data={
+            idregin: info.idregin,
             idregws: info.idregws,
+            option: 0
         }
 
-        setProgressBar('');
-        fn_reiniciar(data);
-        handleProgressbar()
-        
+        //ESTA FUNCION NO PUEDE EJECUTARSE ENTRE LAS 12 Y LAS 13HORAS 
+        if( hora < 12 || hora >= 13){
+             //¿EL EQUIPO SE REGISTRO MEDIANTE LA APLICACION DESKTOP?
+             if(info.aplicacion === 'APP-DESKTOP'){
+                
+                data.option =2;
+                setProgressBar('');
+                fn_reiniciar(data);
+                handleProgressbar()
+                console.log(data)
+
+             }else{
+                data.option =1;
+                setProgressBar('');
+                fn_reiniciar(data);
+                handleProgressbar()
+                console.log(data)
+            }
+        }else{
+            noSave({msg: 'Esta accion solo se puede ejecutar despues de la hora de almuerzo', type: 'danger'})
+        }
     }
 
     const onClickAprobar=()=>{
@@ -329,7 +396,7 @@ const AdministrarAsignacionForm = (props) =>{
     return (
         <div className="my-5 mx-5">
             {inicio}
-
+        <Notification/>
         </div>
     );
     
@@ -343,6 +410,7 @@ export default connect(mapStateToProps,
         fn_reasignar, 
         fn_denegar, 
         fn_habililitar_edicion,
-        tecnicos_activos 
+        tecnicos_activos,
+        noSave 
     }
 )(AdministrarAsignacionForm);

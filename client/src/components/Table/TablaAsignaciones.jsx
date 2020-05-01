@@ -17,13 +17,13 @@ const administrador_opciones = (data)=>{
             <Link 
                 className="btn btn-sm btn-outline-primary" 
                 //value={tasks.data.rows[i].idregin} 
-                to={`/assignament/report/view/${data.idregws}`}
+                to={`/assignmentview/${data.idregws}`}
                 >Ver
             </Link>
             <Link 
                 className="btn btn-sm btn-outline-dark mx-1" 
                 //value={tasks.data.rows[i].idregin} 
-                to={`/assignament/admin/view/${data.idregws}`}
+                to={`/manageassignment/${data.idregws}`}
                 >Adm
             </Link>
         </div>
@@ -39,13 +39,13 @@ const tecnico_opciones_edicion = (data) =>{
             <Link 
                 className="btn btn-sm btn-primary mx-1 mt-1" 
                 //value={tasks.data.rows[i].idregin} 
-                to={`/assignament/report/view/${data.idregws}`}
+                to={`/assignmentview/${data.idregws}`}
                 >Ver
             </Link>
             <Link 
                 className="btn btn-sm btn-warning my-1" 
                 //value={tasks.data.rows[i].idregin} 
-                to={`/assignament/edit/view/${data.idregws}`}
+                to={`/editassignment/${data.idregws}`}
                 >Edit
             </Link>
         </div>
@@ -60,7 +60,7 @@ const tecnico_opciones_finalizado = (data) =>{
             <Link 
                 className="btn btn-sm btn-primary mx-1" 
                 //value={tasks.data.rows[i].idregin} 
-                to={`/assignament/report/view/${data.idregws}`}
+                to={`/assignmentview/${data.idregws}`}
                 >Ver
             </Link>
             
@@ -81,7 +81,7 @@ const TablaAsignaciones = (props) =>{
 
             for(let i=0; i<tasks.data.rows.length; i++){
 
-                if(rol !== 'ADMINISTRADOR'){
+                if(rol !== 'SUPERUSER'){
 
                     Object.defineProperty(tasks.data.rows[i], 'nombre', {value: tasks.data.rows[i].nombreusuario, configurable: true})
 

@@ -16,7 +16,7 @@ class Base extends Component {
 
     render() {
         return (
-            <BrowserRouter>
+            <BrowserRouter basename='/onsupport'>
                 <Provider store={store}>
                     <ReactNotifications />
                     <Route component={App} />

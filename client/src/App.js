@@ -24,15 +24,15 @@ class App extends Component {
     return (
       <Fragment>
         <Navbar />
-        <PrivateRoute location={location} exact path='/assignament/admin/view/:id' component={AdministrarAsignacionForm} />
-        <PrivateRoute location={location} exact path='/assignament/report/view/:id' component={PaginaAtenciones} />
-        <PrivateRoute location={location} exact path='/assignament/edit/view/:id' component={PaginaEdicionAtencion} />
-        <PrivateRoute location={location} exact path='/assignament/close/view/:id' component={FormularioCierreAsignacion} />
-        <PrivateRoute location={location} exact path='/control/taller' component={PaginaControlTaller} />
-        <PrivateRoute location={location} exact path='/informes/tecnicos' component={PaginaInformes} />
-        <Route location={location} exact path='/asignacion-reportada-tecnico' component={PaginaAtencionReportadaTecnico} />
+        <PrivateRoute location={location} exact path='/manageassignment/:id' component={AdministrarAsignacionForm} />
+        <PrivateRoute location={location} exact path='/assignmentview/:id' component={PaginaAtenciones} />
+        <PrivateRoute location={location} exact path='/editassignment/:id' component={PaginaEdicionAtencion} />
+        <PrivateRoute location={location} exact path='/closeassignment/:id' component={FormularioCierreAsignacion} />
+        <PrivateRoute location={location} exact path='/manageworkshop' component={PaginaControlTaller} />
+        <PrivateRoute location={location} exact path='/reports' component={PaginaInformes} />
+        <Route location={location} exact path='/reportedwork' component={PaginaAtencionReportadaTecnico} />
         <Route location={location} exact path='/' component={HomePage} />
-        <PrivateRoute location={location} exact path='/local/support' component={PaginaCrearAsignacion} />
+        <PrivateRoute location={location} exact path='/createassignment' component={PaginaCrearAsignacion} />
         <PrivateRoute location={location} exact path='/profile' component={Profile} />
         <GuestRoute location={location} exact path='/signin' component={Signin} />
 

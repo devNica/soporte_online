@@ -12,7 +12,7 @@ const FormularioEdicionRepuestos = (props)=>{
 
     const {noSave, Repuestos, repuestos_fr, asignaciones_fr, idregws_fc} = props;
 
-    const [info, setInfo] = useState([]);
+    // const [info, setInfo] = useState([]);
     const [repuestos, setRepuestos] = useState([]);
     const [operacion, setOperacion] = useState('');
 
@@ -31,7 +31,7 @@ const FormularioEdicionRepuestos = (props)=>{
             
             if(repuestos.length <= 4)
             {
-                console.log(repuesto)
+                //console.log(repuesto)
                 setRepuestos((prevState)=>([...prevState, repuesto]))
                 setOperacion('add');
             
@@ -106,7 +106,7 @@ const FormularioEdicionRepuestos = (props)=>{
         
         const currentP = repuestos.slice();
         const previousP = repuestos_fr.slice();
-        let idregws = info[0].idregws;
+        let idregws = idregws_fc;
         let flag = false;
         let count = 0;
         let IDS = '-';
@@ -147,6 +147,7 @@ const FormularioEdicionRepuestos = (props)=>{
                 opt: 'ADD'
             }
             
+            //console.log(data);
             Repuestos(data);
             setOperacion('');
             
@@ -170,6 +171,7 @@ const FormularioEdicionRepuestos = (props)=>{
                 opt: 'DEL'
             }
 
+            //console.log(data);
             Repuestos(data);
             setOperacion('')
 
@@ -179,9 +181,9 @@ const FormularioEdicionRepuestos = (props)=>{
         }
     }
 
-    useEffect(()=>{
-        setInfo(asignaciones_fr)
-    },[asignaciones_fr])
+    // useEffect(()=>{
+    //     setInfo(asignaciones_fr)
+    // },[asignaciones_fr])
 
     useEffect(()=>{
         setRepuestos(repuestos_fr)

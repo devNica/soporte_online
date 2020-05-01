@@ -324,10 +324,27 @@ min-height: 100vh;
 transition: all 0.3s;
 }
 
+.opciones {
+  display: none;
+}
+
+#opcionesTaller{
+ color: #ff9800;
+ text-decoration: none;
+ background-color: transparent;
+ outline: none;
+}
+
+#opcionesAtencion{
+  color: #ff9800;
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+ }
+ 
 /* ---------------------------------------------------
 MEDIAQUERIES
 ----------------------------------------------------- */
-
 @media (max-width: 768px) {
 #sidebar {
     margin-left: -250px;
@@ -338,6 +355,11 @@ MEDIAQUERIES
 #sidebarCollapse span {
     display: none;
 }
+
+.opciones {
+  display: block
+}
+
 }
 
 /* features */

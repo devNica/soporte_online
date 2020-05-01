@@ -144,6 +144,34 @@ export const timeTools = {
         return segundos;
     },
 
+    checkOvertimeFormat: (ta, tb) => {
+        let X = {
+            flag: true,
+            error: []
+        };
+
+        let sizeA = ta.hh.length + ta.mm.length;
+        let sizeB = tb.hh.length + tb.mm.length;
+
+        console.log('sizeA')
+
+        if (sizeA < 4 && sizeB === 4) {
+            X.flag = false;
+            X.error.push('A')
+        }
+        else if (sizeA === 4 && sizeB < 4) {
+            X.flag = false;
+            X.error.push('B')
+        }
+        else if (sizeA < 4 && sizeB < 4) {
+            X.flag = false;
+            X.error.push('A')
+            X.error.push('B')
+        }
+
+        return X;
+    },
+
 
 
 }

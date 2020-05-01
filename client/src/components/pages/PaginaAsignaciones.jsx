@@ -21,7 +21,7 @@ const PaginaAsignaciones = (props) =>{
 
         let filtro = '';
 
-        if(rol_fr !== 'ADMINISTRADOR'){
+        if(rol_fr !== 'SUPERUSER'){
             filtro = `RT.inicio BETWEEN ('${inicio.toISOString()}') AND ('${date.toISOString()}') AND RT.fk_tecnico_regtaller = ${userID_fr}`
             getTaskAfterDate({filtro});
         }else{
@@ -36,7 +36,7 @@ const PaginaAsignaciones = (props) =>{
         fecha.setDate(fecha.getDate()-30)
         let filtro = '';
 
-        if(rol_fr !== 'ADMINISTRADOR'){
+        if(rol_fr !== 'SUPERUSER'){
             filtro = `RT.fk_tecnico_regtaller = ${userID_fr} AND RT.inicio > '${fecha.toISOString()}'`
         }else{
             filtro = `RT.inicio > '${fecha.toISOString()}'`

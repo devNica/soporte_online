@@ -18,20 +18,9 @@ const FormularioCierreAsignacion = (props) =>{
     const [msg, setMsg] = useState('');
     const [equipo, setEquipo] = useState('');
 
-    // state={
-    //     idregws: '',
-    //     error: false,
-    //     flag: false,
-    //     msg: '',
-    //     equipo: ''
-    // }
-
     const reparado=()=>{
-        //const {idregws, equipo} = this.state;
-        
         let pendientes = tareasEquipo_fr.filter(item => item.estado === 'PENDIENTE')
     
-
         let data={
             idregin: parseInt(equipo[0].idregin),
             idregws: parseInt(idregws),
@@ -58,16 +47,30 @@ const FormularioCierreAsignacion = (props) =>{
     }
 
     const espera_de_repuesto=()=>{
+        let pendientes = tareasEquipo_fr.filter(item => item.estado === 'PENDIENTE')
+        let data={
+            idregin: parseInt(equipo[0].idregin),
+            idregws: parseInt(idregws),
+        }
 
+        //SI NO ENCUENTRA TAREAS PENDIENTES EN LA SOLICITUD
+        if(pendientes.length <1){
+            api.workshop.pausarAtencion(data).then(res=>{
+                setMsg(res.msg); setFlag(true); setError(false);
+            }).catch(err=>{
+                //this.setState({msg: 'Ha ocurrido un error, su peticion no se logro procesar correctamente, favor comuniquese con el Administrador', flag: false, error: true})
+                let msg = 'Ha ocurrido un error, su peticion no se logro procesar correctamente, favor comuniquese con el Administrador';
+                setMsg(msg); setFlag(false); setError(true);
+           })
+        }else{
+            let msg = 'Su solictud no puede ser procesada, mientras el equipo tenga tareas pendientes'
+            setMsg(msg); setFlag(true); setError(true);
+        }
     }
 
     const baja_tecnica=()=>{
-        //const {idregws, equipo} = this.state;
-        //const {tasksEQP} = this.props;
-        //let info = rows.filter(item => item.idregws === parseInt(idregws))
         let pendientes = tareasEquipo_fr.filter(item => item.estado === 'PENDIENTE')
     
-
         let data={
             idregin: parseInt(equipo[0].idregin),
             idregws: parseInt(idregws),
@@ -93,11 +96,8 @@ const FormularioCierreAsignacion = (props) =>{
     }
 
     const solucionado=()=>{
-        //const {idregws, equipo} = this.state;
-        //const {tasksEQP} = this.props;
         let pendientes = tareasEquipo_fr.filter(item => item.estado === 'PENDIENTE')
     
-
         let data={
             idregin: parseInt(equipo[0].idregin),
             idregws: parseInt(idregws),
@@ -124,7 +124,31 @@ const FormularioCierreAsignacion = (props) =>{
     }
 
     const remitir_soporte=()=>{
+        let pendientes = tareasEquipo_fr.filter(item => item.estado === 'PENDIENTE')
+    
+        let data={
+            idregin: parseInt(equipo[0].idregin),
+            idregws: parseInt(idregws),
+            stregws: 6, //EXPEDIDO 
+            stregin: 3, //FINALIZADO
+        }
 
+        //IF NO ENCUENTRA TAREAS PENDIENTES EN LA SOLICITUD
+        if(pendientes.length < 1){
+            api.workload.cerrarAsistencia(data).then(res=>{
+                setMsg(res.msg); setFlag(true); setError(false);
+                //this.setState({msg: res.msg, flag: true, error: false})
+             }).catch(err=>{
+                 setMsg('Ha ocurrido un error, su peticion no se logro procesar correctamente, favor comuniquese con el Administrador');
+                 setFlag(false);
+                 setError(true)
+                 //this.setState({msg: , flag: false, error: true})
+             })
+        }else{
+            let msg = 'Su solictud no puede ser procesada, mientras el equipo tenga tareas pendientes'
+            setMsg(msg); setFlag(true); setError(true);
+            //this.setState({msg, error: true, flag: true});
+        }
     }
 
     useEffect(()=>{
@@ -132,13 +156,7 @@ const FormularioCierreAsignacion = (props) =>{
         setEquipo(equipo)
     },[setEquipo, idregws, equipos_fr])
 
-    // useEffect=()=>{
-        
-    //     //this.setState({idregws: this.props.match.params.id, equipo});
-    // }
-
-    //const {msg, error, flag, equipo} = this.state;
-
+    
     const mensage = (
         <div className="jumbotron">
             <h1 className="display-4">{ error ? 'Oops!': '¡Listo!'}</h1>
