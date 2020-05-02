@@ -2,9 +2,9 @@ import React, {Fragment, useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import ReportesPanel from '../Panel/ReportesPanel';
 import PaginaDesempeno from './PaginaDesempeno';
-import {limpiarNotificacionesUsuario} from '../../redux/actions/tools';
+import {fn_limpiar_notificaciones} from '../../redux/actions/tools';
 
-const PaginaInformes = ({limpiarNotificacionesUsuario}) =>{
+const PaginaInformes = ({fn_limpiar_notificaciones}) =>{
 
     const [seleccion, setSeleccion] = useState('')
 
@@ -14,8 +14,8 @@ const PaginaInformes = ({limpiarNotificacionesUsuario}) =>{
     }
 
     useEffect(()=>{
-        limpiarNotificacionesUsuario();
-    },[limpiarNotificacionesUsuario])
+        fn_limpiar_notificaciones();
+    },[fn_limpiar_notificaciones])
 
     let tipo = seleccion.substring(0, 3);
     let filtro = seleccion.substring(4, seleccion.length);
@@ -57,4 +57,4 @@ const PaginaInformes = ({limpiarNotificacionesUsuario}) =>{
     
 }
 
-export default connect(null,{limpiarNotificacionesUsuario})(PaginaInformes);
+export default connect(null,{fn_limpiar_notificaciones})(PaginaInformes);

@@ -1,18 +1,18 @@
 import React, {useEffect } from 'react';
 import FormularioAtencionTaller from '../Forms/FormularioAtencionTaller';
 import {connect} from 'react-redux';
-import {ingresado_pendiente} from '../../redux/actions/recepcion';
-import {tecnicos_activos} from '../../redux/actions/empleados';
+import {fn_ingresado_pendiente} from '../../redux/actions/recepcion';
+import {fn_tecnicos_activos} from '../../redux/actions/empleados';
 
 
 const PaginaControlTaller = (props) =>{
 
-    const {ingresado_pendiente, tecnicos_activos} = props;
+    const {fn_ingresado_pendiente, fn_tecnicos_activos} = props;
 
     useEffect(()=>{
         let filtro=`RI.fk_estados_regin = 1`
-        ingresado_pendiente({filtro});
-        tecnicos_activos();
+        fn_ingresado_pendiente({filtro});
+        fn_tecnicos_activos();
     })
    
     return (
@@ -23,4 +23,4 @@ const PaginaControlTaller = (props) =>{
     
 }
 
-export default connect(null,{ingresado_pendiente, tecnicos_activos})(PaginaControlTaller);
+export default connect(null,{fn_ingresado_pendiente, fn_tecnicos_activos})(PaginaControlTaller);

@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
-import {empleados_activos, tecnicos_activos} from '../../redux/actions/empleados';
+import {fn_empleados_activos, fn_tecnicos_activos} from '../../redux/actions/empleados';
 import FormularioCrearAsistencia from '../Forms/FormularioCrearAsistencia';
-import {limpiarNotificacionesUsuario} from '../../redux/actions/tools';
+import {fn_limpiar_notificaciones} from '../../redux/actions/tools';
 
 
 const PaginaCrearAsignacion = (props) =>{
 
-    const {empleados_activos, tecnicos_activos, limpiarNotificacionesUsuario} = props;
+    const {fn_empleados_activos, fn_tecnicos_activos, fn_limpiar_notificaciones} = props;
 
     useEffect(()=>{
-        empleados_activos();
-        tecnicos_activos();
-        limpiarNotificacionesUsuario();
-    },[empleados_activos, tecnicos_activos, limpiarNotificacionesUsuario])
+        fn_empleados_activos();
+        fn_tecnicos_activos();
+        fn_limpiar_notificaciones();
+    },[fn_empleados_activos, fn_tecnicos_activos, fn_limpiar_notificaciones])
 
 
     return (
@@ -24,4 +24,4 @@ const PaginaCrearAsignacion = (props) =>{
     
 }
 
-export default connect(null,{empleados_activos, tecnicos_activos, limpiarNotificacionesUsuario})(PaginaCrearAsignacion);
+export default connect(null,{fn_empleados_activos, fn_tecnicos_activos, fn_limpiar_notificaciones})(PaginaCrearAsignacion);

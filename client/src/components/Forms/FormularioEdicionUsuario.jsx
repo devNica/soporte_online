@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import UsuariosModal from '../Modal/UsuariosModal';
 import SearchIcon from '@material-ui/icons/Search';
-import {empleados_activos} from '../../redux/actions/empleados';
+import {fn_empleados_activos} from '../../redux/actions/empleados';
 import {setUsuarioRegin} from '../../redux/actions/tools'
 import {noSave} from '../../redux/actions/tools';
 
@@ -12,7 +12,7 @@ const mapStateToProps = state=>({
 
 const FormularioEdicionUsuario = (props)=>{
 
-    const {empleados_activos, setUsuarioRegin, noSave, asignaciones_fr, idregws_fc} = props;
+    const {fn_empleados_activos, setUsuarioRegin, noSave, asignaciones_fr, idregws_fc} = props;
     
     const [usr, setUsr] = useState({id: '',full_name: '',carnet: ''});
     const [info, setInfo] = useState([]);
@@ -46,9 +46,9 @@ const FormularioEdicionUsuario = (props)=>{
             setInfo(info)
         }
 
-        empleados_activos();
+        fn_empleados_activos();
 
-    },[empleados_activos, asignaciones_fr, idregws_fc])
+    },[fn_empleados_activos, asignaciones_fr, idregws_fc])
 
     return (
         <Fragment>
@@ -91,4 +91,4 @@ const FormularioEdicionUsuario = (props)=>{
     );
 }
 
-export default connect(mapStateToProps,{empleados_activos, setUsuarioRegin, noSave})(FormularioEdicionUsuario);
+export default connect(mapStateToProps,{fn_empleados_activos, setUsuarioRegin, noSave})(FormularioEdicionUsuario);

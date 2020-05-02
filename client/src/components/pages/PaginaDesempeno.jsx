@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import TablaDesempeno from '../Table/TablaDesempeno';
 import {connect} from 'react-redux';
-import {rep_desemepeno_tec} from '../../redux/actions/reportes';
-import {tecnicos_activos} from '../../redux/actions/empleados';
+import {fn_reporte_desempeno_tecnico} from '../../redux/actions/reportes';
+import {fn_tecnicos_activos} from '../../redux/actions/empleados';
 import DatePicker  from 'react-datepicker'
 
 const mapStateToProps = state =>({
@@ -13,7 +13,7 @@ const mapStateToProps = state =>({
 
 const PaginaDesempeno = (props) =>{
 
-    const {rep_desemepeno_tec, tecnicos_activos, user_fr, rol_fr, tecnicos_fr, filtro_fc} = props;
+    const {fn_reporte_desempeno_tecnico, fn_tecnicos_activos, user_fr, rol_fr, tecnicos_fr, filtro_fc} = props;
     const [idtecnico, setIdTecnico] = useState('');
     const [inicio, setInicio] = useState('');
     const [finalizo, setFinalizo] = useState('');
@@ -37,21 +37,21 @@ const PaginaDesempeno = (props) =>{
         }
 
         console.log(filtro);
-        rep_desemepeno_tec({filtro});
+        fn_reporte_desempeno_tecnico({filtro});
     }
 
     const handleOnChange = e =>{
         let filtro = `RT.fk_tecnico_regtaller = ${e.target.value}`
         //console.log(filtro)
-        rep_desemepeno_tec({filtro});
+        fn_reporte_desempeno_tecnico({filtro});
         setIdTecnico(e.target.value)
         // setTipo('tecnico')
 
     }
 
     useEffect(()=>{
-        tecnicos_activos()
-    },[tecnicos_activos])
+        fn_tecnicos_activos()
+    },[fn_tecnicos_activos])
 
     
     const listaTecnicos = tecnicos_fr.map((tecnico, i)=>(
@@ -116,4 +116,4 @@ const PaginaDesempeno = (props) =>{
     
 }
 
-export default connect(mapStateToProps,{rep_desemepeno_tec, tecnicos_activos})(PaginaDesempeno);
+export default connect(mapStateToProps,{fn_reporte_desempeno_tecnico, fn_tecnicos_activos})(PaginaDesempeno);

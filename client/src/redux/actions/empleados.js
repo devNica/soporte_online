@@ -3,7 +3,7 @@ import { modelos } from '../../modelos/modelos';
 import api from '../../api/api';
 
 
-export const empleados_activos = () => dispatch => {
+export const fn_empleados_activos = () => dispatch => {
     api.employee.actives().then(res => {
         let info = modelos.empleados(res.employees);
         dispatch({
@@ -19,7 +19,7 @@ export const empleados_activos = () => dispatch => {
     })
 }
 
-export const tecnicos_activos = () => dispatch => {
+export const fn_tecnicos_activos = () => dispatch => {
     api.employee.tecnhnicians().then(res => {
         console.log(res)
         dispatch({

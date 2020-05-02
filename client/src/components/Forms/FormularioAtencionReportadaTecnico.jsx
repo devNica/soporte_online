@@ -9,7 +9,7 @@ import setHours from 'date-fns/setHours'
 import FormularioBuscarUsuarioEquipo from './FormularioBuscarUsuarioEquipo';
 import FormularioBuscarEquipo from './FormularioBuscarEquipo';
 import {noSave} from '../../redux/actions/tools';
-import {registrar_atencion} from '../../redux/actions/workload';
+import {fn_registrar_atencion} from '../../redux/actions/workload';
 import {connect} from 'react-redux';
 import {mayorFecha, TO_CFS, nolaborable} from '../../helpers/tiempo';
 import {timeTools, timeManagement} from '../../helpers/timetools'
@@ -18,7 +18,7 @@ const mapStateToProps = state =>({
     fk_tecnico_fr: state.auth.user.idusuarios
 })
 
-const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_atencion}) => {
+const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, fn_registrar_atencion}) => {
 
     const [tiempoInicio, setTiempoInicio] = useState({ hh: '00', mm: '00', ss: '00'});
     const [tiempoFinalizo, setTiempoFinalizo] = useState({ hh: '00', mm: '00', ss: '00'});
@@ -166,7 +166,7 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
                                    `Equipo: ${equipo.equipo}-${equipo.consecutivo}\n`
 
                         if (window.confirm(msg)){
-                            registrar_atencion(data);
+                            fn_registrar_atencion(data);
                             limpiarCampos();
     
                         }else{
@@ -339,4 +339,4 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, registrar_a
     
 }
 
-export default connect(mapStateToProps,{noSave, registrar_atencion})(FormularioAtencionReportadaTecnico);
+export default connect(mapStateToProps,{noSave, fn_registrar_atencion})(FormularioAtencionReportadaTecnico);

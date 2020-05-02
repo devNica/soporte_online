@@ -2,9 +2,9 @@ import React, {Fragment, useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import UsuariosModal from '../Modal/UsuariosModal';
 import SearchIcon from '@material-ui/icons/Search';
-import {empleados_activos} from '../../redux/actions/empleados';
+import {fn_empleados_activos} from '../../redux/actions/empleados';
 
-const FormularioBuscarUsuarioEquipo = ({empleados_activos, fetchDataComponent}) =>{
+const FormularioBuscarUsuarioEquipo = ({fn_empleados_activos, fetchDataComponent}) =>{
 
     const [usr, setUsr] = useState('');
 
@@ -14,7 +14,7 @@ const FormularioBuscarUsuarioEquipo = ({empleados_activos, fetchDataComponent}) 
     }
 
     useEffect(()=>{
-        empleados_activos();
+        fn_empleados_activos();
     })
 
     return (
@@ -54,4 +54,4 @@ const FormularioBuscarUsuarioEquipo = ({empleados_activos, fetchDataComponent}) 
     
 }
 
-export default connect(null,{empleados_activos})(FormularioBuscarUsuarioEquipo);
+export default connect(null,{fn_empleados_activos})(FormularioBuscarUsuarioEquipo);

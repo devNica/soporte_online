@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {noSave, Tareas} from '../../redux/actions/tools';
+import {noSave, fn_adm_tareas} from '../../redux/actions/tools';
 import TareasModal from '../Modal/TareasModal';
 
 const mapStateToProps = state=>({
@@ -10,7 +10,7 @@ const mapStateToProps = state=>({
 
 const FormularioEdiciontareas= (props) => {
 
-    const {noSave, Tareas, asignaciones_fr, tareasEquipo_fr, idregws_fc} = props;
+    const {noSave, fn_adm_tareas, asignaciones_fr, tareasEquipo_fr, idregws_fc} = props;
 
     const [info, setInfo] = useState([]);
     const [tareasEqp, setTareasEqp] = useState([]);
@@ -139,7 +139,7 @@ const FormularioEdiciontareas= (props) => {
                 currentT
             }
 
-            Tareas(cluster);
+            fn_adm_tareas(cluster);
             setOperacion('')
 
         }
@@ -170,7 +170,7 @@ const FormularioEdiciontareas= (props) => {
             }
 
 
-            Tareas(cluster);
+            fn_adm_tareas(cluster);
             setOperacion('')
 
         }
@@ -185,7 +185,7 @@ const FormularioEdiciontareas= (props) => {
                 currentT
             }
 
-            Tareas(cluster);
+            fn_adm_tareas(cluster);
             setOperacion('')
 
         }
@@ -291,4 +291,4 @@ const FormularioEdiciontareas= (props) => {
     );
 }
 
-export default connect(mapStateToProps,{noSave, Tareas})(FormularioEdiciontareas);
+export default connect(mapStateToProps,{noSave, fn_adm_tareas})(FormularioEdiciontareas);

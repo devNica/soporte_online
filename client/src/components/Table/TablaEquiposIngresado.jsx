@@ -2,7 +2,7 @@ import React, {Fragment, useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {noSave} from '../../redux/actions/tools';
-import {registrar_atencion_taller} from '../../redux/actions/recepcion';
+import {fn_registrar_atencion_taller} from '../../redux/actions/recepcion';
 import Notification from '../Notifications/Notification'
 
 const mapStateToProps = state=>({
@@ -12,7 +12,7 @@ const mapStateToProps = state=>({
 
 const TablaEquiposIngresados = (props) =>{
     
-    const {noSave, registrar_atencion_taller, ingreso, tecnicos} = props;
+    const {noSave, fn_registrar_atencion_taller, ingreso, tecnicos} = props;
     const [tecnico, setTecnico] = useState([]);
     const [equipos, setEquipos] = useState([]);
     const [tipoSeleccion, setTipo] = useState(0);
@@ -61,7 +61,7 @@ const TablaEquiposIngresados = (props) =>{
                 idtecnico: tecnico[0].idusuario
             }
             
-            registrar_atencion_taller(data);
+            fn_registrar_atencion_taller(data);
             reset();
 
         }else{
@@ -281,4 +281,4 @@ const TablaEquiposIngresados = (props) =>{
     );
 }
 
-export default connect(mapStateToProps,{noSave, registrar_atencion_taller})(TablaEquiposIngresados);
+export default connect(mapStateToProps,{noSave, fn_registrar_atencion_taller})(TablaEquiposIngresados);

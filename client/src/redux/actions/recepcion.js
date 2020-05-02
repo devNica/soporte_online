@@ -4,7 +4,7 @@ import { modelo_recepcion } from '../../modelos/recepcion'
 
 
 //OBTIENE UNA LISTA DE EQUIPOS QUE HAN INGRESADO Y ESTAN PENDIENTES DE REVISION
-export const ingresado_pendiente = data => dispatch => {
+export const fn_ingresado_pendiente = data => dispatch => {
     api.workshop.pendientesRevision(data).then(res => {
 
         let info = modelo_recepcion(res.pendientes)
@@ -20,7 +20,7 @@ export const ingresado_pendiente = data => dispatch => {
 }
 
 
-export const registrar_atencion_taller = data => dispatch => {
+export const fn_registrar_atencion_taller = data => dispatch => {
     api.workshop.registrarAtencionTaller(data).then(res => {
 
         dispatch({

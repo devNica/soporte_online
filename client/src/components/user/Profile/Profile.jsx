@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import AdminPanel from '../../Panel/AdminPanel';
 import PaginaAsignaciones from '../../pages/PaginaAsignaciones';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {revisarNotificacionesUsuario} from '../../../redux/actions/tools';
+import {fn_revisar_notificaciones} from '../../../redux/actions/tools';
 import NotificacionProceso from '../../Notifications/NotificacionProceso';
 
 const mapStateToProps = state => ({
     user_fr: state.auth.user,
 })
 
-const Profile = ({user_fr, revisarNotificacionesUsuario}) =>{
+const Profile = ({user_fr, fn_revisar_notificaciones}) =>{
     
     const [user, setUser]= useState('');
     
@@ -23,13 +23,13 @@ const Profile = ({user_fr, revisarNotificacionesUsuario}) =>{
     useEffect(()=>{
         const interval = setInterval(() => {
             if(user_fr !== undefined){
-                revisarNotificacionesUsuario({usuario: user_fr.nick})
+                fn_revisar_notificaciones({usuario: user_fr.nick})
             }
             
         }, 5000);
         return () => clearInterval(interval);
         
-    },[user_fr, revisarNotificacionesUsuario])
+    },[user_fr, fn_revisar_notificaciones])
    
     const dashboard=(
         <Fragment>
@@ -78,4 +78,4 @@ const Profile = ({user_fr, revisarNotificacionesUsuario}) =>{
     
 }
 
-export default connect(mapStateToProps,{revisarNotificacionesUsuario})(Profile);
+export default connect(mapStateToProps,{fn_revisar_notificaciones})(Profile);

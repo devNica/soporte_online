@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import DatePicker  from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import TablaAsignaciones from '../Table/TablaAsignaciones';
-import {getTaskAfterDate} from '../../redux/actions/workshop';
+import {fn_asignaciones_fecha} from '../../redux/actions/workshop';
 
 const mapStateToProps = state =>({
     userID_fr: state.auth.user.idusuarios,
@@ -12,7 +12,7 @@ const mapStateToProps = state =>({
 
 const PaginaAsignaciones = (props) =>{
 
-    const {getTaskAfterDate, rol_fr, userID_fr} = props;
+    const {fn_asignaciones_fecha, rol_fr, userID_fr} = props;
     const [inicio, setInicio] = useState('');
     const [finalizo, setFinalizo] = useState('');
 
@@ -23,10 +23,10 @@ const PaginaAsignaciones = (props) =>{
 
         if(rol_fr !== 'SUPERUSER'){
             filtro = `RT.inicio BETWEEN ('${inicio.toISOString()}') AND ('${date.toISOString()}') AND RT.fk_tecnico_regtaller = ${userID_fr}`
-            getTaskAfterDate({filtro});
+            fn_asignaciones_fecha({filtro});
         }else{
             filtro = `RT.inicio BETWEEN ('${inicio.toISOString()}') AND ('${date.toISOString()}')`
-            getTaskAfterDate({filtro});
+            fn_asignaciones_fecha({filtro});
         }
         
     }
@@ -41,8 +41,8 @@ const PaginaAsignaciones = (props) =>{
         }else{
             filtro = `RT.inicio > '${fecha.toISOString()}'`
         }
-        getTaskAfterDate({filtro});
-    },[getTaskAfterDate, rol_fr, userID_fr])
+        fn_asignaciones_fecha({filtro});
+    },[fn_asignaciones_fecha, rol_fr, userID_fr])
 
     return (
         <div>
@@ -83,4 +83,4 @@ const PaginaAsignaciones = (props) =>{
 
 
 
-export default connect(mapStateToProps,{getTaskAfterDate})(PaginaAsignaciones);
+export default connect(mapStateToProps,{fn_asignaciones_fecha})(PaginaAsignaciones);

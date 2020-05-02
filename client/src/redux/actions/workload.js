@@ -2,7 +2,7 @@ import api from '../../api/api';
 import { CREATE_NOTIFICATION } from './types'
 
 
-export const registrar_atencion = data => dispatch => {
+export const fn_registrar_atencion = data => dispatch => {
     api.workload.crearAtencionTecnico(data).then(res => {
 
         dispatch({
@@ -20,7 +20,7 @@ export const registrar_atencion = data => dispatch => {
     })
 }
 
-export const crear_assistencia = data => dispatch => {
+export const fn_crear_asistencia = data => dispatch => {
     api.workload.crearAsistencia(data).then(res => {
 
         dispatch({
@@ -35,24 +35,6 @@ export const crear_assistencia = data => dispatch => {
     }).catch(err => {
         console.log(err);
     })
-}
-
-export const ACR = data => dispatch => {
-    api.workload.assignamentClosureReq(data).then(res => {
-
-        dispatch({
-            type: CREATE_NOTIFICATION,
-            payload: {
-                msg: res.msg,
-                type: 'success',
-                time: 3500
-            }
-        })
-
-    }).catch(err => {
-        console.log(err);
-    })
-
 }
 
 export const fn_aprobar = data => dispatch => {

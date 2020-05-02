@@ -2,7 +2,7 @@ import React, {Fragment, useState, useEffect, useCallback } from 'react';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import Line from '../chart/Line';
-import {rep_desemepeno_tec} from '../../redux/actions/reportes';
+import {fn_reporte_desempeno_tecnico} from '../../redux/actions/reportes';
 import { modelo_desempeno } from '../../modelos/desempeno'
 
 const mapStateToProps = state=>({
@@ -14,7 +14,7 @@ const mapStateToProps = state=>({
 
 const TablaDesempeno = (props) => {
 
-    const {rep_desemepeno_tec, desempeno_fr, rol_fr, userID_fr, tipo_fc, inicio_fc, finalizo_fc, idtecnico_fc} = props;
+    const {fn_reporte_desempeno_tecnico, desempeno_fr, rol_fr, userID_fr, tipo_fc, inicio_fc, finalizo_fc, idtecnico_fc} = props;
     const [data, setData] = useState(modelo_desempeno([]).data);
     const [datasets, setDatasets] = useState([]);
     const [etiquetas, setEtiquetas] = useState([]);
@@ -79,7 +79,7 @@ const TablaDesempeno = (props) => {
             }
             
         }
-        rep_desemepeno_tec({filtro});
+        fn_reporte_desempeno_tecnico({filtro});
     }
 
     useEffect(()=>{
@@ -117,4 +117,4 @@ const TablaDesempeno = (props) => {
     
 }
 
-export default connect(mapStateToProps,{rep_desemepeno_tec})(TablaDesempeno);
+export default connect(mapStateToProps,{fn_reporte_desempeno_tecnico})(TablaDesempeno);

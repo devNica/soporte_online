@@ -3,7 +3,7 @@ import { modelos } from '../../modelos/modelos';
 import api from '../../api/api';
 
 
-export const getTaskAfterDate = data => dispatch => {
+export const fn_asignaciones_fecha = data => dispatch => {
     api.workshop.task(data).then(res => {
 
         let info = modelos.asignaciones(res.task);
@@ -21,7 +21,7 @@ export const getTaskAfterDate = data => dispatch => {
     })
 }
 
-export const getCoverage = idregws => dispatch => {
+export const fn_obt_cobertura = idregws => dispatch => {
     api.workshop.coverage(idregws).then(res => {
 
         dispatch({
@@ -37,7 +37,7 @@ export const getCoverage = idregws => dispatch => {
     })
 }
 
-export const getParts = idregws => dispatch => {
+export const fn_obt_repuestos = idregws => dispatch => {
     api.workshop.parts(idregws).then(res => {
 
         //console.log('lista de repuestos', res)
@@ -54,7 +54,7 @@ export const getParts = idregws => dispatch => {
     })
 }
 
-export const getTasksEQP = idregws => dispatch => {
+export const fn_obt_tareaseqp = idregws => dispatch => {
     api.workshop.tasksEqp(idregws).then(res => {
 
         dispatch({

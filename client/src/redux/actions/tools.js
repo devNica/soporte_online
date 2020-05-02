@@ -136,7 +136,7 @@ export const getRepuestos = idequipo => dispatch => {
     })
 }
 
-export const Tareas = cluster => dispatch => {
+export const fn_adm_tareas = cluster => dispatch => {
 
     if (cluster.data.opt === 'UPD') {
         api.workshop.tasksEqp({ id: cluster.data.idregws }).then(res => {
@@ -248,7 +248,7 @@ export const fn_adm_cobertura = data => dispatch => {
     })
 }
 
-export const Repuestos = data => dispatch => {
+export const fn_adm_repuestos = data => dispatch => {
 
     if (data.opt === 'UPD') {
 
@@ -350,7 +350,7 @@ export const noSave = (data) => dispatch => {
 }
 
 
-export const revisarNotificacionesUsuario = (data) => (dispatch, getState) => {
+export const fn_revisar_notificaciones = (data) => (dispatch, getState) => {
     api.notificacion.revisar(data).then(res => {
 
         const prevNotifications = getState().notifications.proceso || [];
@@ -376,7 +376,7 @@ export const revisarNotificacionesUsuario = (data) => (dispatch, getState) => {
     })
 }
 
-export const limpiarNotificacionesUsuario = () => dispatch => {
+export const fn_limpiar_notificaciones = () => dispatch => {
     dispatch({
         type: 'CLEAR_NOTIFICATION_PROCESS',
     })

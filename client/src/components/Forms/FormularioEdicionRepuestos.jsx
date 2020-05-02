@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect } from 'react';
 import {connect} from 'react-redux';
-import {noSave, Repuestos} from '../../redux/actions/tools';
+import {noSave, fn_adm_repuestos} from '../../redux/actions/tools';
 import RepuestosModal from '../Modal/RepuestosModal';
 
 const mapStateToProps = state=>({
@@ -9,9 +9,8 @@ const mapStateToProps = state=>({
 
 const FormularioEdicionRepuestos = (props)=>{
 
-    const {noSave, Repuestos, repuestos_fr, idregws_fc} = props;
+    const {noSave, fn_adm_repuestos, repuestos_fr, idregws_fc} = props;
 
-    // const [info, setInfo] = useState([]);
     const [repuestos, setRepuestos] = useState([]);
     const [operacion, setOperacion] = useState('');
 
@@ -119,7 +118,7 @@ const FormularioEdicionRepuestos = (props)=>{
                 opt: 'UPD'
             }
 
-            Repuestos(data);
+            fn_adm_repuestos(data);
             setOperacion('');
         }
 
@@ -147,7 +146,7 @@ const FormularioEdicionRepuestos = (props)=>{
             }
             
             //console.log(data);
-            Repuestos(data);
+            fn_adm_repuestos(data);
             setOperacion('');
             
         }
@@ -171,7 +170,7 @@ const FormularioEdicionRepuestos = (props)=>{
             }
 
             //console.log(data);
-            Repuestos(data);
+            fn_adm_repuestos(data);
             setOperacion('')
 
         }
@@ -293,4 +292,4 @@ const FormularioEdicionRepuestos = (props)=>{
 }
 
 
-export default connect(mapStateToProps,{noSave, Repuestos })(FormularioEdicionRepuestos);
+export default connect(mapStateToProps,{noSave, fn_adm_repuestos })(FormularioEdicionRepuestos);

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {MDBDataTable} from 'mdbreact';
 import {connect} from 'react-redux';
 import {modelos} from '../../modelos/modelos';
-import {crear_assistencia} from '../../redux/actions/workload';
+import {fn_crear_asistencia} from '../../redux/actions/workload';
 import {noSave} from '../../redux/actions/tools';
 import Notification from '../Notifications/Notification';
 
@@ -14,7 +14,7 @@ const mapStateToProps = state=>({
 
 const FormularioCrearAsistencia = (props) =>{
 
-    const {crear_assistencia, tecnicos_fr, empleados_fr, noSave}=props;
+    const {fn_crear_asistencia, tecnicos_fr, empleados_fr, noSave}=props;
 
     const [emp, setEmp] = useState({});
     const [data, setData] = useState(modelos.empleados().data);
@@ -55,7 +55,7 @@ const FormularioCrearAsistencia = (props) =>{
         if(nota === '' || idusuario === 0 || selector === 0 || emp.carnet === null){
             noSave({msg:'No ha completado toda la informacion requerida', type: 'warning', time: 3500});
         }else{
-            crear_assistencia(nueva_asistencia);
+            fn_crear_asistencia(nueva_asistencia);
             limpiarCampos();
         }
     }
@@ -158,4 +158,4 @@ const FormularioCrearAsistencia = (props) =>{
     
 }
 
-export default connect(mapStateToProps,{crear_assistencia, noSave})(FormularioCrearAsistencia);
+export default connect(mapStateToProps,{fn_crear_asistencia, noSave})(FormularioCrearAsistencia);

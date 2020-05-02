@@ -2,7 +2,7 @@ import React, {Fragment, useState, useEffect } from 'react';
 import {Link} from 'react-router-dom'
 import {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion} from '../../redux/actions/workload';
 import {noSave} from '../../redux/actions/tools'
-import {tecnicos_activos} from '../../redux/actions/empleados';
+import {fn_tecnicos_activos} from '../../redux/actions/empleados';
 import 'moment-timezone';
 import {connect} from 'react-redux';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
@@ -10,7 +10,7 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 import Progressbar from '../progressbar/Progressbar';
 import Notification from '../Notifications/Notification';
-import {limpiarNotificacionesUsuario} from '../../redux/actions/tools';
+import {fn_limpiar_notificaciones} from '../../redux/actions/tools';
 
 const mapStateToProps = state =>({
     user_fr: state.auth.user,
@@ -20,8 +20,8 @@ const mapStateToProps = state =>({
 
 const AdministrarAsignacionForm = (props) =>{
 
-    const {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion, tecnicos_activos, history, noSave} = props;
-    const {limpiarNotificacionesUsuario} = props;
+    const {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion, fn_tecnicos_activos, history, noSave} = props;
+    const {fn_limpiar_notificaciones} = props;
     const idregws = props.match.params.id;
     const {user_fr, asignaciones_fr, tecnicos_fr} = props;
     
@@ -256,13 +256,13 @@ const AdministrarAsignacionForm = (props) =>{
 
     useEffect(()=>{
         
-        tecnicos_activos();
+        fn_tecnicos_activos();
 
-    },[tecnicos_activos])
+    },[fn_tecnicos_activos])
 
     useEffect(()=>{
-        limpiarNotificacionesUsuario();
-    },[limpiarNotificacionesUsuario])
+        fn_limpiar_notificaciones();
+    },[fn_limpiar_notificaciones])
 
     const listaTecnicos = tecnicos_fr.map((tecnico, i)=>(
         <tr key={i}>
@@ -435,8 +435,8 @@ export default connect(mapStateToProps,
         fn_reasignar, 
         fn_denegar, 
         fn_habililitar_edicion,
-        tecnicos_activos,
+        fn_tecnicos_activos,
         noSave,
-        limpiarNotificacionesUsuario 
+        fn_limpiar_notificaciones 
     }
 )(AdministrarAsignacionForm);
