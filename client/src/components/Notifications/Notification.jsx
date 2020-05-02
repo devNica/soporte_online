@@ -17,8 +17,9 @@ class Notification extends Component {
             animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
             dismiss: {
               duration
-            }
-          })
+            },
+
+        })
     }
 
     componentDidUpdate(prevProps){
@@ -26,7 +27,6 @@ class Notification extends Component {
         if(note !== prevProps.note){
 
             this.createNotifiacion(note.msg, note.type, '', note.time);
-           
         }
     }
 

@@ -137,7 +137,10 @@ export const fn_reasignar = cluster => dispatch => {
             let data = {
                 idtec: cluster.idtec,
                 idregws: cluster.idregws,
-                idcateqp: cluster.idrevision
+                idcateqp: cluster.idrevision,
+                orden: cluster.orden,
+                consecutivo: cluster.consecutivo,
+                notificado: cluster.notificado
             }
 
             console.log('data para calculos:', data);

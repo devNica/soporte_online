@@ -86,10 +86,13 @@ router.post('/workshop/pausar-atencion-eqp', (req, res) => {
     let data = {
         idregws: req.body.idregws,
         idregin: req.body.idregin,
-        option: req.body.option
+        option: req.body.option,
+        orden: req.body.orden,
+        consecutivo: `'` + req.body.consecutivo + `'`,
+        notificado: `'` + req.body.notificado + `'`
     }
 
-    workshop.pausarAtencion(data.idregws, data.idregin, data.option).then(response => {
+    workshop.pausarAtencion(data).then(response => {
         let pausado = response.rows[0]
         console.log(pausado);
         res.status(200).json({ msg: 'Esta atencion ha sido puesto en pausa exitosamente', pausado });
@@ -102,7 +105,10 @@ router.post('/workshop/reiniciar-atencion-eqp', (req, res) => {
     let data = {
         idregin: req.body.idregin,
         idregws: req.body.idregws,
-        option: req.body.option
+        option: req.body.option,
+        orden: req.body.orden,
+        consecutivo: `'` + req.body.consecutivo + `'`,
+        notificado: `'` + req.body.notificado + `'`
     }
 
     console.log(data)
@@ -125,7 +131,10 @@ router.post('/workshop/reasignar-atencion-eqp', (req, res) => {
         idcomplejidad: req.body.idcomplejidad,
         idrevision: req.body.idrevision,
         idestadotaller: req.body.idestadotaller,
-        idestadorecepcion: req.body.idestadorecepcion
+        idestadorecepcion: req.body.idestadorecepcion,
+        orden: req.body.orden,
+        consecutivo: `'` + req.body.consecutivo + `'`,
+        notificado: `'` + req.body.notificado + `'`
     }
 
     workshop.reasignarAtecion(data).then(response => {

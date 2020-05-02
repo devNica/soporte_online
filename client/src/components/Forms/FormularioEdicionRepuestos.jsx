@@ -5,12 +5,11 @@ import RepuestosModal from '../Modal/RepuestosModal';
 
 const mapStateToProps = state=>({
     repuestos_fr: state.workshop.parts,
-    asignaciones_fr: state.workshop.tasks.data.rows,
 })
 
 const FormularioEdicionRepuestos = (props)=>{
 
-    const {noSave, Repuestos, repuestos_fr, asignaciones_fr, idregws_fc} = props;
+    const {noSave, Repuestos, repuestos_fr, idregws_fc} = props;
 
     // const [info, setInfo] = useState([]);
     const [repuestos, setRepuestos] = useState([]);

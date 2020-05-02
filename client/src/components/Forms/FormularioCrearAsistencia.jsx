@@ -73,7 +73,7 @@ const FormularioCrearAsistencia = (props) =>{
             let func='clickEvent'
 
             for(let i=0; i<empleados_fr.data.rows.length; i++){
-                Object.defineProperty(empleados_fr.data.rows[i], func, {value: handleOnClick})
+                Object.defineProperty(empleados_fr.data.rows[i], func, {value: handleOnClick, configurable: true})
                  
             }
             

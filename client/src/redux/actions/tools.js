@@ -1,4 +1,4 @@
-import { GET_CATALOGO_EQP, GET_EQUIPOS_ACTIVOS, GET_TAREAS_BY_EQP, CREATE_NOTIFICATION, GET_REPUESTOS_BY_EQP, GET_COBERTURA } from './types'
+import { GET_CATALOGO_EQP, GET_EQUIPOS_ACTIVOS, GET_TAREAS_BY_EQP, CREATE_NOTIFICATION, GET_REPUESTOS_BY_EQP, GET_COBERTURA, CREATE_NOTIFICACION_PROCESS } from './types'
 import { modelos } from '../../modelos/modelos';
 import api from '../../api/api'
 
@@ -337,7 +337,6 @@ export const Repuestos = data => dispatch => {
 
 }
 
-
 export const noSave = (data) => dispatch => {
     dispatch({
         type: CREATE_NOTIFICATION,
@@ -349,3 +348,37 @@ export const noSave = (data) => dispatch => {
     })
 
 }
+
+
+export const revisarNotificacionesUsuario = (data) => (dispatch, getState) => {
+    api.notificacion.revisar(data).then(res => {
+
+        const prevNotifications = getState().notifications.proceso || [];
+        let existe;
+        let currentNotifications = [];
+
+        res.notas.map((nota, i) => {
+            existe = prevNotifications.filter(item => item.Consecutivo === nota.Consecutivo);
+
+            if (existe.length < 1) {
+                currentNotifications[i] = nota
+                //console.log('agrego:', nota.Consecutivo)
+                dispatch({
+                    type: CREATE_NOTIFICACION_PROCESS,
+                    payload: currentNotifications
+                })
+
+            } else {
+                console.log('noagrego:', nota.Consecutivo)
+            }
+
+        })
+    })
+}
+
+export const limpiarNotificacionesUsuario = () => dispatch => {
+    dispatch({
+        type: 'CLEAR_NOTIFICATION_PROCESS',
+    })
+}
+

@@ -193,4 +193,33 @@ router.post('/tools/upd-tareas-eqp', (req, res) => {
 
 })
 
+router.post('/tools/review-changes-user-notifications', (req, res) => {
+    let data = {
+        usuario: req.body.usuario
+    }
+
+    console.log('revisar notificaciones', data)
+
+    tools.revisarNotificaciones(data).then(response => {
+        let notas = response.rows;
+        res.status(200).json({ msg: 'ok', notas, flag: true });
+    }).catch(err => {
+        res.status(200).json({ msg: 'fail', flag: false, err });
+    })
+
+
+})
+
+router.post('/tools/update-user-notification-status', (req, res) => {
+    let data = {
+        idnotification: req.body.idnotification
+    }
+
+    tools.actualizacionNotificaion(data).then(response => {
+        res.status(201).json({ msg: 'ok', flag: true })
+    }).catch(err => {
+        console.log(err)
+    })
+})
+
 module.exports = router;

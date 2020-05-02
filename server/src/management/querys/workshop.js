@@ -1,7 +1,15 @@
 const workshop = {
 
-    FAFT: (stregws, stregin, idregws, idregin) => {
-        return `CALL PROCEDIMIENTO_FINALIZAR_ATENCION(${stregws}, ${stregin}, ${idregws}, ${idregin})`
+    PFAT: (data) => {
+        return `CALL PROCEDIMIENTO_FINALIZAR_ATENCION(
+            ${data.stregws},
+            ${data.stregin},
+            ${data.idregws},
+            ${data.idregin},
+            ${data.orden},
+            ${data.consecutivo}, 
+            ${data.notificador}
+        )`
     },
 
     assignedTasks: (filtro) => {
@@ -105,13 +113,27 @@ const workshop = {
     },
 
     //PROCEDIMIENTO PARA PAUSAR UNA ATENCION O ASISTENCIA
-    PPA: (idregws, idregin, option) => {
-        return `CALL PROCEDIMIENTO_PAUSAR_ATENCION(${idregws}, ${idregin}, ${option})`
+    PPA: (data) => {
+        return `CALL PROCEDIMIENTO_PAUSAR_ATENCION(
+            ${data.idregws},
+            ${data.idregin},
+            ${data.option},
+            ${data.orden},
+            ${data.consecutivo}, 
+            ${data.notificado}
+        )`
     },
 
     //PROCEDIMIENTO PARA REINICIAR UNA ATENCION O ASISTENCIA
     PRA: (data) => {
-        return `CALL PROCEDIMIENTO_REINICIAR_ATENCION(${data.idregin}, ${data.idregws}, ${data.option})`
+        return `CALL PROCEDIMIENTO_REINICIAR_ATENCION(
+            ${data.idregin}, 
+            ${data.idregws}, 
+            ${data.option},
+            ${data.orden},
+            ${data.consecutivo}, 
+            ${data.notificado}
+        )`
     },
 
     //PROCEDIMIENTO REASIGNAR ATENCION
@@ -124,7 +146,10 @@ const workshop = {
                 ${data.idcomplejidad}, 
                 ${data.idrevision},
                 ${data.idestadotaller},
-                ${data.idestadorecepcion}
+                ${data.idestadorecepcion},
+                ${data.orden},
+                ${data.consecutivo},
+                ${data.notificado}
         )`
     },
 
@@ -134,8 +159,13 @@ const workshop = {
     },
 
     //PROCEDIMIENTO HABILITAR EDICION DE ASIGNACION
-    PHEA: (idregws) => {
-        return `CALL PROCEDIMIENTO_HABILITAR_EDICION_ASIGNACION(${idregws})`
+    PHEA: (data) => {
+        return `CALL PROCEDIMIENTO_HABILITAR_EDICION_ASIGNACION(
+            ${data.idregws},
+            ${data.orden},
+            ${data.consecutivo},
+            ${data.notificado}
+        )`
     },
 
     //PROCEDIMIENTO RESTAURAR SEGUIMIENTO DE LA ASIGNACION
@@ -160,6 +190,15 @@ const workshop = {
             ${data.tmpsec}
         )`
     },
+
+    PCNA: (data) => {
+        return `CALL PROCEDIMIENTO_NOTIFICAR_APROPBADO(
+            ${data.orden},
+            ${data.consecutivo}, 
+            ${data.notificado},
+            ${data.mensaje}
+        )`
+    }
 }
 
 module.exports = workshop;

@@ -1,9 +1,10 @@
 var mysql = require('mysql2/promise');
-var { equiposActivos, catalogoEqps, tareasEqp, equipoRegin, tiempoRevision, usuarioRegin, DTUC, ATUC, FT, repuestos, CVG, PRO_TAREAS, PRO_REP } = require('../querys/tool');
+
+var { equiposActivos, catalogoEqps, tareasEqp, equipoRegin, tiempoRevision, usuarioRegin, } = require('../querys/tool');
+var { DTUC, ATUC, FT, repuestos, CVG, PRO_TAREAS, PRO_REP, CRNU, CANU } = require('../querys/tool');
+
 var { cnc } = require('../../database/connection');
 var config = require('../../database/config');
-
-//console.log(config);
 
 let configuration = {
     host: config.db.host,
@@ -54,6 +55,14 @@ const tools = {
     actualizarRepuestos: (idregws, IDS, VALUES, size, opt) => {
         return cnc(mysql, configuration, PRO_REP(idregws, IDS, VALUES, size, opt))
     },
+
+    revisarNotificaciones: (data) => {
+        return cnc(mysql, configuration, CRNU(data))
+    },
+
+    actualizacionNotificaion: (data) => {
+        return cnc(mysql, configuration, CANU(data))
+    }
 
 }
 

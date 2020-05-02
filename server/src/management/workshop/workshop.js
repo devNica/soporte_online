@@ -38,8 +38,8 @@ const process = {
         return cnc(mysql, configuration, PRAT(IDS, idtec, size))
     },
 
-    pausarAtencion: (idregws, idregin, option) => {
-        return cnc(mysql, configuration, PPA(idregws, idregin, option))
+    pausarAtencion: (data) => {
+        return cnc(mysql, configuration, PPA(data))
     },
 
     reiniciarAtencion: (data) => {

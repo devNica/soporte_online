@@ -102,6 +102,16 @@ const tool = {
         return `CALL PROCEDIMIENTO_ESTABLECER_COBERTURA(${idregin}, ${idregws}, ${IDS}, ${size}, ${opt})`
     },
 
+    /*CONSULTA REVISAR NOTIFICACIONES A USUARIO*/
+    CRNU: (data) => {
+        return `SELECT * FROM notificaciones WHERE Identificador LIKE '${data.usuario}' AND Estado = 0`
+    },
+
+    /*CONSULTA ACTUALIZAR ESTAD DE LA NOTIFIACION*/
+    CANU: (data) => {
+        return `UPDATE notificaciones SET Estado = '1' WHERE idNotificaciones = ${data.idnotification}`
+    }
+
 }
 
 module.exports = tool;

@@ -113,5 +113,13 @@ export default {
     cvg: {
         cobertura: data =>
             axios.post('/api/tools/upd-cvg-eqp', { data }).then(res => res.data),
+    },
+
+    notificacion: {
+        revisar: data =>
+            axios.post('/api/tools/review-changes-user-notifications', data).then(res => res.data),
+
+        actualizar: data =>
+            axios.post('/api/tools/update-user-notification-status', data).then(res => res.data),
     }
 }

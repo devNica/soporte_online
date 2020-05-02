@@ -1,7 +1,14 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import IconoTecnologia from './IconoTecnologia';
+import {connect} from 'react-redux'; 
+import {limpiarNotificacionesUsuario} from '../../redux/actions/tools';
 
-const HomePage = () => {
+const HomePage = ({limpiarNotificacionesUsuario}) => {
+
+    useEffect(()=>{
+        limpiarNotificacionesUsuario();
+    },[limpiarNotificacionesUsuario])
+
     return (
         <div className="container mt-5">
             <div className="jumbotron">
@@ -46,7 +53,7 @@ const HomePage = () => {
             <div className="row mt-4">
                 <div className="col-12">
                     <div className="alert alert-dark text-center">
-                        ® Querybirdcode -/- Lucas Andres Marsell & Vanessa Cruma & Alexander Rosales 
+                        ® Querybirdcode -/- Paul Maxwell & Vanessa Cruma & Alexander Rosales 
                     </div>
                 </div>
                 
@@ -56,4 +63,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default connect(null,{limpiarNotificacionesUsuario})(HomePage);

@@ -1,5 +1,5 @@
 var mysql = require('mysql2/promise');
-var { FAFT, CDSC, PHEA, PRSA, PART } = require('../querys/workshop');
+var { PFAT, CDSC, PHEA, PRSA, PART, PCNA } = require('../querys/workshop');
 var { Asistencia } = require('../querys/checkin');
 var { cnc } = require('../../database/connection');
 var config = require('../../database/config');
@@ -16,8 +16,8 @@ let configuration = {
 
 //FINALIZAR CASO
 const process = {
-    cerrarAsistencia: (stregws, stregin, idregws, idregin) => {
-        return cnc(mysql, configuration, FAFT(stregws, stregin, idregws, idregin))
+    cerrarAsistencia: (data) => {
+        return cnc(mysql, configuration, PFAT(data))
     },
 
     crear_asistencia: (nota, recepcionestado, selector, idtecnico, carnet, fecha) => {
@@ -33,15 +33,17 @@ const process = {
         return cnc(mysql, configuration, CDSC(idregws))
     },
 
-    habilitar_edicion: (idregws) => {
-        return cnc(mysql, configuration, PHEA(idregws))
+    habilitar_edicion: (data) => {
+        return cnc(mysql, configuration, PHEA(data))
     },
 
     restaurar_seguimiento: (idregws) => {
         return cnc(mysql, configuration, PRSA(idregws))
     },
 
-
+    notificarAprobado: (data) => {
+        return cnc(mysql, configuration, PCNA(data))
+    }
 
 }
 

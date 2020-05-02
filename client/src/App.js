@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Route } from 'react-router-dom'
 import PrivateRoute from './components/commons/PrivateRoute';
 import GuestRoute from './components/commons/GuestRoute';
@@ -15,30 +15,26 @@ import PaginaControlTaller from './components/pages/PaginaControlTaller';
 import PaginaInformes from './components/pages/PaginaInformes';
 import PaginaAtencionReportadaTecnico from './components/pages/PaginaAtencionReportadaTecnico';
 
+const App = ({ location }) => {
 
-class App extends Component {
-  render() {
+  return (
+    <Fragment>
+      <Navbar />
+      <PrivateRoute location={location} exact path='/manageassignment/:id' component={AdministrarAsignacionForm} />
+      <PrivateRoute location={location} exact path='/assignmentview/:id' component={PaginaAtenciones} />
+      <PrivateRoute location={location} exact path='/editassignment/:id' component={PaginaEdicionAtencion} />
+      <PrivateRoute location={location} exact path='/closeassignment/:id' component={FormularioCierreAsignacion} />
+      <PrivateRoute location={location} exact path='/manageworkshop' component={PaginaControlTaller} />
+      <PrivateRoute location={location} exact path='/reports' component={PaginaInformes} />
+      <Route location={location} exact path='/reportedwork' component={PaginaAtencionReportadaTecnico} />
+      <Route location={location} exact path='/' component={HomePage} />
+      <PrivateRoute location={location} exact path='/createassignment' component={PaginaCrearAsignacion} />
+      <PrivateRoute location={location} exact path='/profile' component={Profile} />
+      <GuestRoute location={location} exact path='/signin' component={Signin} />
 
-    const { location } = this.props
+    </Fragment>
+  );
 
-    return (
-      <Fragment>
-        <Navbar />
-        <PrivateRoute location={location} exact path='/manageassignment/:id' component={AdministrarAsignacionForm} />
-        <PrivateRoute location={location} exact path='/assignmentview/:id' component={PaginaAtenciones} />
-        <PrivateRoute location={location} exact path='/editassignment/:id' component={PaginaEdicionAtencion} />
-        <PrivateRoute location={location} exact path='/closeassignment/:id' component={FormularioCierreAsignacion} />
-        <PrivateRoute location={location} exact path='/manageworkshop' component={PaginaControlTaller} />
-        <PrivateRoute location={location} exact path='/reports' component={PaginaInformes} />
-        <Route location={location} exact path='/reportedwork' component={PaginaAtencionReportadaTecnico} />
-        <Route location={location} exact path='/' component={HomePage} />
-        <PrivateRoute location={location} exact path='/createassignment' component={PaginaCrearAsignacion} />
-        <PrivateRoute location={location} exact path='/profile' component={Profile} />
-        <GuestRoute location={location} exact path='/signin' component={Signin} />
-
-      </Fragment>
-    );
-  }
 }
 
 export default App;

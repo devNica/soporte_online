@@ -34,12 +34,11 @@ router.post('/workload/cerrar-asignacion', (req, res) => {
     /*
     stregws:                    |   stregin:           
     1: REPARADO                 |   1: PENDIENTE
-    2: ESPERA DE REPUESTOS      |   2: EN REVISION
-    3: BAJA TECNICA             |   3: FINALIZADO
+    2: PAUSADO                  |   2: EN REVISION
+    3: OBSOLETO                 |   3: FINALIZADO
     4: REASIGNADO               |   4: ENTREGADO
     5: EN PROCESO               |   5: PAUSADO
-    6: SOLUCIONADO              |
-    7: REMITIDO A SOPORTE       | 
+    6: EXPEDIDO                 | 
     */
 
     let data = {
@@ -47,11 +46,14 @@ router.post('/workload/cerrar-asignacion', (req, res) => {
         stregin: req.body.data.stregin, //ENTREGADO APP WEB
         idregin: req.body.data.idregin,
         idregws: req.body.data.idregws,
+        orden: req.body.data.orden,
+        consecutivo: `'` + req.body.data.consecutivo + `'`,
+        notificador: `'` + req.body.data.notificador + `'`
     }
 
     console.log(data);
 
-    workload.cerrarAsistencia(data.stregws, data.stregin, data.idregws, data.idregin).then(ressponse => {
+    workload.cerrarAsistencia(data).then(response => {
         res.status(201).json({ msg: 'Su solicitud de cierre de asignacion ha sido procesada correctamente' })
     }).catch(err => {
         console.log(err);
@@ -60,8 +62,23 @@ router.post('/workload/cerrar-asignacion', (req, res) => {
 });
 
 router.post('/workload/denegar-cierre-asignacion', (req, res) => {
-    workload.denegar_cierre(req.body.idregws).then(response => {
-        res.status(201).json({ msg: 'La solicitud de cierre del Usuario ha sido denegada' })
+
+    let data = {
+        idregws: req.body.idregws,
+        orden: req.body.orden,
+        consecutivo: `'` + req.body.consecutivo + `'`,
+        notificado: `'` + req.body.notificado + `'`,
+        mensaje: `'` + 'SOLICITUD DENEGADA' + `'`
+    }
+
+    workload.denegar_cierre(data.idregws).then(response => {
+
+        workload.notificarAprobado(data).then(response => {
+            res.status(201).json({ msg: 'La solicitud de cierre del Usuario ha sido denegada' })
+        }).catch(err => {
+            console.log(err);
+        })
+
     }).catch(err => {
         console.log(err);
     })
@@ -69,7 +86,15 @@ router.post('/workload/denegar-cierre-asignacion', (req, res) => {
 })
 
 router.post('/workload/habilitar-edicion-asignacion', (req, res) => {
-    workload.habilitar_edicion(req.body.idregws).then(response => {
+
+    let data = {
+        idregws: req.body.idregws,
+        orden: req.body.orden,
+        consecutivo: `'` + req.body.consecutivo + `'`,
+        notificado: `'` + req.body.notificado + `'`,
+    }
+
+    workload.habilitar_edicion(data).then(response => {
         res.status(201).json({ msg: 'La solicitud de habilitar ediicion de asignacion se ha realizado' })
     }).catch(err => {
         console.log(err);
@@ -93,6 +118,13 @@ router.post('/workload/aprobar-asignacion', (req, res) => {
         idtec: req.body.data.idtec,
         idregws: req.body.data.idregws,
         idcateqp: req.body.data.idcateqp
+    }
+
+    let datos = {
+        orden: req.body.data.orden,
+        consecutivo: `'` + req.body.data.consecutivo + `'`,
+        notificado: `'` + req.body.data.notificado + `'`,
+        mensaje: `'` + 'SOLICITUD APROBADA' + `'`
     }
 
     console.log(data)
@@ -130,7 +162,12 @@ router.post('/workload/aprobar-asignacion', (req, res) => {
                     bio.setBio(data.idtec, 0, 2).then(response => {
                         console.log(response.rows[0])
 
-                        res.status(200).json({ msg: 'Esta solicitud, ha sido aprobada exitosamente', flag: true })
+                        workload.notificarAprobado(datos).then(response => {
+                            res.status(200).json({ msg: 'Esta solicitud, ha sido aprobada exitosamente', flag: true })
+                        }).catch(err => {
+                            console.log(err);
+                            res.status(200).json({ msg: 'Fail Query NQ900', flag: false, });
+                        })
 
                     }).catch(err => {
                         console.log(err);

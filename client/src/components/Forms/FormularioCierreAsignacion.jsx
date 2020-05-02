@@ -4,14 +4,13 @@ import {connect} from 'react-redux';
 import api from '../../api/api';
 
 const mapStateToProps = state =>({
-    asignaciones_fr: state.workshop.tasks.data.rows,
     tareasEquipo_fr: state.workshop.tasksEQP,
     equipos_fr: state.workshop.tasks.data.rows
 })
 
 const FormularioCierreAsignacion = (props) =>{
 
-    const {asignaciones_fr, tareasEquipo_fr, equipos_fr} = props;
+    const {tareasEquipo_fr, equipos_fr} = props;
     const idregws = props.match.params.id
     const [error, setError] = useState(false);
     const [flag, setFlag] = useState(false);
@@ -25,7 +24,10 @@ const FormularioCierreAsignacion = (props) =>{
             idregin: parseInt(equipo[0].idregin),
             idregws: parseInt(idregws),
             stregws: 1, //REPARADO 
-            stregin: 3, //FINALIZADO
+            stregin: 3, //FINALIZADO,
+            orden: equipo[0].orden,
+            consecutivo: equipo[0].consecutivo,
+            notificador: equipo[0].tecnico
         }
 
         //IF NO ENCUENTRA TAREAS PENDIENTES EN LA SOLICITUD
@@ -75,7 +77,10 @@ const FormularioCierreAsignacion = (props) =>{
             idregin: parseInt(equipo[0].idregin),
             idregws: parseInt(idregws),
             stregws: 3, //BAJATECNICA 
-            stregin: 3, //FINALIZADO
+            stregin: 3, //FINALIZADO,
+            orden: equipo[0].orden,
+            consecutivo: equipo[0].consecutivo,
+            notificador: equipo[0].tecnico
         }
 
         //IF NO ENCUENTRA TAREAS PENDIENTES EN LA SOLICITUD
@@ -102,7 +107,10 @@ const FormularioCierreAsignacion = (props) =>{
             idregin: parseInt(equipo[0].idregin),
             idregws: parseInt(idregws),
             stregws: 1, //SOLUCIONADO 
-            stregin: 4, //ENTREGADO
+            stregin: 4, //ENTREGADO,
+            orden: equipo[0].orden,
+            consecutivo: equipo[0].consecutivo,
+            notificador: equipo[0].tecnico
         }
 
         //IF NO ENCUENTRA TAREAS PENDIENTES EN LA SOLICITUD
@@ -130,7 +138,10 @@ const FormularioCierreAsignacion = (props) =>{
             idregin: parseInt(equipo[0].idregin),
             idregws: parseInt(idregws),
             stregws: 6, //EXPEDIDO 
-            stregin: 3, //FINALIZADO
+            stregin: 3, //FINALIZADO,
+            orden: equipo[0].orden,
+            consecutivo: equipo[0].consecutivo,
+            notificador: equipo[0].tecnico
         }
 
         //IF NO ENCUENTRA TAREAS PENDIENTES EN LA SOLICITUD

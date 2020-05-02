@@ -10,19 +10,20 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 import Progressbar from '../progressbar/Progressbar';
 import Notification from '../Notifications/Notification';
+import {limpiarNotificacionesUsuario} from '../../redux/actions/tools';
 
 const mapStateToProps = state =>({
     user_fr: state.auth.user,
     asignaciones_fr: state.workshop.tasks.data.rows,
-    rol_fr: state.auth.user.rol,
     tecnicos_fr: state.employee.tecnicos
 })
 
 const AdministrarAsignacionForm = (props) =>{
 
     const {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion, tecnicos_activos, history, noSave} = props;
+    const {limpiarNotificacionesUsuario} = props;
     const idregws = props.match.params.id;
-    const {user_fr, asignaciones_fr, rol_fr, tecnicos_fr} = props;
+    const {user_fr, asignaciones_fr, tecnicos_fr} = props;
     
     const [tecnico, setTecnico] = useState('');
     const [nombre, setNombre] = useState('');
@@ -37,7 +38,10 @@ const AdministrarAsignacionForm = (props) =>{
         let data={
             idregin: info.idregin,
             idregws: info.idregws,
-            option: 0
+            option: 0, 
+            orden: info.orden,
+            consecutivo: info.consecutivo,
+            notificado: info.tecnico
         }
         console.log(hora)
         
@@ -108,7 +112,10 @@ const AdministrarAsignacionForm = (props) =>{
                     idcomplejidad: info.idcomplejidad,
                     idrevision: info.idcategoria,
                     idestadotaller: info.estado === 'EN PROCESO' ? 5 : info.estado === 'PAUSADO' ? 2: 0,
-                    idestadorecepcion: info.aplicacion === 'APP-DESKTOP' ? 2 : 4
+                    idestadorecepcion: info.aplicacion === 'APP-DESKTOP' ? 2 : 4,
+                    orden: info.orden,
+                    consecutivo: info.consecutivo,
+                    notificado: info.tecnico 
                 }
         
                 setProgressBar('');
@@ -133,7 +140,11 @@ const AdministrarAsignacionForm = (props) =>{
         let data={
             idregin: info.idregin,
             idregws: info.idregws,
-            option: 0
+            option: 0,
+            orden: info.orden,
+            consecutivo: info.consecutivo,
+            notificado: info.tecnico 
+
         }
 
         //ESTA FUNCION NO PUEDE EJECUTARSE ENTRE LAS 12 Y LAS 13HORAS 
@@ -164,7 +175,11 @@ const AdministrarAsignacionForm = (props) =>{
         let data={
             idtec: info.idtecnico,
             idregws: info.idregws,
-            idcateqp: info.idcategoria
+            idcateqp: info.idcategoria,
+            orden: info.orden,
+            consecutivo: info.consecutivo,
+            notificado: info.tecnico 
+
         }
 
         setProgressBar('');
@@ -177,7 +192,10 @@ const AdministrarAsignacionForm = (props) =>{
     const onclickDenegar = () =>{
         
         let data={
-            idregws: info.idregws
+            idregws: info.idregws,
+            orden: info.orden,
+            consecutivo: info.consecutivo,
+            notificado: info.tecnico 
         }
         
         setProgressBar('');
@@ -189,7 +207,10 @@ const AdministrarAsignacionForm = (props) =>{
     const onclickHabilitarEdicion = () =>{
         
         let data={
-            idregws: info.idregws
+            idregws: info.idregws,
+            orden: info.orden,
+            consecutivo: info.consecutivo,
+            notificado: info.tecnico
         }
         
         setProgressBar('');
@@ -238,6 +259,10 @@ const AdministrarAsignacionForm = (props) =>{
         tecnicos_activos();
 
     },[tecnicos_activos])
+
+    useEffect(()=>{
+        limpiarNotificacionesUsuario();
+    },[limpiarNotificacionesUsuario])
 
     const listaTecnicos = tecnicos_fr.map((tecnico, i)=>(
         <tr key={i}>
@@ -411,6 +436,7 @@ export default connect(mapStateToProps,
         fn_denegar, 
         fn_habililitar_edicion,
         tecnicos_activos,
-        noSave 
+        noSave,
+        limpiarNotificacionesUsuario 
     }
 )(AdministrarAsignacionForm);
