@@ -1,9 +1,8 @@
 var mysql = require('mysql2/promise');
-var { listEmployee, listTechnicians } = require('../querys/employee');
+var { listaEmpleados, listaTecnicos } = require('../querys/staff');
 var { cnc } = require('../../database/connection');
 var config = require('../../database/config');
 
-//console.log(config);
 
 let configuration = {
     host: config.db.host,
@@ -14,15 +13,15 @@ let configuration = {
     timezone: "+06:00"
 }
 
-//EMPLOYEE MANAGEMENT 
-const employee_mng = {
-    getActiveEmployees: () => {
-        return cnc(mysql, configuration, listEmployee())
+//STAFF MANAGEMENT 
+const staff = {
+    empleadosActivos: () => {
+        return cnc(mysql, configuration, listaEmpleados())
     },
 
-    getActiveTechnicians: () => {
-        return cnc(mysql, configuration, listTechnicians())
+    tecnicosActivos: () => {
+        return cnc(mysql, configuration, listaTecnicos())
     }
 }
 
-module.exports = employee_mng;
+module.exports = staff;

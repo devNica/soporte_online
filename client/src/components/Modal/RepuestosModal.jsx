@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
-import {getRepuestos} from '../../redux/actions/tools';
+import {fn_obt_lista_repuesto} from '../../redux/actions/tools';
 import RepuestosTable from '../Table/RepuestosTable';
 
 const mapStateToProps = state =>({
@@ -9,16 +9,16 @@ const mapStateToProps = state =>({
 
 const RepuestosModal = (props) =>{
 
-    const {idregws, getRepuestos, note, fetchComponentData} = props;
+    const {idregws, fn_obt_lista_repuesto, note, fetchComponentData} = props;
     const [repuesto, setRepuesto] = useState({id: '', qty: '', repuesto: ''})
 
-    useEffect(()=>{
-        getRepuestos({idregws})
-    })
+    // useEffect(()=>{
+    //     fn_obt_lista_repuesto({idregws})
+    // })
 
     useEffect(()=>{
-        getRepuestos({idregws})
-    },[note, getRepuestos, idregws])
+        fn_obt_lista_repuesto({idregws})
+    },[note, fn_obt_lista_repuesto, idregws])
 
     const handleOnchange = e =>{
 
@@ -130,4 +130,4 @@ const RepuestosModal = (props) =>{
 }
 
 
-export default connect(mapStateToProps,{getRepuestos})(RepuestosModal);
+export default connect(mapStateToProps,{fn_obt_lista_repuesto})(RepuestosModal);

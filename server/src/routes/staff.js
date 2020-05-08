@@ -1,10 +1,8 @@
 var router = require('express').Router();
-var { getActiveEmployees, getActiveTechnicians } = require('../management/employee/employee');
+var staff = require('../management/staff/staff');
 
-//RETORNA UN CONJUNTO DE RESULTADOS DE TODOS LOS EMPLEADOS
-//QUE ESTAN REGISTRADOS PERO QUE ESTAN ACTIVOS
-router.get('/employee/list/active', (req, res) => {
-    getActiveEmployees().then(result => {
+router.get('/staff/lista-empleados-activos', (req, res) => {
+    staff.empleadosActivos().then(result => {
         let employees = result.rows
         res.status(200).json({ mg: 'Ok', flag: true, employees })
     }).catch(err => {
@@ -12,8 +10,8 @@ router.get('/employee/list/active', (req, res) => {
     })
 })
 
-router.get('/employee/list/tec', (req, res) => {
-    getActiveTechnicians().then(result => {
+router.get('/staff/lista-tecnicos-activos', (req, res) => {
+    staff.tecnicosActivos().then(result => {
         let tecnicos = result.rows
         res.status(200).json({ mg: 'Ok', flag: true, tecnicos })
     }).catch(err => {

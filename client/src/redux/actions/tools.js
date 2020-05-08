@@ -65,10 +65,10 @@ export const fn_catalog_eqp = () => dispatch => {
     })
 }
 
-export const getTareasEqp = idregws => dispatch => {
-    api.eqp.getTareasEqp(idregws).then(res => {
+/*RECUPERA UNA LISTA DE TODAS LAS TAREAS ASOCIADAS AL TIPO DE EQUIPO*/
+export const fn_tareas_eqp = idregws => dispatch => {
+    api.tasks.listar(idregws).then(res => {
 
-        //let tareas = TareasEQPDT(res.tareas)
         let tareas = modelos.tareas(res.tareas)
 
         dispatch({
@@ -81,9 +81,9 @@ export const getTareasEqp = idregws => dispatch => {
     })
 }
 
-
-export const setEquipoRegin = cluster => dispatch => {
-    api.eqp.setEquipoRegin(cluster.data).then(res => {
+/*ACTUALIZA EL EQUIPO EN EL INGRESO*/
+export const fn_actualizar_ingreso_eqp = cluster => dispatch => {
+    api.eqp.actualizarIngresoEqp(cluster.data).then(res => {
 
         dispatch({
             type: CREATE_NOTIFICATION,
@@ -116,8 +116,9 @@ export const setEquipoRegin = cluster => dispatch => {
     })
 }
 
-export const setUsuarioRegin = data => dispatch => {
-    api.eqp.setUsuarioRegin(data).then(res => {
+/*ACTUALIZA EL USUARIO EN EL INGRESO*/
+export const fn_actualizar_ingreso_usr = data => dispatch => {
+    api.eqp.actualizarIngresoUsr(data).then(res => {
 
         dispatch({
             type: CREATE_NOTIFICATION,
@@ -133,10 +134,10 @@ export const setUsuarioRegin = data => dispatch => {
     })
 }
 
-export const getRepuestos = idequipo => dispatch => {
-    api.rep.getRepuestos(idequipo).then(res => {
+/*OBTIENE UNA LISTA DE REPUESTOS ESPECIFICOS PARA EL TIPO DE EQUIPO EN REVISION*/
+export const fn_obt_lista_repuesto = idequipo => dispatch => {
+    api.spares.listar(idequipo).then(res => {
 
-        //let reps = RepuestoDT(res.repuestos)
         let reps = modelos.repuestos(res.repuestos)
 
         dispatch({
@@ -184,7 +185,7 @@ export const fn_adm_tareas = cluster => dispatch => {
                 opt: cluster.data.opt
             }
 
-            api.task.tareas(data).then(res => {
+            api.eqp.actualizarTareas(data).then(res => {
 
                 dispatch({
                     type: CREATE_NOTIFICATION,
@@ -209,7 +210,7 @@ export const fn_adm_tareas = cluster => dispatch => {
         })
     }
     else {
-        api.task.tareas(cluster.data).then(res => {
+        api.eqp.actualizarTareas(cluster.data).then(res => {
 
             dispatch({
                 type: CREATE_NOTIFICATION,
@@ -261,6 +262,8 @@ export const fn_adm_cobertura = data => dispatch => {
     })
 }
 
+
+/*ACTUALIZA LA CANTIDAD Y TIPO DE REPUESTOS ASOCIADOS A UN EQUIPO EN ATENCION*/
 export const fn_adm_repuestos = data => dispatch => {
 
     if (data.opt === 'UPD') {
@@ -298,7 +301,7 @@ export const fn_adm_repuestos = data => dispatch => {
             }
 
 
-            api.rep.repuestos(info).then(res => {
+            api.eqp.actualizarRepuestos(info).then(res => {
 
                 dispatch({
                     type: CREATE_NOTIFICATION,
@@ -325,7 +328,7 @@ export const fn_adm_repuestos = data => dispatch => {
 
     }
     else {
-        api.rep.repuestos(data).then(res => {
+        api.eqp.actualizarRepuestos(data).then(res => {
 
             dispatch({
                 type: CREATE_NOTIFICATION,

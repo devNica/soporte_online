@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { setEquipoRegin ,noSave, fn_limpiar_eqp} from '../../redux/actions/tools';
+import { fn_actualizar_ingreso_eqp ,noSave, fn_limpiar_eqp} from '../../redux/actions/tools';
 import EquiposModal from '../Modal/EquiposModal';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -11,7 +11,7 @@ const mapStateToProps = state=>({
 
 const FormularioEdicionEquipo =(props)=> {
 
-    const {setEquipoRegin, noSave, userID_fr, asignaciones_fr, idregws_fc, fn_limpiar_eqp } = props;
+    const {fn_actualizar_ingreso_eqp, noSave, userID_fr, asignaciones_fr, idregws_fc, fn_limpiar_eqp } = props;
     const [info, setInfo]=useState([]);
     const [eqp, setEquipo] = useState({id: '', consecutivo: '', modelo: '', equipo: '', idcategoria: ''})
 
@@ -42,7 +42,7 @@ const FormularioEdicionEquipo =(props)=> {
             }
 
             console.log(cluster);
-            setEquipoRegin(cluster);
+            fn_actualizar_ingreso_eqp(cluster);
             fn_limpiar_eqp();
 
         }else{
@@ -103,4 +103,4 @@ const FormularioEdicionEquipo =(props)=> {
     
 }
 
-export default connect(mapStateToProps, {setEquipoRegin, noSave, fn_limpiar_eqp})(FormularioEdicionEquipo);
+export default connect(mapStateToProps, {fn_actualizar_ingreso_eqp, noSave, fn_limpiar_eqp})(FormularioEdicionEquipo);

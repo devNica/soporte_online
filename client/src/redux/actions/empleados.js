@@ -4,7 +4,7 @@ import api from '../../api/api';
 
 
 export const fn_empleados_activos = () => dispatch => {
-    api.employee.actives().then(res => {
+    api.staff.empleadosActivos().then(res => {
         let info = modelos.empleados(res.employees);
         dispatch({
             type: OBT_EMPLEADOS_ACTIVOS,
@@ -20,7 +20,7 @@ export const fn_empleados_activos = () => dispatch => {
 }
 
 export const fn_tecnicos_activos = () => dispatch => {
-    api.employee.tecnhnicians().then(res => {
+    api.staff.tecnicosActivos().then(res => {
         console.log(res)
         dispatch({
             type: OBT_TECNICOS_ACTIVOS,

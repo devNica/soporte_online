@@ -24,7 +24,7 @@ const tools = {
         return cnc(mysql, configuration, catalogoEqps())
     },
 
-    getTareasEqp: (idregws) => {
+    tareasEquipo: (idregws) => {
         return cnc(mysql, configuration, tareasEqp(idregws))
     },
 
@@ -40,7 +40,7 @@ const tools = {
         return cnc(mysql, configuration, usuarioRegin(data))
     },
 
-    getRepuestos: (idregws) => {
+    listaRepuestos: (idregws) => {
         return cnc(mysql, configuration, repuestos(idregws))
     },
 

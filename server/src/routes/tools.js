@@ -24,7 +24,7 @@ router.get('/tool/catalogoeqp-list', (req, res) => {
 })
 
 router.post('/tools/tareas-eqp-list', (req, res) => {
-    tools.getTareasEqp(req.body.idregws).then(response => {
+    tools.tareasEquipo(req.body.idregws).then(response => {
         let tareas = response.rows
         res.status(200).json({ msg: 'Ok', flag: true, tareas })
     }).catch(err => {
@@ -123,9 +123,9 @@ router.post('/tools/finish-tarea-eqp', (req, res) => {
 
 router.post('/tools/list-repuestos-eqp', (req, res) => {
 
-    console.log('esto imprime', req.body);
+    //console.log('esto imprime', req.body);
 
-    tools.getRepuestos(req.body.idregws).then(response => {
+    tools.listaRepuestos(req.body.idregws).then(response => {
         let repuestos = response.rows
         res.status(200).json({ msg: 'Ok', flag: true, repuestos })
     }).catch(err => {

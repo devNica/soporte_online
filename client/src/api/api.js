@@ -39,12 +39,12 @@ export default {
             axios.post('/api/workshop/reasignar-atencion-eqp', data).then(res => res.data),
     },
 
-    employee: {
-        actives: () =>
-            axios.get('/api/employee/list/active').then(res => res.data),
+    staff: {
+        empleadosActivos: () =>
+            axios.get('/api/staff/lista-empleados-activos').then(res => res.data),
 
-        tecnhnicians: () =>
-            axios.get('/api/employee/list/tec').then(res => res.data),
+        tecnicosActivos: () =>
+            axios.get('/api/staff/lista-tecnicos-activos').then(res => res.data),
     },
 
     workload: {
@@ -71,7 +71,7 @@ export default {
 
     },
 
-    report: {
+    reports: {
         eqp: () =>
             axios.get('/api/export/pdf', { responseType: 'arraybuffer', headers: { 'Accept': 'application/pdf' } }),
 
@@ -89,28 +89,28 @@ export default {
         catalogoEquipos: () =>
             axios.get('/api/tool/catalogoeqp-list').then(res => res.data),
 
-        getTareasEqp: idregws =>
-            axios.post('/api/tools/tareas-eqp-list', idregws).then(res => res.data),
-
-        setEquipoRegin: data =>
+        actualizarIngresoEqp: data =>
             axios.post('/api/tools/set-eqp-regin', { data }).then(res => res.data),
 
-        setUsuarioRegin: data =>
+        actualizarIngresoUsr: data =>
             axios.post('/api/tools/set-usr-regin', data).then(res => res.data),
 
-    },
-
-    task: {
-        tareas: data =>
+        actualizarTareas: data =>
             axios.post('/api/tools/upd-tareas-eqp', { data }).then(res => res.data),
+
+        actualizarRepuestos: data =>
+            axios.post('/api/tools/upd-repuestos-eqp', { data }).then(res => res.data),
+
     },
 
-    rep: {
-        getRepuestos: idequipo =>
-            axios.post('/api/tools/list-repuestos-eqp', idequipo).then(res => res.data),
+    tasks: {
+        listar: idregws =>
+            axios.post('/api/tools/tareas-eqp-list', idregws).then(res => res.data),
+    },
 
-        repuestos: data =>
-            axios.post('/api/tools/upd-repuestos-eqp', { data }).then(res => res.data),
+    spares: {
+        listar: idequipo =>
+            axios.post('/api/tools/list-repuestos-eqp', idequipo).then(res => res.data),
     },
 
     cvg: {

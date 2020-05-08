@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux';
 import TareasEqpTable from '../Table/TareasEqpTable';
-import {getTareasEqp} from '../../redux/actions/tools';
+import {fn_tareas_eqp} from '../../redux/actions/tools';
 
 const TareasModal = (props) => {
 
-    const {idregws, getTareasEqp, note, fetchComponentData} = props;
+    const {idregws, fn_tareas_eqp, note, fetchComponentData} = props;
     const [tareaseqp, setTareas] = useState({id: '', tarea: '', tipoequipo: ''})
 
     useEffect(()=>{
-        getTareasEqp({idregws: idregws})
-    },[getTareasEqp, note, idregws])
+        fn_tareas_eqp({idregws: idregws})
+    },[fn_tareas_eqp, note, idregws])
 
     
     const handleOnSave = () =>{
@@ -87,4 +87,4 @@ const mapStateToProps = state =>({
     note : state.notifications.note
 })
 
-export default connect(mapStateToProps,{getTareasEqp})(TareasModal);
+export default connect(mapStateToProps,{fn_tareas_eqp})(TareasModal);

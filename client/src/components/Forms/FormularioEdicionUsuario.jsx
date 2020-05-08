@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import UsuariosModal from '../Modal/UsuariosModal';
 import SearchIcon from '@material-ui/icons/Search';
 import {fn_empleados_activos} from '../../redux/actions/empleados';
-import {setUsuarioRegin} from '../../redux/actions/tools'
+import {fn_actualizar_ingreso_usr} from '../../redux/actions/tools'
 import {noSave} from '../../redux/actions/tools';
 
 const mapStateToProps = state=>({
@@ -12,7 +12,7 @@ const mapStateToProps = state=>({
 
 const FormularioEdicionUsuario = (props)=>{
 
-    const {fn_empleados_activos, setUsuarioRegin, noSave, asignaciones_fr, idregws_fc} = props;
+    const {fn_empleados_activos, fn_actualizar_ingreso_usr, noSave, asignaciones_fr, idregws_fc} = props;
     
     const [usr, setUsr] = useState({id: '',full_name: '',carnet: ''});
     const [info, setInfo] = useState([]);
@@ -26,7 +26,7 @@ const FormularioEdicionUsuario = (props)=>{
                 idregin: info[0].idregin
             }
 
-            setUsuarioRegin({data});
+            fn_actualizar_ingreso_usr({data});
         }else{
             noSave({msg:'No se ha notificado al sistema de cambios en el usuario', type: 'info', time: 3500})
         }
@@ -91,4 +91,4 @@ const FormularioEdicionUsuario = (props)=>{
     );
 }
 
-export default connect(mapStateToProps,{fn_empleados_activos, setUsuarioRegin, noSave})(FormularioEdicionUsuario);
+export default connect(mapStateToProps,{fn_empleados_activos, fn_actualizar_ingreso_usr, noSave})(FormularioEdicionUsuario);

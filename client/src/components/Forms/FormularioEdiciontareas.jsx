@@ -139,6 +139,7 @@ const FormularioEdiciontareas= (props) => {
                 currentT
             }
 
+            console.log(cluster);
             fn_adm_tareas(cluster);
             setOperacion('')
 
@@ -169,7 +170,7 @@ const FormularioEdiciontareas= (props) => {
                 currentT
             }
 
-
+            console.log(cluster);
             fn_adm_tareas(cluster);
             setOperacion('')
 
@@ -185,6 +186,7 @@ const FormularioEdiciontareas= (props) => {
                 currentT
             }
 
+            console.log(cluster);
             fn_adm_tareas(cluster);
             setOperacion('')
 
@@ -197,8 +199,11 @@ const FormularioEdiciontareas= (props) => {
     }
 
     useEffect(()=>{
-       setInfo(asignaciones_fr)
-    },[asignaciones_fr])
+
+        let asignacion = asignaciones_fr.filter(item => item.idregws === parseInt(idregws_fc))
+        setInfo(asignacion)
+
+    },[asignaciones_fr, idregws_fc])
 
     useEffect(()=>{
         setTareasEqp(tareasEquipo_fr)

@@ -3,7 +3,7 @@ import api from '../../api/api'
 import { modelos } from '../../modelos/modelos'
 
 export const fn_reporte_desempeno_tecnico = data => dispatch => {
-    api.report.desemepeno(data).then(res => {
+    api.reports.desemepeno(data).then(res => {
 
         let info = modelos.desempeno(res.response)
 
@@ -19,7 +19,7 @@ export const fn_reporte_desempeno_tecnico = data => dispatch => {
 
 
 export const fn_reporte_distribucion_tiempo = data => dispatch => {
-    api.report.distribucionTiempo(data).then(res => {
+    api.reports.distribucionTiempo(data).then(res => {
         console.log(res.mediciones[0].FLAG);
 
         if (res.mediciones[0].FLAG) {

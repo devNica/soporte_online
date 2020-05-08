@@ -1,5 +1,5 @@
-const employee = {
-    listEmployee: (estado = 1) => {
+const staff = {
+    listaEmpleados: (estado = 1) => {
         return `SELECT 
         empleados.Id_Empleado as idempleado,
         empleados.Cedula as cedula,
@@ -12,7 +12,7 @@ const employee = {
         FROM empleados WHERE empleados.Estado = ${estado} ORDER BY idempleado ASC`
     },
 
-    listTechnicians: (estado = 1) => {
+    listaTecnicos: (estado = 1) => {
         return `SELECT 
         usuarios.idusuarios as idusuario,
         usuarios.nick as username,
@@ -24,4 +24,4 @@ const employee = {
     }
 }
 
-module.exports = employee;
+module.exports = staff;
