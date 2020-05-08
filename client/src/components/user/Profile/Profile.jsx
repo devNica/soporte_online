@@ -6,30 +6,57 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {fn_revisar_notificaciones} from '../../../redux/actions/tools';
 import NotificacionProceso from '../../Notifications/NotificacionProceso';
 
+import io from 'socket.io-client';
+
 const mapStateToProps = state => ({
     user_fr: state.auth.user,
 })
 
+let socket;
+
 const Profile = ({user_fr, fn_revisar_notificaciones}) =>{
     
     const [user, setUser]= useState('');
+    const ENDPOINT = 'localhost:5000';
     
     useEffect(()=>{
         setUser(user_fr);
     },[user_fr])
 
-    /*EJECUTA ESTE PROCESO EN INTERVALOS DE 5SEG SIEMPRE QUE EL COMPONENTE ESTE MONTADO
-    DE ESA FORMA VERFICIO LAS NOTIFICACIONES QUE TIENE EL USUARIO*/
     useEffect(()=>{
+        socket = io(ENDPOINT);
+
+        return ()=>{
+            socket.emit('disconnect');
+            socket.off();
+        }
+
+    },[ENDPOINT])
+
+    useEffect(()=>{
+
         const interval = setInterval(() => {
             if(user_fr !== undefined){
-                fn_revisar_notificaciones({usuario: user_fr.nick})
+                /*PIDO REVISAR LAS NOTIFICACIONES QUE TIENE EL USUARIO*/
+                socket.emit('revisar-notificaciones-usuario', {usuario: user_fr.nick}, (error)=>{
+                    if(error){
+                        console.log(error);
+                    }
+                })
             }
-            
-        }, 5000);
+        },5000)
+
         return () => clearInterval(interval);
+    },[user_fr])
+
+
+    useEffect(()=>{
         
-    },[user_fr, fn_revisar_notificaciones])
+        socket.on('recuperar-resultados', notas =>{
+            fn_revisar_notificaciones(notas);
+        })
+
+    },[fn_revisar_notificaciones])
    
     const dashboard=(
         <Fragment>

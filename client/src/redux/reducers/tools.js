@@ -1,4 +1,4 @@
-import { GET_CATALOGO_EQP, GET_EQUIPOS_ACTIVOS, GET_TAREAS_BY_EQP, GET_REPUESTOS_BY_EQP, GET_COBERTURA } from '../actions/types';
+import { OBT_CATALOGO_EQP, OBT_EQUIPOS_ACTIVOS, OBT_TAREAS_POR_EQP, OBT_REPUESTOS_POR_EQP, OBT_COBERTURA_EQP } from '../actions/types';
 
 const initialState = {
     catalogo: [],
@@ -12,31 +12,31 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
 
-        case GET_CATALOGO_EQP:
+        case OBT_CATALOGO_EQP:
             return {
                 ...state,
                 catalogo: action.catalogo,
             }
 
-        case GET_EQUIPOS_ACTIVOS:
+        case OBT_EQUIPOS_ACTIVOS:
             return {
                 ...state,
                 eqps: action.eqps,
             }
 
-        case GET_COBERTURA:
+        case OBT_COBERTURA_EQP:
             return {
                 ...state,
                 cobertura: action.eqps,
             }
 
-        case GET_TAREAS_BY_EQP:
+        case OBT_TAREAS_POR_EQP:
             return {
                 ...state,
                 tareasEqp: action.tareasEqp,
             }
 
-        case GET_REPUESTOS_BY_EQP:
+        case OBT_REPUESTOS_POR_EQP:
             return {
                 ...state,
                 reps: action.reps,

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {Fragment, useState, useEffect } from 'react';
 import TablaDesempeno from '../Table/TablaDesempeno';
 import {connect} from 'react-redux';
-import {fn_reporte_desempeno_tecnico} from '../../redux/actions/reportes';
+import {fn_reporte_desempeno_tecnico, fn_reporte_distribucion_tiempo, fn_limpiar_datos_reporte} from '../../redux/actions/reportes';
 import {fn_tecnicos_activos} from '../../redux/actions/empleados';
 import DatePicker  from 'react-datepicker'
+import TablaDistribucionTiempo from '../Table/TablaDistribucionTiempo';
 
 const mapStateToProps = state =>({
     user_fr: state.auth.user,
@@ -13,7 +14,8 @@ const mapStateToProps = state =>({
 
 const PaginaDesempeno = (props) =>{
 
-    const {fn_reporte_desempeno_tecnico, fn_tecnicos_activos, user_fr, rol_fr, tecnicos_fr, filtro_fc} = props;
+    const {fn_tecnicos_activos, user_fr, rol_fr, tecnicos_fr, filtro_fc} = props;
+    const {fn_reporte_desempeno_tecnico, fn_reporte_distribucion_tiempo, fn_limpiar_datos_reporte} = props;
     const [idtecnico, setIdTecnico] = useState('');
     const [inicio, setInicio] = useState('');
     const [finalizo, setFinalizo] = useState('');
@@ -26,32 +28,65 @@ const PaginaDesempeno = (props) =>{
     };
 
     const fechaFinalizo = date =>{
+        
         setFinalizo(date);
-
         let filtro = '';
+        
+        if(filtro_fc === 'dist_tiempo'){
 
-        if(rol_fr==='SUPERUSER'){
-            filtro = `RT.inicio BETWEEN ('${inicio.toISOString()}') AND ('${date.toISOString()}')`
-        }else{
-            filtro = `RT.inicio BETWEEN ('${inicio.toISOString()}') AND ('${date.toISOString()}') AND RT.fk_tecnico_regtaller = ${user_fr.idusuarios}`
+            let data = {
+                idtecnico: user_fr.rol === 'SUPERUSER' ? parseInt(idtecnico) : user_fr.idusuarios,
+                inicio: inicio.toISOString().slice(0,10), 
+                final: date.toISOString().slice(0,10), 
+                filtro: `'`+`'`
+            }
+
+            console.log(data);
+            fn_reporte_distribucion_tiempo(data);
+        
         }
+        else{
 
-        console.log(filtro);
-        fn_reporte_desempeno_tecnico({filtro});
+            /**ACA NO IMPORTA CUANTOS DIAS HAYAN ENTRE LAS FECHAS PORQUE NO HAY DESBORDAMIENTO EN LOS CALCULOS*/
+            if(rol_fr==='SUPERUSER'){
+
+                filtro = `(RT.inicio BETWEEN '${inicio.toISOString()}' AND '${date.toISOString()}') AND
+                (RT.inicio BETWEEN '${inicio.toISOString()}' AND '${date.toISOString()}') and (fk_tecnico_regtaller = ${idtecnico})  
+                AND (RT.fk_estado_tallerestados = 1 OR RT.fk_estado_tallerestados = 3 OR RT.fk_estado_tallerestados = 4 OR RT.fk_estado_tallerestados = 6)`
+
+            }else{
+
+                filtro = `(RT.inicio BETWEEN '${inicio.toISOString()}' AND '${date.toISOString()}') AND
+                (RT.inicio BETWEEN '${inicio.toISOString()}' AND '${date.toISOString()}') and (fk_tecnico_regtaller = ${user_fr.idusuarios})  
+                AND (RT.fk_estado_tallerestados = 1 OR RT.fk_estado_tallerestados = 3 OR RT.fk_estado_tallerestados = 4 OR RT.fk_estado_tallerestados = 6)`
+            }
+
+            console.log(filtro);
+            fn_reporte_desempeno_tecnico({filtro});
+        }
     }
 
     const handleOnChange = e =>{
         let filtro = `RT.fk_tecnico_regtaller = ${e.target.value}`
-        //console.log(filtro)
-        fn_reporte_desempeno_tecnico({filtro});
-        setIdTecnico(e.target.value)
-        // setTipo('tecnico')
-
+        
+        if(filtro_fc === 'dist_tiempo'){
+            setIdTecnico(e.target.value)
+        }
+        if(filtro_fc === 'tecnico'){
+            fn_reporte_desempeno_tecnico({filtro});
+            setIdTecnico(e.target.value)
+        }
+        
     }
 
     useEffect(()=>{
         fn_tecnicos_activos()
     },[fn_tecnicos_activos])
+
+    useEffect(()=>{
+
+        return ()=> fn_limpiar_datos_reporte();
+    },[fn_limpiar_datos_reporte])
 
     
     const listaTecnicos = tecnicos_fr.map((tecnico, i)=>(
@@ -92,10 +127,10 @@ const PaginaDesempeno = (props) =>{
         </div>
     )
 
-    const opciones = (
+    const tecnicos = (
         <div className="row">
             <div className="col-12 col-sm-12 col-md-6 offset-md-3">
-                <select name="tecnico" id="tecnico" className="form-control" onChange={handleOnChange}>
+                <select name="tecnico" id="tecnico" className="form-control font-weight-bold" onChange={handleOnChange}>
                     <option value="0">SELECCIONE UN TECNICO DE LA LISTA</option>
                     {listaTecnicos !== undefined ? listaTecnicos : null}
                 </select>
@@ -103,17 +138,54 @@ const PaginaDesempeno = (props) =>{
         </div>
     )
 
+    
+
+    const tiempos = (
+        <div className="row">
+            <div className="col-12">
+                {filtro_fc === 'tecnico' ? 
+                    <h3 className="text-center border py-2">Reportes por tecnicos</h3>: 
+                    <h3 className="text-center border py-2">Reporte Distribucion Tiempo</h3>}
+            </div>
+            {rol_fr === 'SUPERUSER' ? 
+                
+                <Fragment>
+                    <div className="col-12 mb-3">
+                        {tecnicos} 
+                    </div>
+                    <div className="col-12">
+                        {calendar}
+                    </div>
+                </Fragment>       
+                
+                :
+                
+                <div className="col-12">
+                    {calendar}
+                </div>
+            }
+        </div>
+    )
+
     return (
         <div>
-            {filtro_fc !== undefined ?
-                        filtro_fc === 'tecnico' ? opciones : calendar
-                    :null
+            {filtro_fc !== undefined ? tiempos : null }
+            
+            {filtro_fc === 'tecnico' ?  
+                <TablaDesempeno idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc}/>:
+                <TablaDistribucionTiempo idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc}/> 
             }
-            <TablaDesempeno idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc}/>
                 
         </div>
     );
     
 }
 
-export default connect(mapStateToProps,{fn_reporte_desempeno_tecnico, fn_tecnicos_activos})(PaginaDesempeno);
+export default connect(mapStateToProps,
+    {
+        fn_reporte_desempeno_tecnico, 
+        fn_reporte_distribucion_tiempo,
+        fn_limpiar_datos_reporte,
+        fn_tecnicos_activos
+    }
+)(PaginaDesempeno);

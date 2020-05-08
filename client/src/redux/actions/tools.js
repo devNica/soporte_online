@@ -1,4 +1,17 @@
-import { GET_CATALOGO_EQP, GET_EQUIPOS_ACTIVOS, GET_TAREAS_BY_EQP, CREATE_NOTIFICATION, GET_REPUESTOS_BY_EQP, GET_COBERTURA, CREATE_NOTIFICACION_PROCESS } from './types'
+import {
+    OBT_CATALOGO_EQP,
+    OBT_EQUIPOS_ACTIVOS,
+    OBT_TAREAS_POR_EQP,
+    CREATE_NOTIFICATION,
+    OBT_REPUESTOS_POR_EQP,
+    OBT_COBERTURA_EQP,
+    CREATE_NOTIFICACION_PROCESS,
+    OBT_TAREAS_DEL_EQP,
+    OBT_PARTES_POR_IDREGWS,
+    OBT_COBERTURA_POR_IDREGWS
+}
+    from './types'
+
 import { modelos } from '../../modelos/modelos';
 import api from '../../api/api'
 
@@ -14,7 +27,7 @@ export const fn_equipos_activos = id => dispatch => {
         let eqps = modelos.equipos(res.eqps)
 
         dispatch({
-            type: GET_EQUIPOS_ACTIVOS,
+            type: OBT_EQUIPOS_ACTIVOS,
             eqps,
         })
 
@@ -29,7 +42,7 @@ export const fn_equipos_cobertura = id => dispatch => {
         let eqps = modelos.equipos(res.eqps)
 
         dispatch({
-            type: GET_COBERTURA,
+            type: OBT_COBERTURA_EQP,
             eqps,
         })
 
@@ -43,7 +56,7 @@ export const fn_catalog_eqp = () => dispatch => {
 
 
         dispatch({
-            type: GET_CATALOGO_EQP,
+            type: OBT_CATALOGO_EQP,
             catalogo: res.catalogo
         })
 
@@ -59,7 +72,7 @@ export const getTareasEqp = idregws => dispatch => {
         let tareas = modelos.tareas(res.tareas)
 
         dispatch({
-            type: GET_TAREAS_BY_EQP,
+            type: OBT_TAREAS_POR_EQP,
             tareasEqp: tareas
         })
 
@@ -127,7 +140,7 @@ export const getRepuestos = idequipo => dispatch => {
         let reps = modelos.repuestos(res.repuestos)
 
         dispatch({
-            type: GET_REPUESTOS_BY_EQP,
+            type: OBT_REPUESTOS_POR_EQP,
             reps
         })
 
@@ -183,7 +196,7 @@ export const fn_adm_tareas = cluster => dispatch => {
                 })
 
                 dispatch({
-                    type: 'GET_TASKS_EQP',
+                    type: OBT_TAREAS_DEL_EQP,
                     payload: {
                         tasksEQP: currentT,
                     }
@@ -208,7 +221,7 @@ export const fn_adm_tareas = cluster => dispatch => {
             })
 
             dispatch({
-                type: 'GET_TASKS_EQP',
+                type: OBT_TAREAS_DEL_EQP,
                 payload: {
                     tasksEQP: cluster.currentT,
                 }
@@ -236,7 +249,7 @@ export const fn_adm_cobertura = data => dispatch => {
         api.workshop.coverage({ id: data.idregws }).then(res => {
 
             dispatch({
-                type: 'GET_COVERAGE_BY_IDREGWS',
+                type: OBT_COBERTURA_POR_IDREGWS,
                 payload: {
                     coverage: res.coverage,
                     msg: res.msg
@@ -298,7 +311,7 @@ export const fn_adm_repuestos = data => dispatch => {
 
                 api.workshop.parts({ id: data.idregws }).then(res => {
                     dispatch({
-                        type: 'GET_PARTS_BY_IDREGWS',
+                        type: OBT_PARTES_POR_IDREGWS,
                         payload: {
                             parts: res.parts,
                             msg: res.msg
@@ -325,7 +338,7 @@ export const fn_adm_repuestos = data => dispatch => {
 
             api.workshop.parts({ id: data.idregws }).then(res => {
                 dispatch({
-                    type: 'GET_PARTS_BY_IDREGWS',
+                    type: OBT_PARTES_POR_IDREGWS,
                     payload: {
                         parts: res.parts,
                         msg: res.msg
@@ -351,29 +364,29 @@ export const noSave = (data) => dispatch => {
 
 
 export const fn_revisar_notificaciones = (data) => (dispatch, getState) => {
-    api.notificacion.revisar(data).then(res => {
 
-        const prevNotifications = getState().notifications.proceso || [];
-        let existe;
-        let currentNotifications = [];
+    //console.log(data.notas);
+    const prevNotifications = getState().notifications.proceso || [];
+    let existe;
+    let currentNotifications = [];
 
-        res.notas.map((nota, i) => {
-            existe = prevNotifications.filter(item => item.Consecutivo === nota.Consecutivo);
+    data.notas.map((nota, i) => {
+        existe = prevNotifications.filter(item => item.Consecutivo === nota.Consecutivo);
 
-            if (existe.length < 1) {
-                currentNotifications[i] = nota
-                //console.log('agrego:', nota.Consecutivo)
-                dispatch({
-                    type: CREATE_NOTIFICACION_PROCESS,
-                    payload: currentNotifications
-                })
+        if (existe.length < 1) {
+            currentNotifications[i] = nota
+            //console.log('agrego:', nota.Consecutivo)
+            dispatch({
+                type: CREATE_NOTIFICACION_PROCESS,
+                payload: currentNotifications
+            })
 
-            } else {
-                console.log('noagrego:', nota.Consecutivo)
-            }
+        } else {
+            console.log('noagrego:', nota.Consecutivo)
+        }
 
-        })
     })
+
 }
 
 export const fn_limpiar_notificaciones = () => dispatch => {

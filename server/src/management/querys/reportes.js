@@ -42,7 +42,21 @@ const reportes = {
 
         WHERE ${filtro} ORDER BY nick DESC
         `
-    }
+    },
+
+    REP_DISTRIBUCION_TIEMPOS: (data) => {
+
+        return `
+        CALL PROCEDIMIENTO_DISTRIBUCION_TIEMPOS(
+            ${`'` + data.idtecnico + `'`},
+            ${`'` + data.inicio + `'`},
+            ${`'` + data.final + `'`},
+            ${data.filtro}
+        ); 
+        `
+    },
+
+
 
 }
 

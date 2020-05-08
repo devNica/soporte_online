@@ -14,15 +14,17 @@ const mapStateToProps = state=>({
 
 const TablaDesempeno = (props) => {
 
-    const {fn_reporte_desempeno_tecnico, desempeno_fr, rol_fr, userID_fr, tipo_fc, inicio_fc, finalizo_fc, idtecnico_fc} = props;
+    const {desempeno_fr, rol_fr, userID_fr, inicio_fc, finalizo_fc, idtecnico_fc} = props;
+    const {fn_reporte_desempeno_tecnico} = props;
     const [data, setData] = useState(modelo_desempeno([]).data);
     const [datasets, setDatasets] = useState([]);
     const [etiquetas, setEtiquetas] = useState([]);
 
     const generar_dataset = useCallback(()=>{
         let dataA=[], dataB=[], colorA=[], colorB=[], etiquetas =[];
-        const {rows} = desempeno_fr.data;
         
+        const {rows} = desempeno_fr.data;
+
         rows.forEach((item, i) => {
             etiquetas[i]=item.consecutivo
             dataA[i]=parseFloat(item.tmplog)
@@ -55,31 +57,33 @@ const TablaDesempeno = (props) => {
             ]
         ))
 
-       
     },[desempeno_fr])
 
     const handleOnSearch = e =>{
         let filtro;
-        if(tipo_fc==='tecnico'){
-            filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') AND RT.fk_tecnico_regtaller = ${idtecnico_fc}`
+        
+        if(rol_fr==='SUPERUSER'){
             
+            filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%' OR USR.nick LIKE '%${e}%') AND 
+                        (RT.inicio BETWEEN '${inicio_fc.toISOString()}' AND '${finalizo_fc.toISOString()}') AND
+                        (RT.inicio BETWEEN '${inicio_fc.toISOString()}' AND '${finalizo_fc.toISOString()}') AND 
+                        (fk_tecnico_regtaller = ${idtecnico_fc}) AND 
+                        (RT.fk_estado_tallerestados = 1 OR RT.fk_estado_tallerestados = 3 OR RT.fk_estado_tallerestados = 4 OR RT.fk_estado_tallerestados = 6)`
+
+
+        }else{
             
+            filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') AND 
+                        (RT.inicio BETWEEN '${inicio_fc.toISOString()}' AND '${finalizo_fc.toISOString()}') AND
+                        (RT.inicio BETWEEN '${inicio_fc.toISOString()}' AND '${finalizo_fc.toISOString()}') AND 
+                        (fk_tecnico_regtaller = ${userID_fr})  AND 
+                        (RT.fk_estado_tallerestados = 1 OR RT.fk_estado_tallerestados = 3 OR RT.fk_estado_tallerestados = 4 OR RT.fk_estado_tallerestados = 6)`
+                        
         }
-        if(tipo_fc==='fecha'){
-            if(rol_fr==='SUPERUSER'){
-                filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%' OR USR.nick LIKE '%${e}%') 
-                            AND RT.inicio BETWEEN ('${inicio_fc.toISOString()}') 
-                            AND ('${finalizo_fc.toISOString()}')`
-               
-            }else{
-                filtro = `(CAT.Equipo LIKE '%${e}%' OR CNC.Consecutivo LIKE '%${e}%') 
-                            AND RT.inicio BETWEEN ('${inicio_fc.toISOString()}') AND ('${finalizo_fc.toISOString()}')
-                            AND RT.fk_tecnico_regtaller = ${userID_fr}`
-                           
-            }
-            
-        }
+
+        //console.log(filtro)
         fn_reporte_desempeno_tecnico({filtro});
+    
     }
 
     useEffect(()=>{
@@ -89,17 +93,18 @@ const TablaDesempeno = (props) => {
             
             /*ESTA VERSION DE CICLO FOR TIENE MEJOR TIEMPO DE RESPUESTA*/
             for (const key in desempeno_fr.data.rows) {
+                
                 Object.defineProperty(desempeno_fr.data.rows[key], funcion, {value: generar_dataset, writable: true})
             }
             
-           setData(desempeno_fr.data);
+            setData(desempeno_fr.data);
         }
 
     },[desempeno_fr, generar_dataset])
 
     return (
         <Fragment>
-            <div className="my-5">
+            <div className="my-2">
                 <MDBDataTable
                     bordered
                     hover
@@ -110,7 +115,7 @@ const TablaDesempeno = (props) => {
                     
                 />
 
-                {datasets.length > 0 ? <Line datasets={datasets} labels={etiquetas}/> : null}
+                {datasets.length > 0 ?  <Line datasets={datasets} labels={etiquetas}/> :null}
             </div>
         </Fragment>
     );

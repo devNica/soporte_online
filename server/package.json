@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "ws": "node src/websocket.js"
   },
   "keywords": [],
   "author": "",
@@ -22,8 +23,10 @@
     "mysql": "^2.18.1",
     "mysql-utilities": "^1.1.0-alpha.3",
     "mysql2": "^2.1.0",
+    "ngrok": "^3.2.7",
     "puppeteer": "^2.1.1",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

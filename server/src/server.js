@@ -3,6 +3,8 @@ var bodyparser = require("body-parser");
 var cors = require("cors");
 var path = require('path');
 var hbs = require('express-handlebars');
+var ngrok = require('ngrok');
+
 
 var app = express();
 var port = process.env.PORT || 4200;
@@ -49,3 +51,21 @@ app.use('/api', reportesRouter);
 // })
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
+
+
+// app.listen(port, () => {
+//     if (ngrok) { // open a tunnel
+
+//         ngrok.connect(port, (err, url) => {
+//             if (err) {
+//                 return console.log(err);
+//             }
+//             console.log(`Server started. Tunnel running at url ${url}`);
+//         });
+//     } else { // start normally
+//         console.log(`Server listening on port ${port}`);
+//     }
+// });
+
+
+

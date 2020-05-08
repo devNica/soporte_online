@@ -10,4 +10,16 @@ router.post('/reporte/desempeno-tecnicos', (req, res) => {
     })
 })
 
+
+router.post('/reporte/distribucion-tiempo', (req, res) => {
+
+    //console.log(req.body)
+
+    reportes.reporteDistribucionTiempo(req.body).then(response => {
+        res.status(200).json({ msg: 'Ok', mediciones: response.rows[0] })
+    }).catch(err => {
+        console.log(err);
+    })
+})
+
 module.exports = router;

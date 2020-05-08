@@ -6,8 +6,9 @@ import {connect} from 'react-redux';
 import PermDataSettingIcon from '@material-ui/icons/PermDataSetting';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PersonIcon from '@material-ui/icons/Person';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import ComputerIcon from '@material-ui/icons/Computer';
+//import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+//import ComputerIcon from '@material-ui/icons/Computer';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 
 class ReportesPanel extends Component {
@@ -18,7 +19,7 @@ class ReportesPanel extends Component {
 
     render() {
 
-        const {rol} = this.props;
+        //const {rol} = this.props;
 
         return (
             <div className="list-group pl-4">
@@ -28,20 +29,13 @@ class ReportesPanel extends Component {
                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                     ><PermDataSettingIcon  style={{ color: "#5094de"}} fontSize="small"/> Reportes por</button>
                 <div className="dropdown-menu  px-2 pt-3" aria-labelledby="dropdownMenuButton">
-                    {rol !== undefined ?
-                            rol === 'SUPERUSER' ?
-                            <button className="list-group-item list-group-item-action sub-item-option h5 text-dark" name="pfm_tecnico" onClick={this.handleOnClick}> 
-                                <PersonIcon  style={{ color: "#5094de"}} fontSize="small"/> Tecnico
-                            </button>
-                            : null
-                        :null
-                    }
-                    
-                    <button className="list-group-item list-group-item-action sub-item-option h5 text-dark" name="pfm_fecha" onClick={this.handleOnClick}>
-                        <CalendarTodayIcon  style={{ color: "#5094de"}} fontSize="small"/> Fecha
+                   
+                    <button className="list-group-item list-group-item-action sub-item-option h5 text-dark" name="pfm_tecnico" onClick={this.handleOnClick}> 
+                        <PersonIcon  style={{ color: "#5094de"}} fontSize="small"/> Tecnico
                     </button>
-                    <button className="list-group-item list-group-item-action sub-item-option h5 text-dark" name="pfm_equipo" onClick={this.handleOnClick}>
-                        <ComputerIcon  style={{ color: "#5094de"}} fontSize="small"/> App
+                     
+                    <button className="list-group-item list-group-item-action sub-item-option h5 text-dark" name="pfm_dist_tiempo" onClick={this.handleOnClick}>
+                        <AccessTimeIcon  style={{ color: "#5094de"}} fontSize="small"/> Dist. Tiempo
                     </button>
                 </div>
                 <button className="list-group-item list-group-item-action item-profile h5 text-dark"><PictureAsPdfIcon  style={{ color: "#5094de"}} fontSize="small"/> Informes</button>

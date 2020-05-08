@@ -77,6 +77,9 @@ export default {
 
         desemepeno: data =>
             axios.post('/api/reporte/desempeno-tecnicos', data).then(res => res.data),
+
+        distribucionTiempo: data =>
+            axios.post('/api/reporte/distribucion-tiempo', data).then(res => res.data),
     },
 
     eqp: {

@@ -41,7 +41,7 @@ const HomePage = ({fn_limpiar_notificaciones}) => {
 
             <hr className="my-4"/>
             <div className="row">
-                <IconoTecnologia icono="logo1.png" descripcion="Javascript"/>
+                <IconoTecnologia icono={`${process.env.PUBLIC_URL}logo1.png`} descripcion="Javascript"/>
                 <IconoTecnologia icono="logo2.png" descripcion="MySQL"/>
                 <IconoTecnologia icono="logo3.png" descripcion="NodeJS"/>
                 <IconoTecnologia icono="logo5.png" descripcion="ReactJS"/>

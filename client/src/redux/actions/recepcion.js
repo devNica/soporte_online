@@ -1,4 +1,4 @@
-import { GET_INGRESADO_PENDIENTE, CREATE_NOTIFICATION } from './types'
+import { OBT_INGRESADOS_PENDIENTES, CREATE_NOTIFICATION } from './types'
 import api from '../../api/api'
 import { modelo_recepcion } from '../../modelos/recepcion'
 
@@ -9,7 +9,7 @@ export const fn_ingresado_pendiente = data => dispatch => {
 
         let info = modelo_recepcion(res.pendientes)
         dispatch({
-            type: GET_INGRESADO_PENDIENTE,
+            type: OBT_INGRESADOS_PENDIENTES,
             ingreso: info
         })
 
@@ -35,7 +35,7 @@ export const fn_registrar_atencion_taller = data => dispatch => {
         api.workshop.pendientesRevision({ filtro: `RI.fk_estados_regin = 1` }).then(res => {
             let info = modelo_recepcion(res.pendientes)
             dispatch({
-                type: GET_INGRESADO_PENDIENTE,
+                type: OBT_INGRESADOS_PENDIENTES,
                 ingreso: info
             })
         }).catch(err => {

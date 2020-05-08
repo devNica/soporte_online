@@ -5,10 +5,10 @@ import './adminpanel.css';
 // Iconos
 import ControlPointTwoToneIcon from '@material-ui/icons/ControlPointTwoTone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-import PermDataSettingIcon from '@material-ui/icons/PermDataSetting';
+//import PermDataSettingIcon from '@material-ui/icons/PermDataSetting';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import TimerRoundedIcon from '@material-ui/icons/TimerRounded';
-import TimerOffRoundedIcon from '@material-ui/icons/TimerOffRounded';
+//import TimerOffRoundedIcon from '@material-ui/icons/TimerOffRounded';
 
 
 
