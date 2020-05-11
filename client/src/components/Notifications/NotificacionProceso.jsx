@@ -25,10 +25,9 @@ const NotificacionProceso = ({datos_fr})=> {
             },
 
             onRemoval: () => {
-              //CUANDO FINALICE LA NOTIFICACION DEBERA ACTUALIZAR LA TABLA PARA PONER 
-              //EN ESTADO DE LEIDO LA MISMA
-                console.log('este es el id de la notificacion:', idnotification)
-                api.notificacion.actualizar({idnotification})
+                //CUANDO FINALICE LA NOTIFICACION DEBERA ACTUALIZAR LA TABLA PARA PONER 
+                //EN ESTADO DE LEIDO LA MISMA
+                //api.notificacion.actualizar({idnotification})
                 //eliminarNotificacion(idnotification);
                 
             }
@@ -41,6 +40,13 @@ const NotificacionProceso = ({datos_fr})=> {
         let index = datos_fr.length -1;
 
         if(index >= 0){
+            if(datos_fr[index].Proceso === 'INGRESO DE EQUIPO'){
+                let msg = `Se ha creado la orden de Ingreso: ${datos_fr[index].Orden}\n\n`+
+                            `Que incluye los equipos: ${datos_fr[index].Consecutivo}`;
+                
+                let type = 'default'
+                createNotifiacion(msg, type, '', datos_fr[index].idNotificaciones);
+            }
             if(datos_fr[index].Proceso === 'ASIGNACION DE TRABAJO'){
                 let msg = `Se le asigno la Orden: ${datos_fr[index].Orden}\n\n`+
                             `Que incluye los equipos: ${datos_fr[index].Consecutivo}`;

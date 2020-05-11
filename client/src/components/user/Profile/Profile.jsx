@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AdminPanel from '../../Panel/AdminPanel';
 import PaginaAsignaciones from '../../pages/PaginaAsignaciones';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {fn_revisar_notificaciones} from '../../../redux/actions/tools';
+import {fn_revisar_notificaciones, fn_limpiar_notificaciones} from '../../../redux/actions/tools';
 import NotificacionProceso from '../../Notifications/NotificacionProceso';
 
 import io from 'socket.io-client';
@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 
 let socket;
 
-const Profile = ({user_fr, fn_revisar_notificaciones}) =>{
+const Profile = ({user_fr, fn_revisar_notificaciones, fn_limpiar_notificaciones}) =>{
     
     const [user, setUser]= useState('');
     const ENDPOINT = 'localhost:5000';
@@ -51,12 +51,14 @@ const Profile = ({user_fr, fn_revisar_notificaciones}) =>{
 
 
     useEffect(()=>{
-        
+      
         socket.on('recuperar-resultados', notas =>{
-            fn_revisar_notificaciones(notas);
-        })
+                fn_revisar_notificaciones(notas);
+            })
+        
+        return () => fn_limpiar_notificaciones();
 
-    },[fn_revisar_notificaciones])
+    },[fn_revisar_notificaciones, fn_limpiar_notificaciones])
    
     const dashboard=(
         <Fragment>
@@ -105,4 +107,4 @@ const Profile = ({user_fr, fn_revisar_notificaciones}) =>{
     
 }
 
-export default connect(mapStateToProps,{fn_revisar_notificaciones})(Profile);
+export default connect(mapStateToProps,{fn_revisar_notificaciones,fn_limpiar_notificaciones})(Profile);

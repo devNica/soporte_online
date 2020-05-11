@@ -51,7 +51,8 @@ const reportes = {
             ${`'` + data.idtecnico + `'`},
             ${`'` + data.inicio + `'`},
             ${`'` + data.final + `'`},
-            ${data.filtro}
+            ${data.filtro},
+            ${`'` + data.tt + `'`}
         ); 
         `
     },

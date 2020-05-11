@@ -5,6 +5,7 @@ import {fn_reporte_desempeno_tecnico, fn_reporte_distribucion_tiempo, fn_limpiar
 import {fn_tecnicos_activos} from '../../redux/actions/empleados';
 import DatePicker  from 'react-datepicker'
 import TablaDistribucionTiempo from '../Table/TablaDistribucionTiempo';
+import {alexaTimeTools} from '../../helpers/alexa';
 
 const mapStateToProps = state =>({
     user_fr: state.auth.user,
@@ -19,7 +20,7 @@ const PaginaDesempeno = (props) =>{
     const [idtecnico, setIdTecnico] = useState('');
     const [inicio, setInicio] = useState('');
     const [finalizo, setFinalizo] = useState('');
-    // const [tipo, setTipo] = useState('');
+    const [tiempoTotal, setTiempoTotal] = useState(0);
 
     const fechaInicio = date =>{
         setInicio(date);
@@ -30,19 +31,43 @@ const PaginaDesempeno = (props) =>{
     const fechaFinalizo = date =>{
         
         setFinalizo(date);
+
         let filtro = '';
+
+        let cluster={
+            fechaInicio: inicio,
+            fechaFinalizo: date,
+            tiempoInicio: { hh: '08', mm: '10', ss: '00'},
+            tiempoFinalizo: { hh: '16', mm: '50', ss: '00'},
+            carnet: 0,
+            fk_tecnico_fr: 0,
+            equipo: {id: 0, idcategoria: 0, consecutivo: 'WV0000', equipo: 'VIRTUAL'},
+            tipoactividad: '',
+            T1: {hh:'00',mm:'00'}, 
+            T2: {hh:'00',mm:'00'},
+            usuario: {full_name: 'AELXANDER ROSALES'}
+        }
+
+        let res = alexaTimeTools(cluster);
         
         if(filtro_fc === 'dist_tiempo'){
 
-            let data = {
-                idtecnico: user_fr.rol === 'SUPERUSER' ? parseInt(idtecnico) : user_fr.idusuarios,
-                inicio: inicio.toISOString().slice(0,10), 
-                final: date.toISOString().slice(0,10), 
-                filtro: `'`+`'`
-            }
+            if(res.flag){
+                setTiempoTotal(res.data.ttsec);
 
-            console.log(data);
-            fn_reporte_distribucion_tiempo(data);
+                let data = {
+                    idtecnico: user_fr.rol === 'SUPERUSER' ? parseInt(idtecnico) : user_fr.idusuarios,
+                    inicio: inicio.toISOString().slice(0,10), 
+                    final: date.toISOString().slice(0,10), 
+                    filtro: `'`+`'`,
+                    tt: res.data.ttsec,
+                }
+
+                fn_reporte_distribucion_tiempo(data);
+            }else{
+                console.log(res.msg);
+            }
+            
         
         }
         else{
@@ -108,6 +133,7 @@ const PaginaDesempeno = (props) =>{
                             className="form-control text-center"
                             //withPortal
                             placeholderText="MM/DD/YYYY"
+                            dateFormat="MMMM d, yyyy"
                         />
                     </div>
                 </div>
@@ -120,6 +146,7 @@ const PaginaDesempeno = (props) =>{
                             className="form-control text-center"
                             //withPortal
                             placeholderText="MM/DD/YYYY"
+                            dateFormat="MMMM d, yyyy"
                         />
                     </div>
                 </div>
@@ -144,8 +171,8 @@ const PaginaDesempeno = (props) =>{
         <div className="row">
             <div className="col-12">
                 {filtro_fc === 'tecnico' ? 
-                    <h3 className="text-center border py-2">Reportes por tecnicos</h3>: 
-                    <h3 className="text-center border py-2">Reporte Distribucion Tiempo</h3>}
+                    <h3 className="text-center border py-2" style={{color: '#2253a3'}}>Reportes por tecnicos</h3>: 
+                    <h3 className="text-center border py-2" style={{color: '#2253a3'}}>Reporte Distribucion Tiempo</h3>}
             </div>
             {rol_fr === 'SUPERUSER' ? 
                 
@@ -173,7 +200,7 @@ const PaginaDesempeno = (props) =>{
             
             {filtro_fc === 'tecnico' ?  
                 <TablaDesempeno idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc}/>:
-                <TablaDistribucionTiempo idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc}/> 
+                <TablaDistribucionTiempo idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc} tt_fc={tiempoTotal}/> 
             }
                 
         </div>

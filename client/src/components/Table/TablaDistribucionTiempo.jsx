@@ -13,7 +13,7 @@ const mapStateToProps = state=>({
 
 const TablaDistribucionTiempo = (props) =>{
 
-    const {mediciones_fr, rol_fr, userID_fr, tipo_fc, inicio_fc, finalizo_fc, idtecnico_fc} = props;
+    const {mediciones_fr, rol_fr, userID_fr, tipo_fc, inicio_fc, finalizo_fc, idtecnico_fc, tt_fc} = props;
     const {fn_reporte_distribucion_tiempo} = props;
     const [data, setData] = useState(modelo_distribucion_tiempo([]).data); /**REALIZAR SU PROPIO MODELO */
     const [R1, setR1] = useState([]);
@@ -94,7 +94,8 @@ const TablaDistribucionTiempo = (props) =>{
                 idtecnico:  rol_fr==='SUPERUSER' ? idtecnico_fc: userID_fr,
                 inicio: inicio_fc.toISOString().slice(0,10), 
                 final: finalizo_fc.toISOString().slice(0,10), 
-                filtro: `'${e}'`
+                filtro: `'${e}'`,
+                tt: tt_fc
             }
 
             fn_reporte_distribucion_tiempo(data);

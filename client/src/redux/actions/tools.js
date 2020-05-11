@@ -368,26 +368,20 @@ export const noSave = (data) => dispatch => {
 
 export const fn_revisar_notificaciones = (data) => (dispatch, getState) => {
 
-    //console.log(data.notas);
-    const prevNotifications = getState().notifications.proceso || [];
-    let existe;
+    console.log('notificaciones servidor: ', data.notas)
+
     let currentNotifications = [];
 
-    data.notas.map((nota, i) => {
-        existe = prevNotifications.filter(item => item.Consecutivo === nota.Consecutivo);
+    data.notas.forEach((nota) => {
 
-        if (existe.length < 1) {
-            currentNotifications[i] = nota
-            //console.log('agrego:', nota.Consecutivo)
-            dispatch({
-                type: CREATE_NOTIFICACION_PROCESS,
-                payload: currentNotifications
-            })
+        currentNotifications.push(nota);
+        dispatch({
+            type: CREATE_NOTIFICACION_PROCESS,
+            payload: currentNotifications
+        })
 
-        } else {
-            console.log('noagrego:', nota.Consecutivo)
-        }
-
+        /*RESUELTO GRACIAS A COMENTARIOS DEL ING.ALEXANDER ROSALES*/
+        api.notificacion.actualizar({ idnotification: nota.idNotificaciones })
     })
 
 }
