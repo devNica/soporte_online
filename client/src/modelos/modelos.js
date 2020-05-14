@@ -7,6 +7,7 @@ import { modelo_recepcion } from './recepcion'
 import { modelo_equipos } from './equipos'
 import { modelo_cobertura } from './cobertura'
 import { modelo_distribucion_tiempo } from './distribucionTiempo';
+import { modelo_edicion_inventario } from './edicionInventario';
 
 
 export const modelos = {
@@ -19,6 +20,7 @@ export const modelos = {
     equipos: modelo_equipos,
     cobertura: modelo_cobertura,
     distribucion: modelo_distribucion_tiempo,
+    edicion: modelo_edicion_inventario,
 }
 
 

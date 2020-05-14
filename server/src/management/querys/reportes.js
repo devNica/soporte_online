@@ -57,6 +57,24 @@ const reportes = {
         `
     },
 
+    REP_EDICION_INVENTARIO: filtro => {
+        return `
+        SELECT 
+        CNS.idConsultas as idconsulta, 
+        CNS.Consultas as consulta, 
+        CNS.Estado as estado, 
+        CNS.Identificador as consecutivo, 
+        CNS.fk_usuario_cns as idusuario, 
+        CNS.Fecha as fecha, 
+        CNS.Tipo as tipo, 
+        CNS.Historico as historico, 
+        USR.nick as nick 
+        
+        FROM consultas as CNS 
+        INNER JOIN usuarios as USR ON USR.idusuarios = CNS.fk_usuario_cns 
+        WHERE ${filtro} ORDER BY CNS.idconsultas ASC`
+    }
+
 
 
 }

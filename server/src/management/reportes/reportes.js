@@ -1,5 +1,5 @@
 var mysql = require('mysql2/promise');
-var { REP_DESEMPENO, REP_DISTRIBUCION_TIEMPOS } = require('../querys/reportes');
+var { REP_DESEMPENO, REP_DISTRIBUCION_TIEMPOS, REP_EDICION_INVENTARIO } = require('../querys/reportes');
 var { cnc } = require('../../database/connection');
 var config = require('../../database/config');
 
@@ -10,7 +10,8 @@ let configuration = {
     user: config.db.username,
     password: config.db.password,
     database: config.db.database,
-    multipleStatements: true
+    multipleStatements: true,
+    timezone: "+06:00"
 }
 
 const reportes = {
@@ -21,6 +22,10 @@ const reportes = {
 
     reporteDistribucionTiempo: (data) => {
         return cnc(mysql, configuration, REP_DISTRIBUCION_TIEMPOS(data))
+    },
+
+    reporteEdicionInventario: filtro => {
+        return cnc(mysql, configuration, REP_EDICION_INVENTARIO(filtro))
     }
 }
 

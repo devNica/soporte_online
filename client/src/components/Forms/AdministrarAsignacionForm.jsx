@@ -10,7 +10,6 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 import Progressbar from '../progressbar/Progressbar';
 import Notification from '../Notifications/Notification';
-import {fn_limpiar_notificaciones} from '../../redux/actions/tools';
 
 const mapStateToProps = state =>({
     user_fr: state.auth.user,
@@ -21,7 +20,6 @@ const mapStateToProps = state =>({
 const AdministrarAsignacionForm = (props) =>{
 
     const {fn_aprobar, fn_pausar, fn_reiniciar, fn_reasignar, fn_denegar, fn_habililitar_edicion, fn_tecnicos_activos, history, noSave} = props;
-    const {fn_limpiar_notificaciones} = props;
     const idregws = props.match.params.id;
     const {user_fr, asignaciones_fr, tecnicos_fr} = props;
     
@@ -260,9 +258,7 @@ const AdministrarAsignacionForm = (props) =>{
 
     },[fn_tecnicos_activos])
 
-    useEffect(()=>{
-        fn_limpiar_notificaciones();
-    },[fn_limpiar_notificaciones])
+
 
     const listaTecnicos = tecnicos_fr.map((tecnico, i)=>(
         <tr key={i}>
@@ -437,6 +433,5 @@ export default connect(mapStateToProps,
         fn_habililitar_edicion,
         fn_tecnicos_activos,
         noSave,
-        fn_limpiar_notificaciones 
     }
 )(AdministrarAsignacionForm);

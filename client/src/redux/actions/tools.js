@@ -366,10 +366,7 @@ export const noSave = (data) => dispatch => {
 }
 
 
-export const fn_revisar_notificaciones = (data) => (dispatch, getState) => {
-
-    console.log('notificaciones servidor: ', data.notas)
-
+export const fn_revisar_notificaciones = (data) => (dispatch) => {
     let currentNotifications = [];
 
     data.notas.forEach((nota) => {

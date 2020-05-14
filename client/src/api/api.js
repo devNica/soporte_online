@@ -75,11 +75,15 @@ export default {
         eqp: () =>
             axios.get('/api/export/pdf', { responseType: 'arraybuffer', headers: { 'Accept': 'application/pdf' } }),
 
-        desemepeno: data =>
+        desempeno: data =>
             axios.post('/api/reporte/desempeno-tecnicos', data).then(res => res.data),
 
         distribucionTiempo: data =>
             axios.post('/api/reporte/distribucion-tiempo', data).then(res => res.data),
+
+        edicionInventario: data =>
+            axios.post('/api/reporte/edicion-inventario', data).then(res => res.data),
+
     },
 
     eqp: {

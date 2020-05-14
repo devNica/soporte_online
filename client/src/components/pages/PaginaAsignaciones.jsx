@@ -44,6 +44,7 @@ const PaginaAsignaciones = (props) =>{
         fn_asignaciones_fecha({filtro});
     },[fn_asignaciones_fecha, rol_fr, userID_fr])
 
+  
     return (
         <div>
             <div className="border mb-4 py-3 px-3">

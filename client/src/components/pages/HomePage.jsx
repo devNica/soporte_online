@@ -1,13 +1,8 @@
-import React,{useEffect} from 'react';
+import React,{} from 'react';
 import IconoTecnologia from './IconoTecnologia';
 import {connect} from 'react-redux'; 
-import {fn_limpiar_notificaciones} from '../../redux/actions/tools';
 
-const HomePage = ({fn_limpiar_notificaciones}) => {
-
-    useEffect(()=>{
-        fn_limpiar_notificaciones();
-    },[fn_limpiar_notificaciones])
+const HomePage = () => {
 
     return (
         <div className="container mt-5">
@@ -63,4 +58,4 @@ const HomePage = ({fn_limpiar_notificaciones}) => {
     );
 };
 
-export default connect(null,{fn_limpiar_notificaciones})(HomePage);
+export default connect(null)(HomePage);

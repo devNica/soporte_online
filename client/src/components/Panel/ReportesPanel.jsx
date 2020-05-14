@@ -7,7 +7,7 @@ import PermDataSettingIcon from '@material-ui/icons/PermDataSetting';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PersonIcon from '@material-ui/icons/Person';
 //import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-//import ComputerIcon from '@material-ui/icons/Computer';
+import ComputerIcon from '@material-ui/icons/Computer';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 
@@ -36,6 +36,10 @@ class ReportesPanel extends Component {
                      
                     <button className="list-group-item list-group-item-action sub-item-option h5 text-dark" name="pfm_dist_tiempo" onClick={this.handleOnClick}>
                         <AccessTimeIcon  style={{ color: "#5094de"}} fontSize="small"/> Dist. Tiempo
+                    </button>
+
+                    <button className="list-group-item list-group-item-action sub-item-option h5 text-dark" name="pfm_edicion_inventario" onClick={this.handleOnClick}>
+                        <ComputerIcon  style={{ color: "#5094de"}} fontSize="small"/> Edicion Inv
                     </button>
                 </div>
                 <button className="list-group-item list-group-item-action item-profile h5 text-dark"><PictureAsPdfIcon  style={{ color: "#5094de"}} fontSize="small"/> Informes</button>

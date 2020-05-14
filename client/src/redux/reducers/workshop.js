@@ -1,4 +1,4 @@
-import { OBT_ASIGNACIONES_POR_FECHA, OBT_COBERTURA_POR_IDREGWS, OBT_PARTES_POR_IDREGWS, OBT_TAREAS_DEL_EQP } from '../actions/types';
+import { OBT_ASIGNACIONES_POR_FECHA, OBT_COBERTURA_POR_IDREGWS, OBT_PARTES_POR_IDREGWS, OBT_TAREAS_DEL_EQP, LIMPIAR_ASIGNACIONES_POR_FECHA } from '../actions/types';
 
 const initialState = {
     tasks: [],
@@ -39,6 +39,13 @@ export default function (state = initialState, action) {
                 tasksEQP: action.payload.tasksEQP,
                 msg: action.payload.msg
             }
+
+        case LIMPIAR_ASIGNACIONES_POR_FECHA:
+            return {
+                ...state,
+                tasks: []
+            }
+
 
         default:
             return state;

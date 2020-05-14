@@ -2,10 +2,12 @@ import React, {Fragment, useState, useEffect } from 'react';
 import TablaDesempeno from '../Table/TablaDesempeno';
 import {connect} from 'react-redux';
 import {fn_reporte_desempeno_tecnico, fn_reporte_distribucion_tiempo, fn_limpiar_datos_reporte} from '../../redux/actions/reportes';
+import {fn_reporte_edicion_inventario} from '../../redux/actions/reportes';
 import {fn_tecnicos_activos} from '../../redux/actions/empleados';
 import DatePicker  from 'react-datepicker'
 import TablaDistribucionTiempo from '../Table/TablaDistribucionTiempo';
 import {alexaTimeTools} from '../../helpers/alexa';
+import TablaEdicionInventario from '../Table/TablaEdicionInventario';
 
 const mapStateToProps = state =>({
     user_fr: state.auth.user,
@@ -16,7 +18,7 @@ const mapStateToProps = state =>({
 const PaginaDesempeno = (props) =>{
 
     const {fn_tecnicos_activos, user_fr, rol_fr, tecnicos_fr, filtro_fc} = props;
-    const {fn_reporte_desempeno_tecnico, fn_reporte_distribucion_tiempo, fn_limpiar_datos_reporte} = props;
+    const {fn_reporte_desempeno_tecnico, fn_reporte_distribucion_tiempo, fn_limpiar_datos_reporte,fn_reporte_edicion_inventario} = props;
     const [idtecnico, setIdTecnico] = useState('');
     const [inicio, setInicio] = useState('');
     const [finalizo, setFinalizo] = useState('');
@@ -70,7 +72,7 @@ const PaginaDesempeno = (props) =>{
             
         
         }
-        else{
+        if(filtro_fc === 'tecnico'){
 
             /**ACA NO IMPORTA CUANTOS DIAS HAYAN ENTRE LAS FECHAS PORQUE NO HAY DESBORDAMIENTO EN LOS CALCULOS*/
             if(rol_fr==='SUPERUSER'){
@@ -89,18 +91,36 @@ const PaginaDesempeno = (props) =>{
             console.log(filtro);
             fn_reporte_desempeno_tecnico({filtro});
         }
+
+        if(filtro_fc === 'edicion_inventario'){
+
+            if(rol_fr==='SUPERUSER'){
+
+                filtro = `(CNS.Fecha BETWEEN '${inicio.toISOString()}' AND '${date.toISOString()}') AND (CNS.fk_usuario_cns = ${idtecnico})`
+
+            }else{
+
+                filtro = `(CNS.Fecha BETWEEN '${inicio.toISOString()}' AND '${date.toISOString()}') and (CNS.fk_usuario_cns = ${user_fr.idusuarios})`
+            }
+
+            fn_reporte_edicion_inventario({filtro})
+
+        }
     }
 
     const handleOnChange = e =>{
         let filtro = `RT.fk_tecnico_regtaller = ${e.target.value}`
         
-        if(filtro_fc === 'dist_tiempo'){
-            setIdTecnico(e.target.value)
-        }
+        setIdTecnico(e.target.value)
+
+        // if(filtro_fc === 'dist_tiempo'){
+        //     setIdTecnico(e.target.value)
+        // }
         if(filtro_fc === 'tecnico'){
             fn_reporte_desempeno_tecnico({filtro});
             setIdTecnico(e.target.value)
         }
+
         
     }
 
@@ -200,7 +220,9 @@ const PaginaDesempeno = (props) =>{
             
             {filtro_fc === 'tecnico' ?  
                 <TablaDesempeno idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc}/>:
-                <TablaDistribucionTiempo idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc} tt_fc={tiempoTotal}/> 
+                filtro_fc === 'edicion_inventario' ? 
+                    <TablaEdicionInventario idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc}/> :
+                        <TablaDistribucionTiempo idtecnico_fc={idtecnico} inicio_fc={inicio} finalizo_fc={finalizo} tipo_fc={filtro_fc} tt_fc={tiempoTotal}/> 
             }
                 
         </div>
@@ -213,6 +235,7 @@ export default connect(mapStateToProps,
         fn_reporte_desempeno_tecnico, 
         fn_reporte_distribucion_tiempo,
         fn_limpiar_datos_reporte,
+        fn_reporte_edicion_inventario,
         fn_tecnicos_activos
     }
 )(PaginaDesempeno);

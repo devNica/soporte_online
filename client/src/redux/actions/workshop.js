@@ -1,4 +1,4 @@
-import { OBT_ASIGNACIONES_POR_FECHA, OBT_COBERTURA_POR_IDREGWS, OBT_PARTES_POR_IDREGWS, OBT_TAREAS_DEL_EQP } from './types'
+import { OBT_ASIGNACIONES_POR_FECHA, OBT_COBERTURA_POR_IDREGWS, OBT_PARTES_POR_IDREGWS, OBT_TAREAS_DEL_EQP, LIMPIAR_ASIGNACIONES_POR_FECHA } from './types'
 import { modelos } from '../../modelos/modelos';
 import api from '../../api/api';
 
@@ -18,6 +18,13 @@ export const fn_asignaciones_fecha = data => dispatch => {
 
     }).catch(err => {
         console.log(err);
+    })
+}
+
+
+export const fn_limpiar_asignaciones = () => dispatch => {
+    dispatch({
+        type: LIMPIAR_ASIGNACIONES_POR_FECHA,
     })
 }
 
