@@ -3,9 +3,9 @@ var tools = require('../management/tools/tools')
 
 router.post('/tool/eqp-active-list', (req, res) => {
 
-    console.log(req.body);
+    console.log(req.body.idequipo);
 
-    tools.getEqpActivos(req.body.idequipo).then(response => {
+    tools.obtenerEqpCategoria({ filtro: `E.fk_estado_eq = 1 AND EE.Categoria = 1 AND E.fk_catequipos_eq = ${req.body.idequipo}` }).then(response => {
         let eqps = response.rows
         res.status(200).json({ msg: 'Ok', flag: true, eqps })
     }).catch(err => {
@@ -13,6 +13,15 @@ router.post('/tool/eqp-active-list', (req, res) => {
     })
 })
 
+
+router.post('/tool/eqp-list-by-category', (req, res) => {
+    tools.obtenerEqpCategoria({ filtro: `E.fk_catequipos_eq = ${req.body.idequipo}` }).then(response => {
+        let eqps = response.rows
+        res.status(200).json({ msg: 'Ok', flag: true, eqps })
+    }).catch(err => {
+        console.log(err)
+    })
+})
 
 router.get('/tool/catalogoeqp-list', (req, res) => {
     tools.getCatalogo().then(response => {

@@ -2,18 +2,25 @@ import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import {fn_obt_cobertura, fn_obt_repuestos, fn_obt_tareaseqp} from '../../redux/actions/workshop';
 import FormularioEdicionAtencion from '../Forms/FormularioEdicionAtencion';
+import { fn_limpiar_lista_cobertura } from '../../redux/actions/tools';
 
 
 const PaginaEdicionAtencion = (props) =>{
 
-    const {fn_obt_cobertura, fn_obt_repuestos, fn_obt_tareaseqp} = props;
+    const {fn_obt_cobertura, fn_obt_repuestos, fn_obt_tareaseqp, fn_limpiar_lista_cobertura} = props;
     const idregws = props.match.params
 
     useEffect(()=>{
         fn_obt_cobertura(idregws);
         fn_obt_repuestos(idregws);
         fn_obt_tareaseqp(idregws)
-    },[fn_obt_tareaseqp, fn_obt_repuestos, fn_obt_cobertura, idregws])
+
+        return () => {
+            fn_limpiar_lista_cobertura();
+        }
+
+
+    },[fn_obt_tareaseqp, fn_obt_repuestos, fn_obt_cobertura, idregws, fn_limpiar_lista_cobertura])
     
     
     return (
@@ -24,4 +31,4 @@ const PaginaEdicionAtencion = (props) =>{
     
 }
 
-export default connect(null, {fn_obt_cobertura, fn_obt_repuestos, fn_obt_tareaseqp})(PaginaEdicionAtencion);
+export default connect(null, {fn_obt_cobertura, fn_obt_repuestos, fn_obt_tareaseqp, fn_limpiar_lista_cobertura})(PaginaEdicionAtencion);

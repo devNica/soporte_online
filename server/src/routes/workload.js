@@ -198,9 +198,42 @@ router.post('/workload/aprobar-asignacion', (req, res) => {
 })
 
 router.post('/workload/crear-atencion-externa-taller', (req, res) => {
-    console.log(req.body)
+    console.log(req.body.data)
 
     workload.crear_atencion_tecnico(req.body.data).then(response => {
+        res.status(201).json({ msg: 'La atencion ha sido reportada satisfactoriamente', flag: true })
+    }).catch(err => {
+        console.log(err);
+        res.status(200).json({ msg: 'Fallo Registro de Atencion Reportada por el Tecnico', flag: false, });
+    })
+
+})
+
+router.post('/workload/crear-atencion-edicion-inventario', (req, res) => {
+
+
+    // let data = {
+    //     fecha: `'` + req.body.data.fecha + `'`,
+    //     fk_usuario: `'` + req.body.data.fk_usuario + `'`,
+    //     fk_tecnico: req.body.data.fk_tecnico,
+    //     tecnico: `'` + req.body.data.tecnico + `'`,
+    //     inicio: `'` + req.body.data.inicio + `'`,
+    //     final: `'` + req.body.data.final + `'`,
+    //     fk_eqp: req.body.data.fk_eqp,
+    //     consecutivo: `'` + req.body.data.consecutivo + `'`,
+    //     fk_categoria: req.body.data.fk_categoria,
+    //     fk_tipo_atencion: req.body.data.fk_tipo_atencion,
+    //     ordsec: req.body.data.ordsec,
+    //     extrasec: req.body.data.extrasec,
+    //     repsec: req.body.data.repsec,
+    //     tmpsec: req.body.data.tmpsec,
+    //     strID: `'` + req.body.data.strID + `'`,
+    //     size: req.body.data.size,
+    // }
+
+    // console.log(data);
+
+    workload.crear_atencion_edicion_inventario(req.body.data).then(response => {
         res.status(201).json({ msg: 'La atencion ha sido reportada satisfactoriamente', flag: true })
     }).catch(err => {
         console.log(err);

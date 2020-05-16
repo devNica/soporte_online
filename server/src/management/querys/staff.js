@@ -1,5 +1,5 @@
 const staff = {
-    listaEmpleados: (estado = 1) => {
+    listaEmpleados: (data) => {
         return `SELECT 
         empleados.Id_Empleado as idempleado,
         empleados.Cedula as cedula,
@@ -9,7 +9,7 @@ const staff = {
         empleados.Ccosto as centro_costo,
         (SELECT estructura.Nombre from estructura WHERE estructura.Estructura_id = empleados.fk_ubicacion_emp) as ubicacion,
         if(empleados.Estado = 1, "Activo", 'Inactivo') as estado
-        FROM empleados WHERE empleados.Estado = ${estado} ORDER BY idempleado ASC`
+        FROM empleados WHERE ${data.filtro} ORDER BY idempleado ASC`
     },
 
     listaTecnicos: (estado = 1) => {

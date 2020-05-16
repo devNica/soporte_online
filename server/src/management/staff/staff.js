@@ -15,13 +15,15 @@ let configuration = {
 
 //STAFF MANAGEMENT 
 const staff = {
-    empleadosActivos: () => {
-        return cnc(mysql, configuration, listaEmpleados())
+    obtenerEmpleados: (data) => {
+        return cnc(mysql, configuration, listaEmpleados(data))
     },
 
     tecnicosActivos: () => {
         return cnc(mysql, configuration, listaTecnicos())
-    }
+    },
+
+
 }
 
 module.exports = staff;

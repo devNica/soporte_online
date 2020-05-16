@@ -11,14 +11,14 @@ import FormularioBuscarEquipo from './FormularioBuscarEquipo';
 import {noSave} from '../../redux/actions/tools';
 import {fn_registrar_atencion} from '../../redux/actions/workload';
 import {connect} from 'react-redux';
-import {mayorFecha, TO_CFS, nolaborable} from '../../helpers/tiempo';
-import {timeTools, timeManagement} from '../../helpers/timetools'
+import {alexaTimeTools} from '../../helpers/alexa';
 
 const mapStateToProps = state =>({
-    fk_tecnico_fr: state.auth.user.idusuarios
+    idtecnico_fr: state.auth.user.idusuarios,
+    tecnicos_fr: state.auth.user.nick
 })
 
-const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, fn_registrar_atencion}) => {
+const  FormularioAtencionReportadaTecnico = ({noSave, idtecnico_fr, tecnicos_fr, fn_registrar_atencion}) => {
 
     const [tiempoInicio, setTiempoInicio] = useState({ hh: '00', mm: '00', ss: '00'});
     const [tiempoFinalizo, setTiempoFinalizo] = useState({ hh: '00', mm: '00', ss: '00'});
@@ -26,8 +26,8 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, fn_registra
     const [fechaFinalizo, setFechaFinalizo]= useState(0);
     const [T1, setT1]= useState({hh:'00',mm:'00'})
     const [T2, setT2]= useState({hh:'00',mm:'00'})
-    const [equipo, setEquipo]=useState('');
-    const [usuario, setUsuario]=useState('');
+    const [equipo, setEquipo]=useState({id: '', equipo: '', consecutivo: '', modelo: '', usuario: '', idcategoria: ''});
+    const [usuario, setUsuario]=useState({id: '',full_name: '', carnet: ''});
     const [tipoactividad, setTipoActividad] = useState(0);
     
 
@@ -95,94 +95,39 @@ const  FormularioAtencionReportadaTecnico = ({noSave, fk_tecnico_fr, fn_registra
     const handleOnSubmit = e =>{
         e.preventDefault();
         
-        
-        /**DETERMINA SI HAY COHERENCIA ENTRE LAS FECHAS DE INICIO Y FINAL DE LA ASEIGNACION REPORTADA */
-        let coherencia = mayorFecha(fechaInicio, fechaFinalizo, tiempoInicio, tiempoFinalizo)
-
         if(tipoactividad){
-            if(coherencia.flag){
-                if(usuario !== '' && equipo !== ''){
 
-                    let inicio8601 = timeTools.fechaISO8601(fechaInicio, tiempoInicio);
-                    let final8601 = timeTools.fechaISO8601(fechaFinalizo, tiempoFinalizo);
-                    
-                    let opcion = timeManagement.searchOption(tiempoInicio, tiempoFinalizo);
-                    
-                    let cfs = TO_CFS(inicio8601, final8601, opcion.opc);
-                    let nonWorking = nolaborable(inicio8601, final8601);
+            let cluster={
+                fechaInicio: fechaInicio,
+                fechaFinalizo: fechaFinalizo,
+                tiempoInicio: tiempoInicio,
+                tiempoFinalizo: tiempoFinalizo,
+                idtecnico: idtecnico_fr, /*ID DEL TECNICO QUE ATENDIO AL USUARIO*/
+                tecnico: tecnicos_fr,
+                equipo: equipo,
+                tipoactividad: tipoactividad, /*INVENTARIO*/
+                T1: T1, 
+                T2: T2,
+                usuario: usuario /*DATOS DEL USUARIO ATENDIDO*/
+            } 
 
-                    /**IDENTIFICA SI UNA O AMBAS FECHAS CORRESPONDEN A UN FIN DE SEMANA*/
-                    let isWeekend = timeTools.identifyTimeWindow(inicio8601.substring(0,10), final8601.substring(0,10));
+            let response = alexaTimeTools(cluster);
 
-                    const maxovertime = timeTools.maxOverTime(cfs, nonWorking)
-                    const t1_seg = timeTools.timeStringToSeconds(T1);
-                    const t2_seg = timeTools.timeStringToSeconds(T2);
+            if(response.flag){
 
-                    let overtime = 0;
+                if (window.confirm(response.msg)){
+                    fn_registrar_atencion(response.data);
+                    limpiarCampos();
 
-                    /**NO HAY FINES DE SEMANA ENTRE LAS FECHAS*/
-                    if(isWeekend < 2){
-                        
-                        if(t2_seg > 0){
-                            noSave({msg: 'T2 no puede ser diferente de 00:00 porque no hay fines de semana entre las fechas', type:'danger', time: 3500})
-                            return;
-                        }else{
-                            overtime = t1_seg;
-                        }
-                    
-                    }else{
-                        overtime = t1_seg + t2_seg;
-                    }
-
-                    
-                    let isql = inicio8601.replace(/T/g, ' ').substring(0, (inicio8601.length-5))
-                    let fsql = final8601.replace(/T/g, ' ').substring(0, (final8601.length-5))
-
-
-                    if(overtime <= maxovertime){
-                    
-                        let data={
-                            fecha: "'"+inicio8601.slice(0,10)+"'",
-                            fk_usuario: usuario.carnet,
-                            fk_tecnico: fk_tecnico_fr,
-                            inicio: "'"+isql+"'",
-                            final: "'"+fsql+"'", 
-                            fk_eqp: equipo.id, 
-                            fk_categoria:  parseInt(equipo.idcategoria),
-                            fk_tipo_atencion: tipoactividad,
-                            ordsec: (cfs.td - nonWorking.nwk),
-                            extrasec: t1_seg,
-                            repsec: t2_seg,
-                            tmpsec: ((cfs.td - nonWorking.nwk)+overtime),
-                        }
-
-                        //console.log(data);
-                        let msg = 'DESEA PROCESAR SU ATENCION CON LOS DATOS SIG:\n\n' +
-                                   `Fecha Inicio: ${data.inicio}\n`+
-                                   `Fecha Final: ${data.final}\n`+
-                                   `Horas Extras T1: ${T1.hh}:${T1.mm}\n`+
-                                   `Horas Extras T2: ${T2.hh}:${T2.mm}\n`+
-                                   `Usuario Atentido: ${usuario.full_name}\n`+
-                                   `Equipo: ${equipo.equipo}-${equipo.consecutivo}\n`
-
-                        if (window.confirm(msg)){
-                            fn_registrar_atencion(data);
-                            limpiarCampos();
-    
-                        }else{
-                            return;
-                        }
-                       
-                    }else{
-                        noSave({msg: 'El tiempo extra indicado es incongruente', type:'danger', time: 3500})
-                    }
-                    
                 }else{
-                    noSave({msg: 'El campo del usuario o del equipo, esta vacio', type:'warning', time: 3500})
+                    return;
                 }
+
             }else{
-                noSave({msg: coherencia.msg, type:'warning', time: 3500})
+                noSave({msg: response.msg, type: response.type, time: 3500})
             }
+
+    
         }else{
             noSave({msg: 'No ha seleccionado el tipo de Actividad que desea registrar', type:'warning', time: 3500})
         }

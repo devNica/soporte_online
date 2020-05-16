@@ -1,5 +1,5 @@
 var mysql = require('mysql2/promise');
-var { assignedTasks, coverage, parts, tasks, controlAsignaciones, PRAT, PPA, PRA, PREA } = require('../querys/workshop')
+var { assignedTasks, coverage, parts, tasks, PRAT, PPA, PRA, PREA } = require('../querys/workshop')
 var { cnc } = require('../../database/connection');
 var config = require('../../database/config');
 

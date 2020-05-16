@@ -186,7 +186,7 @@ const CoberturaEditForm = (props) => {
                 </button>
                 <button className="btn btn-outline-primary btn-sm" onClick={guardar}>Guardar</button>
             </div>
-            <CoberturaModal fetchDataComponent={setDataComponent}/>
+            <CoberturaModal fetchDataComponent={setDataComponent} opcion_fc={'ACTIVOS'}/>
         </Fragment>
     );
     

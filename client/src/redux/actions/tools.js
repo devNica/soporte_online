@@ -8,7 +8,8 @@ import {
     CREATE_NOTIFICACION_PROCESS,
     OBT_TAREAS_DEL_EQP,
     OBT_PARTES_POR_IDREGWS,
-    OBT_COBERTURA_POR_IDREGWS
+    OBT_COBERTURA_POR_IDREGWS,
+    LIMPIAR_LISTA_EQP_COBERTURA
 }
     from './types'
 
@@ -36,18 +37,46 @@ export const fn_equipos_activos = id => dispatch => {
     })
 }
 
-export const fn_equipos_cobertura = id => dispatch => {
-    api.eqp.inventarioActivo(id).then(res => {
+export const fn_equipos_cobertura = data => dispatch => {
+    if (data.opc === 'ACTIVOS') {
+        console.log('entro en activos')
+        api.eqp.inventarioActivo({ idequipo: data.id }).then(res => {
 
-        let eqps = modelos.equipos(res.eqps)
+            let eqps = modelos.equipos(res.eqps)
 
-        dispatch({
-            type: OBT_COBERTURA_EQP,
-            eqps,
+            dispatch({
+                type: OBT_COBERTURA_EQP,
+                eqps,
+            })
+
+        }).catch(err => {
+            console.log(err);
         })
+    }
+    else if (data.opc === 'INACTIVOS') {
 
-    }).catch(err => {
-        console.log(err);
+    }
+    else if (data.opc === 'TODOS') {
+        console.log('entro en todos')
+        api.eqp.inventarioTotal({ idequipo: data.id }).then(res => {
+
+            let eqps = modelos.equipos(res.eqps)
+
+            dispatch({
+                type: OBT_COBERTURA_EQP,
+                eqps,
+            })
+
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+}
+
+export const fn_limpiar_lista_cobertura = () => dispatch => {
+    dispatch({
+        type: LIMPIAR_LISTA_EQP_COBERTURA,
     })
 }
 

@@ -176,12 +176,14 @@ const workshop = {
     //PROCEDIMIENTO ATENCION REGISTRADA TECNICOS
     PART: (data) => {
         return `CALL PROCEDIMIENTO_ATENCION_REPORTADA_TECNICO(
-            ${data.fecha},
-            ${data.fk_usuario},
+            ${`'` + data.fecha + `'`},
+            ${`'` + data.fk_usuario + `'`},
             ${data.fk_tecnico},
-            ${data.inicio},
-            ${data.final},
+            ${`'` + data.tecnico + `'`},
+            ${`'` + data.inicio + `'`},
+            ${`'` + data.final + `'`},
             ${data.fk_eqp},
+            ${`'` + data.consecutivo + `'`},
             ${data.fk_categoria},
             ${data.fk_tipo_atencion},
             ${data.ordsec},
@@ -191,8 +193,31 @@ const workshop = {
         )`
     },
 
+    //PROCEDIMIENTO REPORTAR ATENCION INVENTARIO
+    PRAI: (data) => {
+        return `CALL PROCEDIMIENTO_REPORTAR_ATENCION_INVENTARIO(
+            ${`'` + data.fecha + `'`},
+            ${`'` + data.fk_usuario + `'`},
+            ${data.fk_tecnico},
+            ${`'` + data.tecnico + `'`},
+            ${`'` + data.inicio + `'`},
+            ${`'` + data.final + `'`},
+            ${data.fk_eqp},
+            ${`'` + data.consecutivo + `'`},
+            ${data.fk_categoria},
+            ${data.fk_tipo_atencion},
+            ${data.ordsec},
+            ${data.extrasec},
+            ${data.repsec},
+            ${data.tmpsec},
+            ${`'` + data.strID + `'`},
+            ${data.size}
+        )`
+    },
+
+    //PROCEDIMIENTO NOTIFICAR APROBADO
     PCNA: (data) => {
-        return `CALL PROCEDIMIENTO_NOTIFICAR_APROPBADO(
+        return `CALL PROCEDIMIENTO_NOTIFICAR_APROBADO(
             ${data.orden},
             ${data.consecutivo}, 
             ${data.notificado},

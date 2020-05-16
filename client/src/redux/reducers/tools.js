@@ -1,4 +1,4 @@
-import { OBT_CATALOGO_EQP, OBT_EQUIPOS_ACTIVOS, OBT_TAREAS_POR_EQP, OBT_REPUESTOS_POR_EQP, OBT_COBERTURA_EQP } from '../actions/types';
+import { OBT_CATALOGO_EQP, OBT_EQUIPOS_ACTIVOS, OBT_TAREAS_POR_EQP, OBT_REPUESTOS_POR_EQP, OBT_COBERTURA_EQP, LIMPIAR_LISTA_EQP_COBERTURA } from '../actions/types';
 
 const initialState = {
     catalogo: [],
@@ -42,12 +42,14 @@ export default function (state = initialState, action) {
                 reps: action.reps,
             }
 
+        case LIMPIAR_LISTA_EQP_COBERTURA:
         case 'CLEAR_EQP':
             return {
                 ...state,
                 cobertura: [],
                 eqps: []
             }
+
 
 
         default:

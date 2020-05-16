@@ -76,7 +76,7 @@ const AtencionReporte = (props)=> {
 
    
     let amount = repuestos.reduce((acc, current)=>{
-        return acc+= parseInt(current.subtotal)
+        return acc+= parseFloat(current.subtotal)
     }, 0);
 
     const info = asignaciones.find(element=>element.idregws === parseInt(idregws))

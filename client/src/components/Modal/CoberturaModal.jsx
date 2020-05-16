@@ -9,7 +9,7 @@ const mapStateToProps = state =>({
 
 const CoberturaModal = (props)=> {
 
-    const {fn_equipos_cobertura, fetchDataComponent, catalogo_fr} = props;
+    const {fn_equipos_cobertura, fetchDataComponent, catalogo_fr, opcion_fc} = props;
     const [eqp, setEquipo] = useState({id: '', equipo: '', consecutivo: '', modelo: '', usuario: ''});
     const [catalogo, setCatalogo] = useState([]);
 
@@ -19,9 +19,15 @@ const CoberturaModal = (props)=> {
     }
      
     const handleSelect = e =>{
-        let idequipo = e.target.value        
+        let idequipo = e.target.value 
+        
+        let data={
+            id: idequipo, 
+            opc: opcion_fc
+        }
+        
         if(idequipo > 0){
-            fn_equipos_cobertura({idequipo})
+            fn_equipos_cobertura(data)
         }
     }
 

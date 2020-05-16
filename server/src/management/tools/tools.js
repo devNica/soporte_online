@@ -1,6 +1,6 @@
 var mysql = require('mysql2/promise');
 
-var { equiposActivos, catalogoEqps, tareasEqp, equipoRegin, tiempoRevision, usuarioRegin, } = require('../querys/tool');
+var { equiposCategoria, catalogoEqps, tareasEqp, equipoRegin, tiempoRevision, usuarioRegin, } = require('../querys/tool');
 var { repuestos, CVG, PRO_TAREAS, PRO_REP, CANU } = require('../querys/tool');
 
 var { cnc } = require('../../database/connection');
@@ -16,8 +16,8 @@ let configuration = {
 
 //CONSULTAS DE USO FRECUENTE
 const tools = {
-    getEqpActivos: (id) => {
-        return cnc(mysql, configuration, equiposActivos(id))
+    obtenerEqpCategoria: (data) => {
+        return cnc(mysql, configuration, equiposCategoria(data))
     },
 
     getCatalogo: () => {

@@ -1,4 +1,4 @@
-import { OBT_EMPLEADOS_ACTIVOS, OBT_TECNICOS_ACTIVOS } from '../actions/types';
+import { OBT_EMPLEADOS_ACTIVOS, OBT_TECNICOS_ACTIVOS, OBT_TODOS_LOS_EMPLEADOS } from '../actions/types';
 
 const initialState = {
     employees: [],
@@ -10,6 +10,7 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
 
+        case OBT_TODOS_LOS_EMPLEADOS:
         case OBT_EMPLEADOS_ACTIVOS:
             return {
                 ...state,

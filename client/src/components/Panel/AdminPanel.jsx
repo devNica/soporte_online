@@ -7,8 +7,8 @@ import ControlPointTwoToneIcon from '@material-ui/icons/ControlPointTwoTone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 //import PermDataSettingIcon from '@material-ui/icons/PermDataSetting';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-import TimerRoundedIcon from '@material-ui/icons/TimerRounded';
-//import TimerOffRoundedIcon from '@material-ui/icons/TimerOffRounded';
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import AirlineSeatReclineNormalIcon from '@material-ui/icons/AirlineSeatReclineNormal';
 
 
 
@@ -34,8 +34,8 @@ const AdminPanel = ({rolusuario}) => {
                 <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/reports"><PictureAsPdfIcon  style={{ color: "#5094de"}} fontSize="small"/> Informes</Link>
                 <br/>
                 <h5 className="font-weight-bold text-uppercase pt-2" style={{color: "#196ac2"}}>Atenciones</h5>
-                <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/reportedwork"><TimerRoundedIcon  style={{ color: "#5094de"}} fontSize="small"/> Nueva Atencion</Link>
-                {/* <Link className="list-group-item list-group-item-action item-profile h5 text-dark" to="/customer/list"><TimerOffRoundedIcon  style={{ color: "#5094de"}} fontSize="small"/> Cerrar Atencion</Link> */}
+                <Link className="list-group-item list-group-item-action item-profile h5 text-dark text-center" to="/reportedwork"><DirectionsRunIcon  style={{ color: "#5094de"}} fontSize="small"/> Reportar Actividad Fuera del Taller</Link>
+                <Link className="list-group-item list-group-item-action item-profile h5 text-dark text-center" to="/reportinventoryactivity"><AirlineSeatReclineNormalIcon  style={{ color: "#5094de"}} fontSize="small"/> Reportar Actividad ED-Inventario</Link>
             </div>
     );
 };

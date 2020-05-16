@@ -20,6 +20,22 @@ export const fn_registrar_atencion = data => dispatch => {
     })
 }
 
+export const fn_registrar_atencion_edicion_inventario = data => dispatch => {
+    api.workload.crearAtencionEdicionInventario(data).then(res => {
+        dispatch({
+            type: CREATE_NOTIFICATION,
+            payload: {
+                msg: res.msg,
+                type: 'success',
+                time: 3500
+            }
+        })
+
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
 export const fn_crear_asistencia = data => dispatch => {
     api.workload.crearAsistencia(data).then(res => {
 

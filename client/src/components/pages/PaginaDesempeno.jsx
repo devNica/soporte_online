@@ -26,7 +26,6 @@ const PaginaDesempeno = (props) =>{
 
     const fechaInicio = date =>{
         setInicio(date);
-        // setTipo('fecha')
     
     };
 
@@ -41,33 +40,33 @@ const PaginaDesempeno = (props) =>{
             fechaFinalizo: date,
             tiempoInicio: { hh: '08', mm: '10', ss: '00'},
             tiempoFinalizo: { hh: '16', mm: '50', ss: '00'},
-            carnet: 0,
-            fk_tecnico_fr: 0,
-            equipo: {id: 0, idcategoria: 0, consecutivo: 'WV0000', equipo: 'VIRTUAL'},
-            tipoactividad: '',
+            idtecnico: 0,
+            equipo: {id: 11308, idcategoria: 13, consecutivo: 'WV0000', equipo: 'VIRTUAL'},
+            tipoactividad:  0,
             T1: {hh:'00',mm:'00'}, 
             T2: {hh:'00',mm:'00'},
-            usuario: {full_name: 'AELXANDER ROSALES'}
+            usuario: {full_name: 'ALEXANDER ROSALES', carnet: 'ABC4523'},
+            tecnico: 'ADMINISTRADOR DEL SISTEMA'
         }
 
-        let res = alexaTimeTools(cluster);
+        let response = alexaTimeTools(cluster);
         
         if(filtro_fc === 'dist_tiempo'){
 
-            if(res.flag){
-                setTiempoTotal(res.data.ttsec);
+            if(response.flag){
+                setTiempoTotal(response.data.ttsec);
 
                 let data = {
                     idtecnico: user_fr.rol === 'SUPERUSER' ? parseInt(idtecnico) : user_fr.idusuarios,
                     inicio: inicio.toISOString().slice(0,10), 
                     final: date.toISOString().slice(0,10), 
                     filtro: `'`+`'`,
-                    tt: res.data.ttsec,
+                    tt: response.data.ttsec,
                 }
 
                 fn_reporte_distribucion_tiempo(data);
             }else{
-                console.log(res.msg);
+                console.log(response.msg);
             }
             
         
@@ -113,9 +112,6 @@ const PaginaDesempeno = (props) =>{
         
         setIdTecnico(e.target.value)
 
-        // if(filtro_fc === 'dist_tiempo'){
-        //     setIdTecnico(e.target.value)
-        // }
         if(filtro_fc === 'tecnico'){
             fn_reporte_desempeno_tecnico({filtro});
             setIdTecnico(e.target.value)

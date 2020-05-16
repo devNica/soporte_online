@@ -14,6 +14,7 @@ import AdministrarAsignacionForm from './components/Forms/AdministrarAsignacionF
 import PaginaControlTaller from './components/pages/PaginaControlTaller';
 import PaginaInformes from './components/pages/PaginaInformes';
 import PaginaAtencionReportadaTecnico from './components/pages/PaginaAtencionReportadaTecnico';
+import PaginaActividadInventario from './components/pages/PaginaActividadInventario';
 
 const App = ({ location }) => {
 
@@ -26,7 +27,8 @@ const App = ({ location }) => {
       <PrivateRoute location={location} exact path='/closeassignment/:id' component={FormularioCierreAsignacion} />
       <PrivateRoute location={location} exact path='/manageworkshop' component={PaginaControlTaller} />
       <PrivateRoute location={location} exact path='/reports' component={PaginaInformes} />
-      <Route location={location} exact path='/reportedwork' component={PaginaAtencionReportadaTecnico} />
+      <PrivateRoute location={location} exact path='/reportedwork' component={PaginaAtencionReportadaTecnico} />
+      <Route location={location} exact path='/reportinventoryactivity' component={PaginaActividadInventario} />
       <Route location={location} exact path='/' component={HomePage} />
       <PrivateRoute location={location} exact path='/createassignment' component={PaginaCrearAsignacion} />
       <PrivateRoute location={location} exact path='/profile' component={Profile} />

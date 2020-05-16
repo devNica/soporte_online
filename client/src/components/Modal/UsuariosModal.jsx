@@ -20,7 +20,7 @@ const UsuariosModal = ({fetchDataComponent}) => {
             <div className="modal-dialog modal-xl" role="document">
                 <div className="modal-content">
                 <div className="modal-header">
-                    <h4 className="modal-title" id="exampleModalLabel" style={{color: '#ff5247'}}>Lista de Empleados Activos</h4>
+                    <label className="font-weight-bold text-center h5" id="exampleModalLabel" style={{color: '#3a85f2'}}>LISTA DE EMPLEADOS ENCONTRADOS</label>
                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>

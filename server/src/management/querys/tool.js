@@ -1,6 +1,6 @@
 const tool = {
 
-    equiposActivos: (id) => {
+    equiposCategoria: (data) => {
         return `
         SELECT 
         E.idequipos as idequipo,
@@ -23,7 +23,7 @@ const tool = {
         INNER JOIN empleados as EMP ON EMP.Carnet = E.fk_empleado_eq
         
         
-        WHERE E.fk_estado_eq = 1 AND EE.Categoria = 1 AND E.fk_catequipos_eq = ${id} ORDER by idEquipos ASC`
+        WHERE ${data.filtro} ORDER by idEquipos ASC`
     },
 
     catalogoEqps: () => {

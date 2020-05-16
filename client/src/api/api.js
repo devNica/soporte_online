@@ -45,6 +45,10 @@ export default {
 
         tecnicosActivos: () =>
             axios.get('/api/staff/lista-tecnicos-activos').then(res => res.data),
+
+        empleadosActivosInactivos: () =>
+            axios.get('/api/staff/lista-empleados-activos-inactivos').then(res => res.data),
+
     },
 
     workload: {
@@ -69,6 +73,9 @@ export default {
         crearAtencionTecnico: data =>
             axios.post('/api/workload/crear-atencion-externa-taller', { data }).then(res => res.data),
 
+        crearAtencionEdicionInventario: data =>
+            axios.post('/api/workload/crear-atencion-edicion-inventario', { data }).then(res => res.data),
+
     },
 
     reports: {
@@ -89,6 +96,9 @@ export default {
     eqp: {
         inventarioActivo: id =>
             axios.post('/api/tool/eqp-active-list', id).then(res => res.data),
+
+        inventarioTotal: id =>
+            axios.post('/api/tool/eqp-list-by-category', id).then(res => res.data),
 
         catalogoEquipos: () =>
             axios.get('/api/tool/catalogoeqp-list').then(res => res.data),

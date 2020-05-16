@@ -14,7 +14,7 @@ const CoberturaTable = (props) => {
     
     const handleOnClick = useCallback((e)=>{
         let field= e.currentTarget;
-        console.log(e.currentTarget.cells[1])
+        //console.log(e.currentTarget.cells[1])
         let id=parseInt(field.cells[0].innerText)
         let equipo=`${field.cells[1].innerText}`
         let consecutivo=`${field.cells[2].innerText}`
