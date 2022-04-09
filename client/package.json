@@ -18,7 +18,7 @@
     "jwt-decode": "^2.2.0",
     "mdbreact": "^4.25.2",
     "mdreact": "^0.1.5",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.28",
     "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
