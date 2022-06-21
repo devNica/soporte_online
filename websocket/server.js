@@ -3,7 +3,6 @@ const socketio = require('socket.io');
 const http = require('http');
 const mysql = require('mysql2/promise');
 const cors = require("cors");
-const bodyparser = require('body-parser');
 
 const { cnc } = require('./database/connection');
 const config = require('./database/config');
@@ -17,7 +16,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 //MIDDLEWARES
-app.use(bodyparser.json());
+app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 
