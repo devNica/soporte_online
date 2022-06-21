@@ -19,7 +19,7 @@ const NotificacionProceso = ({datos_fr})=> {
             animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
             animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
             dismiss: {
-              duration: 0
+                duration: 0
             },
 
             onRemoval: () => {

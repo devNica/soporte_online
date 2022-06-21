@@ -21,7 +21,6 @@ const FormularioCrearAsistencia = (props) =>{
     const [nota, setNota] = useState('');
     const [selector, setSelector] = useState(0);
     const [idusuario, setIdUsuario] = useState(0);
-   
 
     const handleOnClick = useCallback((e)=>{
         let field= e.currentTarget;
@@ -74,7 +73,6 @@ const FormularioCrearAsistencia = (props) =>{
 
             for(let i=0; i<empleados_fr.data.rows.length; i++){
                 Object.defineProperty(empleados_fr.data.rows[i], func, {value: handleOnClick, configurable: true})
-                 
             }
             
             setData(empleados_fr.data)
@@ -82,7 +80,6 @@ const FormularioCrearAsistencia = (props) =>{
         }
 
     },[empleados_fr, handleOnClick])
-   
     
     const listaTecnicos = tecnicos_fr.map((tecnico, i)=>(
         <option key={i} value={tecnico.idusuario}>{tecnico.full_name}</option>

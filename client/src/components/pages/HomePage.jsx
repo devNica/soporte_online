@@ -48,7 +48,7 @@ const HomePage = () => {
             <div className="row mt-4">
                 <div className="col-12">
                     <div className="alert alert-dark text-center">
-                        ® Querybirdcode -/- Paul Maxwell & Vanessa Cruma & Alexander Rosales 
+                        ® Querybirdcode -/- DevNica -/- A. Alejandro G Sanchez
                     </div>
                 </div>
                 
